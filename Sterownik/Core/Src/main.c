@@ -134,9 +134,6 @@ int main(void)
 			  SX1278_LORA_CR_4_5,
 			  SX1278_LORA_CRC_EN,
 			  64);
-
-  // Wiadomość UART
-  printf("UART WORKING!\n");
   
   // Od razu przejście do trybu nasłuchiwania
   printf("Starting LoRa receiver mode...\n");
@@ -157,49 +154,51 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
     if (lora_data_ready) {
-      printf("Received LoRa data: %s\n", lora_buffer);
+    	printf("%s\n", lora_buffer);
+      //printf("Received LoRa data: %s\n", lora_buffer);
       lora_data_ready = 0;
       
-      printf("Reactivating LoRa receiver mode...\n");
+      //printf("Reactivating LoRa receiver mode...\n");
       if (!SX1278_receive(&sx1278, 64, 2000)) {
-        printf("Failed to reactivate receiver mode!\n");
+        //printf("Failed to reactivate receiver mode!\n");
 
         SX1278_hw_Reset(sx1278.hw);
         HAL_Delay(100);
 
-        if (SX1278_receive(&sx1278, 64, 2000))
-          printf("Receiver mode restored after reset\n");
+        SX1278_receive(&sx1278, 64, 2000);
+        //if (SX1278_receive(&sx1278, 64, 2000))
+          //printf("Receiver mode restored after reset\n");
       }
     }
     
-    if (!lora_data_ready){
-    	printf("Entering sleep mode...\n");
-    	HAL_SuspendTick();
-    	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-    	HAL_ResumeTick();
-    	printf("Woke up from sleep mode.\n");
-    }
+//    if (!lora_data_ready){
+//    	printf("Entering sleep mode...\n");
+//    	HAL_SuspendTick();
+//    	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+//    	HAL_ResumeTick();
+//    	printf("Woke up from sleep mode.\n");
+//    }
 
-    static uint32_t last_check = 0;
-    if (HAL_GetTick() - last_check > 5000) {
-      last_check = HAL_GetTick();
-      
-      if (sx1278.status != RX) {
-        printf("LoRa not in RX mode! Current status: %d\n", sx1278.status);
-        printf("Resetting and reactivating receiver...\n");
-
-        SX1278_hw_Reset(sx1278.hw);
-        HAL_Delay(100);
-
-        if (SX1278_receive(&sx1278, 64, 2000))
-          printf("Receiver mode restored!\n");
-      }
-      else
-        printf("LoRa receiver active, status OK\n");
-
-    }
+//    static uint32_t last_check = 0;
+//    if (HAL_GetTick() - last_check > 15000) {
+//      last_check = HAL_GetTick();
+//
+//      if (sx1278.status != RX) {
+//        printf("LoRa not in RX mode! Current status: %d\n", sx1278.status);
+//        printf("Resetting and reactivating receiver...\n");
+//
+//        SX1278_hw_Reset(sx1278.hw);
+//        HAL_Delay(100);
+//
+//        if (SX1278_receive(&sx1278, 64, 2000))
+//          printf("Receiver mode restored!\n");
+//      }
+//      else
+//        printf("LoRa receiver active, status OK\n");
+//
+//    }
     
-    HAL_Delay(10);
+    //HAL_Delay();
   }
   /* USER CODE END 3 */
 }

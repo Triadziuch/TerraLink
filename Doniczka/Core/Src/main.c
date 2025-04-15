@@ -47,6 +47,9 @@ SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
 
+SX1278_hw_t sx1278_hw;
+SX1278_t sx1278;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,8 +88,7 @@ uint8_t ReadSoilMoistureSensor(uint16_t* soil_moisture){
 
 uint16_t sampling_results[8][10];
 
-void SoilMoistureSampling(void){
-	const uint32_t sampling_times[] = {
+const uint32_t sampling_times[] = {
 			ADC_SAMPLETIME_1CYCLE_5,
 			ADC_SAMPLETIME_3CYCLES_5,
 			ADC_SAMPLETIME_7CYCLES_5,
@@ -97,8 +99,48 @@ void SoilMoistureSampling(void){
 			ADC_SAMPLETIME_160CYCLES_5
 	};
 
+void SoilMoistureSamplingTest(void){
 	for (int i = 0; i < 8; ++i){
+		HAL_ADC_DeInit(&hadc);
+		hadc.Init.SamplingTime = sampling_times[i];
+		HAL_ADC_Init(&hadc);
 
+		ADC_ChannelConfTypeDef sConfig = {0};
+		sConfig.Channel = ADC_CHANNEL_2;
+		sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
+		HAL_ADC_ConfigChannel(&hadc, &sConfig);
+
+		HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
+
+		for (int j = 0; j < 10; ++j){
+			HAL_ADC_Start(&hadc);
+			if (HAL_ADC_PollForConversion(&hadc, 200) == HAL_OK){
+				sampling_results[i][j] = HAL_ADC_GetValue(&hadc);
+			}
+			HAL_ADC_Stop(&hadc);
+			HAL_Delay(10);
+		}
+
+		float mean = 0.f, stdev = 0.f, min = 99999.f, max = 0.f;
+		for (int j = 0; j < 10; ++j)
+			mean += sampling_results[i][j];
+		mean /= 10.f;
+
+		for (int j = 0; j < 10; ++j)
+			stdev += (sampling_results[i][j] - mean) * (sampling_results[i][j] - mean);
+		stdev = sqrt(stdev / 10.f);
+
+		for (int j = 0; j < 10; ++j)
+			if (sampling_results[i][j] < min)
+				min = sampling_results[i][j];
+
+		for (int j = 0; j < 10; ++j)
+					if (sampling_results[i][j] > max)
+						max = sampling_results[i][j];
+
+		char data_buffer[64];
+		sprintf(data_buffer, "%u:%u:%u:%u:%u:%u", i, (uint32_t)mean, (uint32_t)stdev, (uint32_t)min, (uint32_t)max, HAL_GetTick());
+		SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
 	}
 }
 
@@ -137,9 +179,6 @@ int main(void)
   MX_ADC_Init();
   /* USER CODE BEGIN 2 */
 
-  SX1278_hw_t sx1278_hw;
-  SX1278_t sx1278;
-
   // Konfiguracja pinów
   sx1278_hw.dio0.pin = LORA_DIO0_Pin;
   sx1278_hw.dio0.port = LORA_DIO0_GPIO_Port;
@@ -171,22 +210,24 @@ int main(void)
   while (1)
   {
 
-	  if (ReadSoilMoistureSensor(&soil_moisture)){
-		  char data_buffer[64];
-		  uint16_t adc_value = soil_moisture;
-		  uint32_t voltage_mV = (adc_value * 3300) / 4096;
-		  uint16_t voltage_int = voltage_mV / 1000;
-		  uint16_t voltage_frac = voltage_mV % 1000;
+//	  if (ReadSoilMoistureSensor(&soil_moisture)){
+//		  char data_buffer[64];
+//		  uint16_t adc_value = soil_moisture;
+//		  uint32_t voltage_mV = (adc_value * 3300) / 4096;
+//		  uint16_t voltage_int = voltage_mV / 1000;
+//		  uint16_t voltage_frac = voltage_mV % 1000;
+//
+//		  sprintf(data_buffer, "CSMS: ADC = %u (%u.%03uV)\n", adc_value, voltage_int, voltage_frac);
+//		  SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
+//	  }
+//	  else{
+//		  uint8_t message[] = "Wystapil blad!";
+//		  SX1278_transmit(&sx1278, message, sizeof(message), 1000);
+//	  }
 
-		  sprintf(data_buffer, "CSMS: ADC = %u (%u.%03uV)\n", adc_value, voltage_int, voltage_frac);
-		  SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
-	  }
-	  else{
-		  uint8_t message[] = "Wystapil blad!";
-		  SX1278_transmit(&sx1278, message, sizeof(message), 1000);
-	  }
+	  SoilMoistureSamplingTest();
 
-	  HAL_Delay(3000);
+	  HAL_Delay(5000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
