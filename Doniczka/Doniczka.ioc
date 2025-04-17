@@ -1,7 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 ADC.ClockPrescaler=ADC_CLOCK_ASYNC_DIV1
 ADC.IPParameters=SamplingTime,ClockPrescaler
-ADC.SamplingTime=ADC_SAMPLETIME_160CYCLES_5
+ADC.SamplingTime=ADC_SAMPLETIME_19CYCLES_5
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=

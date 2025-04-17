@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "SX1278.h"
+#include "stdbool.h"
 
 /* USER CODE END Includes */
 
@@ -32,6 +33,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define ADC_MOISTURE_MAX 3408
+#define ADC_MOISTURE_MIN 1379
+#define ADC_MOISTURE_RANGE (ADC_MOISTURE_MAX - ADC_MOISTURE_MIN)
 
 /* USER CODE END PD */
 
@@ -64,7 +69,7 @@ static void MX_ADC_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint8_t ReadSoilMoistureSensor(uint16_t* soil_moisture){
+bool ReadSoilMoistureSensor(uint16_t* soil_moisture){
 
 	uint16_t adc_value = {0};
 	uint8_t adc_channels_read = 0;
@@ -86,62 +91,18 @@ uint8_t ReadSoilMoistureSensor(uint16_t* soil_moisture){
 	return 0;
 }
 
-uint16_t sampling_results[8][10];
-
-const uint32_t sampling_times[] = {
-			ADC_SAMPLETIME_1CYCLE_5,
-			ADC_SAMPLETIME_3CYCLES_5,
-			ADC_SAMPLETIME_7CYCLES_5,
-			ADC_SAMPLETIME_12CYCLES_5,
-			ADC_SAMPLETIME_19CYCLES_5,
-			ADC_SAMPLETIME_39CYCLES_5,
-			ADC_SAMPLETIME_79CYCLES_5,
-			ADC_SAMPLETIME_160CYCLES_5
-	};
-
-void SoilMoistureSamplingTest(void){
-	for (int i = 0; i < 8; ++i){
-		HAL_ADC_DeInit(&hadc);
-		hadc.Init.SamplingTime = sampling_times[i];
-		HAL_ADC_Init(&hadc);
-
-		ADC_ChannelConfTypeDef sConfig = {0};
-		sConfig.Channel = ADC_CHANNEL_2;
-		sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
-		HAL_ADC_ConfigChannel(&hadc, &sConfig);
-
-		HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
-
-		for (int j = 0; j < 10; ++j){
-			HAL_ADC_Start(&hadc);
-			if (HAL_ADC_PollForConversion(&hadc, 200) == HAL_OK){
-				sampling_results[i][j] = HAL_ADC_GetValue(&hadc);
-			}
-			HAL_ADC_Stop(&hadc);
-			HAL_Delay(10);
-		}
-
-		float mean = 0.f, stdev = 0.f, min = 99999.f, max = 0.f;
-		for (int j = 0; j < 10; ++j)
-			mean += sampling_results[i][j];
-		mean /= 10.f;
-
-		for (int j = 0; j < 10; ++j)
-			stdev += (sampling_results[i][j] - mean) * (sampling_results[i][j] - mean);
-		stdev = sqrt(stdev / 10.f);
-
-		for (int j = 0; j < 10; ++j)
-			if (sampling_results[i][j] < min)
-				min = sampling_results[i][j];
-
-		for (int j = 0; j < 10; ++j)
-					if (sampling_results[i][j] > max)
-						max = sampling_results[i][j];
-
-		char data_buffer[64];
-		sprintf(data_buffer, "%u:%u:%u:%u:%u:%u", i, (uint32_t)mean, (uint32_t)stdev, (uint32_t)min, (uint32_t)max, HAL_GetTick());
-		SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
+// Zakres 0-200, procent = soil_moisture_percentage * 0.5
+bool ConvertSoilMoistureToPercentage(uint16_t* soil_moisture, uint8_t* soil_moisture_percentage){
+	if (*soil_moisture >= ADC_MOISTURE_MAX)
+		*soil_moisture_percentage = 0; // 0%
+	else if (*soil_moisture <= ADC_MOISTURE_MIN)
+		*soil_moisture_percentage = 200; // 100%
+	else{
+		uint16_t delta = ADC_MOISTURE_MAX - *soil_moisture;
+		*soil_moisture_percentage = (delta * 200 + (ADC_MOISTURE_RANGE / 2)) / ADC_MOISTURE_RANGE;
+		return 1;
 	}
+	return 0;
 }
 
 /* USER CODE END 0 */
@@ -202,6 +163,7 @@ int main(void)
   // Inicjalizacja ADC i czujnika
   HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
   uint16_t soil_moisture = 0;
+  uint8_t soil_moisture_percentage = 0;
 
   /* USER CODE END 2 */
 
@@ -210,24 +172,19 @@ int main(void)
   while (1)
   {
 
-//	  if (ReadSoilMoistureSensor(&soil_moisture)){
-//		  char data_buffer[64];
-//		  uint16_t adc_value = soil_moisture;
-//		  uint32_t voltage_mV = (adc_value * 3300) / 4096;
-//		  uint16_t voltage_int = voltage_mV / 1000;
-//		  uint16_t voltage_frac = voltage_mV % 1000;
-//
-//		  sprintf(data_buffer, "CSMS: ADC = %u (%u.%03uV)\n", adc_value, voltage_int, voltage_frac);
-//		  SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
-//	  }
-//	  else{
-//		  uint8_t message[] = "Wystapil blad!";
-//		  SX1278_transmit(&sx1278, message, sizeof(message), 1000);
-//	  }
+	  if (ReadSoilMoistureSensor(&soil_moisture)){
+		  char data_buffer[64];
+		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
 
-	  SoilMoistureSamplingTest();
+		  sprintf(data_buffer, "Moisture: %u.%u%% ADC = %u\n", soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
+		  SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
+	  }
+	  else{
+		  uint8_t message[] = "Wystapil blad!";
+		  SX1278_transmit(&sx1278, message, sizeof(message), 1000);
+	  }
 
-	  HAL_Delay(5000);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -302,7 +259,7 @@ static void MX_ADC_Init(void)
   hadc.Init.OversamplingMode = DISABLE;
   hadc.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
   hadc.Init.Resolution = ADC_RESOLUTION_12B;
-  hadc.Init.SamplingTime = ADC_SAMPLETIME_160CYCLES_5;
+  hadc.Init.SamplingTime = ADC_SAMPLETIME_19CYCLES_5;
   hadc.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc.Init.ContinuousConvMode = DISABLE;

@@ -83,7 +83,6 @@ void HAL_MspInit(void)
   * @param hadc: ADC handle pointer
   * @retval None
   */
-
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};

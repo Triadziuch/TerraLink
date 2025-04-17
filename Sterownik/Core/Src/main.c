@@ -179,24 +179,24 @@ int main(void)
 //    	printf("Woke up from sleep mode.\n");
 //    }
 
-//    static uint32_t last_check = 0;
-//    if (HAL_GetTick() - last_check > 15000) {
-//      last_check = HAL_GetTick();
-//
-//      if (sx1278.status != RX) {
-//        printf("LoRa not in RX mode! Current status: %d\n", sx1278.status);
-//        printf("Resetting and reactivating receiver...\n");
-//
-//        SX1278_hw_Reset(sx1278.hw);
-//        HAL_Delay(100);
-//
-//        if (SX1278_receive(&sx1278, 64, 2000))
-//          printf("Receiver mode restored!\n");
-//      }
+    static uint32_t last_check = 0;
+    if (HAL_GetTick() - last_check > 15000) {
+      last_check = HAL_GetTick();
+
+      if (sx1278.status != RX) {
+        printf("LoRa not in RX mode! Current status: %d\n", sx1278.status);
+        printf("Resetting and reactivating receiver...\n");
+
+        SX1278_hw_Reset(sx1278.hw);
+        HAL_Delay(100);
+
+        if (SX1278_receive(&sx1278, 64, 2000))
+          printf("Receiver mode restored!\n");
+      }
 //      else
 //        printf("LoRa receiver active, status OK\n");
-//
-//    }
+
+    }
     
     //HAL_Delay();
   }
