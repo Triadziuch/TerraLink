@@ -21,8 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "SX1278.h"
+//#include "SX1278.h"
 #include "stdbool.h"
+#include "comm.h"
+#include "string.h"
 
 /* USER CODE END Includes */
 
@@ -47,7 +49,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
-
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
@@ -140,6 +141,7 @@ int main(void)
   MX_ADC_Init();
   /* USER CODE BEGIN 2 */
 
+
   // Konfiguracja pinów
   sx1278_hw.dio0.pin = LORA_DIO0_Pin;
   sx1278_hw.dio0.port = LORA_DIO0_GPIO_Port;
@@ -152,16 +154,18 @@ int main(void)
   // Inicjalizacja modułu
   sx1278.hw = &sx1278_hw;
   SX1278_init(&sx1278,
-              433000000,
-              SX1278_POWER_17DBM,
-              SX1278_LORA_SF_7,
-              SX1278_LORA_BW_125KHZ,
-              SX1278_LORA_CR_4_5,
-              SX1278_LORA_CRC_EN,
-              64);
+			  433000000,
+			  SX1278_POWER_17DBM,
+			  SX1278_LORA_SF_7,
+			  SX1278_LORA_BW_125KHZ,
+			  SX1278_LORA_CR_4_5,
+			  SX1278_LORA_CRC_EN,
+			  64);
+
+  comm_init(&sx1278);
 
   // Inicjalizacja ADC i czujnika
-  HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
+  //HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
   uint16_t soil_moisture = 0;
   uint8_t soil_moisture_percentage = 0;
 
@@ -177,11 +181,17 @@ int main(void)
 		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
 
 		  sprintf(data_buffer, "Moisture: %u.%u%% ADC = %u\n", soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
-		  SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  //bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  //SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  // Use comm_tx instead of direct SX1278_transmit
+		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
 	  }
 	  else{
 		  uint8_t message[] = "Wystapil blad!";
-		  SX1278_transmit(&sx1278, message, sizeof(message), 1000);
+		  //bool status = comm_tx(message, sizeof(message), 1000);
+		  //SX1278_transmit(&sx1278, message, sizeof(message), 1000);
+		  // Use comm_tx instead of direct SX1278_transmit
+		  bool status = comm_tx(message, sizeof(message), 1000);
 	  }
 
 	  HAL_Delay(1000);
