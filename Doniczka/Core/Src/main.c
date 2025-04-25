@@ -22,9 +22,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 //#include "SX1278.h"
-#include "stdbool.h"
 #include "comm.h"
 #include "string.h"
+#include "hal_rtc.h"
 
 /* USER CODE END Includes */
 
@@ -39,6 +39,7 @@
 #define ADC_MOISTURE_MAX 3408
 #define ADC_MOISTURE_MIN 1379
 #define ADC_MOISTURE_RANGE (ADC_MOISTURE_MAX - ADC_MOISTURE_MIN)
+#define RTC_WAKEUP_TIME_S 3
 
 /* USER CODE END PD */
 
@@ -49,12 +50,17 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
+
+RTC_HandleTypeDef hrtc;
+
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
 
 SX1278_hw_t sx1278_hw;
 SX1278_t sx1278;
+
+volatile bool rtc_wakeup_flag = false;
 
 /* USER CODE END PV */
 
@@ -63,6 +69,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_ADC_Init(void);
+static void MX_RTC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -139,6 +146,7 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI1_Init();
   MX_ADC_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 
 
@@ -169,32 +177,58 @@ int main(void)
   uint16_t soil_moisture = 0;
   uint8_t soil_moisture_percentage = 0;
 
+  // RTC
+  __HAL_RCC_RTC_ENABLE();
+
+  if (HAL_RTC_SetWakeup(RTC_WAKEUP_TIME_S) != HAL_OK){
+	  Error_Handler();
+  }
+
+  RTC_TimeTypeDef time;
+  RTC_DateTypeDef date;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  __HAL_RCC_GPIOA_CLK_ENABLE();
+	  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+	  HAL_PWREx_EnableUltraLowPower();
+	  HAL_PWREx_EnableFastWakeUp();
+	  __disable_irq();
+	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+	  __enable_irq();
 
-	  if (ReadSoilMoistureSensor(&soil_moisture)){
-		  char data_buffer[64];
-		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
+	  SystemClock_Config();
+	  HAL_InitTick(TICK_INT_PRIORITY);
 
-		  sprintf(data_buffer, "Moisture: %u.%u%% ADC = %u\n", soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
-		  //bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
-		  //SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
-		  // Use comm_tx instead of direct SX1278_transmit
-		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+	  if (rtc_wakeup_flag){
+		  rtc_wakeup_flag = false;
+
+		  if (ReadSoilMoistureSensor(&soil_moisture)){
+		  		  char data_buffer[64];
+		  		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
+
+		  		  HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+		  		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+
+		  		  sprintf(data_buffer, "Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n", time.Hours, time.Minutes, time.Seconds, soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
+		  		  //bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  		  //SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  		  // Use comm_tx instead of direct SX1278_transmit
+		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  	  }
+		  	  else{
+		  		  uint8_t message[] = "Wystapil blad!";
+		  		  //bool status = comm_tx(message, sizeof(message), 1000);
+		  		  //SX1278_transmit(&sx1278, message, sizeof(message), 1000);
+		  		  // Use comm_tx instead of direct SX1278_transmit
+		  		  bool status = comm_tx(message, sizeof(message), 1000);
+		  	  }
 	  }
-	  else{
-		  uint8_t message[] = "Wystapil blad!";
-		  //bool status = comm_tx(message, sizeof(message), 1000);
-		  //SX1278_transmit(&sx1278, message, sizeof(message), 1000);
-		  // Use comm_tx instead of direct SX1278_transmit
-		  bool status = comm_tx(message, sizeof(message), 1000);
-	  }
 
-	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -210,15 +244,23 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Configure the main internal regulator output voltage
   */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
+  /** Configure LSE Drive Capability
+  */
+  HAL_PWR_EnableBkUpAccess();
+  __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_MSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE
+                              |RCC_OSCILLATORTYPE_MSI;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
@@ -240,6 +282,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
@@ -302,6 +350,49 @@ static void MX_ADC_Init(void)
 }
 
 /**
+  * @brief RTC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_RTC_Init(void)
+{
+
+  /* USER CODE BEGIN RTC_Init 0 */
+
+  /* USER CODE END RTC_Init 0 */
+
+  /* USER CODE BEGIN RTC_Init 1 */
+
+  /* USER CODE END RTC_Init 1 */
+
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+  hrtc.Init.AsynchPrediv = 127;
+  hrtc.Init.SynchPrediv = 255;
+  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+  hrtc.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
+  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Enable the WakeUp
+  */
+  if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0, RTC_WAKEUPCLOCK_RTCCLK_DIV16) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RTC_Init 2 */
+
+  /* USER CODE END RTC_Init 2 */
+
+}
+
+/**
   * @brief SPI1 Initialization Function
   * @param None
   * @retval None
@@ -352,6 +443,7 @@ static void MX_GPIO_Init(void)
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */

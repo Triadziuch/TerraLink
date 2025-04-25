@@ -19,9 +19,11 @@ typedef struct{
 	uint8_t src_id;
 	uint8_t pkt_type;
 	uint8_t seq;
+	uint8_t len;
 	uint8_t payload[MAX_PAYLOAD_SIZE];
 	uint16_t crc16;
 } packet_t;
+#pragma pack(pop)
 
 enum{
 	PKT_REG_REQ		= 0x01,
