@@ -25,6 +25,7 @@
 #include "comm.h"
 #include "string.h"
 #include "hal_rtc.h"
+#include "hal_power.h"
 
 /* USER CODE END Includes */
 
@@ -193,16 +194,28 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  __HAL_RCC_GPIOA_CLK_ENABLE();
-	  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-	  HAL_PWREx_EnableUltraLowPower();
-	  HAL_PWREx_EnableFastWakeUp();
-	  __disable_irq();
-	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-	  __enable_irq();
+//	  __HAL_RCC_GPIOA_CLK_ENABLE();
+//	  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+//	  HAL_PWREx_EnableUltraLowPower();
+//	  HAL_PWREx_EnableFastWakeUp();
+//	  __disable_irq();
+//	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+//	  __enable_irq();
+//
+//	  SystemClock_Config();
+//	  HAL_InitTick(TICK_INT_PRIORITY);
 
-	  SystemClock_Config();
-	  HAL_InitTick(TICK_INT_PRIORITY);
+	  POWER_GoToSleep(&sx1278);
+	  SX1278_init(&sx1278,
+	  			  433000000,
+	  			  SX1278_POWER_17DBM,
+	  			  SX1278_LORA_SF_7,
+	  			  SX1278_LORA_BW_125KHZ,
+	  			  SX1278_LORA_CR_4_5,
+	  			  SX1278_LORA_CRC_EN,
+	  			  64);
+
+	    comm_init(&sx1278);
 
 	  if (rtc_wakeup_flag){
 		  rtc_wakeup_flag = false;
@@ -468,6 +481,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void ReinitPeripheralsAfterWakeup(void){
+	MX_ADC_Init();
+	MX_SPI1_Init();
+}
 
 /* USER CODE END 4 */
 

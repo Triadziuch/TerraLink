@@ -34,12 +34,17 @@ extern "C" {
 
 #include "stdbool.h"
 
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
 extern volatile bool rtc_wakeup_flag;
+
+extern ADC_HandleTypeDef hadc;
+extern RTC_HandleTypeDef hrtc;
+extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE END ET */
 
@@ -57,6 +62,9 @@ extern volatile bool rtc_wakeup_flag;
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+
+void ReinitPeripheralsAfterWakeup(void);
+
 
 /* USER CODE END EFP */
 
