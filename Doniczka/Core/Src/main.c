@@ -206,18 +206,16 @@ int main(void)
 //	  HAL_InitTick(TICK_INT_PRIORITY);
 
 	  POWER_GoToSleep(&sx1278);
-	  SX1278_init(&sx1278,
-	  			  433000000,
-	  			  SX1278_POWER_17DBM,
-	  			  SX1278_LORA_SF_7,
-	  			  SX1278_LORA_BW_125KHZ,
-	  			  SX1278_LORA_CR_4_5,
-	  			  SX1278_LORA_CRC_EN,
-	  			  64);
+//	  SX1278_init(&sx1278,
+//	  			  433000000,
+//	  			  SX1278_POWER_17DBM,
+//	  			  SX1278_LORA_SF_7,
+//	  			  SX1278_LORA_BW_125KHZ,
+//	  			  SX1278_LORA_CR_4_5,
+//	  			  SX1278_LORA_CRC_EN,
+//	  			  64);
 
-	    comm_init(&sx1278);
-
-	  if (rtc_wakeup_flag){
+	  if (true){
 		  rtc_wakeup_flag = false;
 
 		  if (ReadSoilMoistureSensor(&soil_moisture)){

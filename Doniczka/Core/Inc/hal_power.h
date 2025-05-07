@@ -9,18 +9,18 @@
 #define INC_HAL_POWER_H_
 
 #include "stm32l0xx_hal.h"
-#include "SX1278_hw.h"
+#include "SX1278.h"
 #include "stdint.h"
 #include "stdbool.h"
 
 
 void POWER_ConfigUnusedPinsAsAnalog(GPIO_TypeDef *ports[], uint16_t pin_masks[], uint8_t count);
 void POWER_DisableUnusedPeripherals(void);
-void POWER_ConfigLoraPins(const SX1278_hw_t *hw, uint32_t mode, uint32_t pull);
-void POWER_RestoreLoraPins(const SX1278_hw_t *hw);
+void POWER_ConfigLoraPins(SX1278_hw_t *sx_hw, uint32_t mode, uint32_t pull);
+void POWER_RestoreLoraPins(SX1278_hw_t *sx_hw);
 void POWER_EnterStop(void);
-void POWER_ExitStop(const SX1278_hw_t *lora_hw);
-void POWER_PrepareForSleep(const SX1278_hw_t *lora_hw);
-void POWER_GoToSleep(const SX1278_hw_t *lora_hw);
+void POWER_ExitStop(SX1278_t *sx);
+void POWER_PrepareForSleep(SX1278_hw_t *sx_hw);
+void POWER_GoToSleep(SX1278_t *sx);
 
 #endif /* INC_HAL_POWER_H_ */

@@ -49,7 +49,7 @@ void POWER_DisableUnusedPeripherals(void){
 	HAL_SPI_DeInit(&hspi1);
 }
 
-void POWER_ConfigLoraPins(const SX1278_hw_t *hw, uint32_t mode, uint32_t pull){
+void POWER_ConfigLoraPins(SX1278_hw_t *sx_hw, uint32_t mode, uint32_t pull){
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 
@@ -59,17 +59,39 @@ void POWER_ConfigLoraPins(const SX1278_hw_t *hw, uint32_t mode, uint32_t pull){
 		.Speed = GPIO_SPEED_FREQ_LOW
 	};
 
-	init.Pin = hw->dio0.pin;
-	HAL_GPIO_Init(hw->dio0.port, &init);
+	init.Pin = sx_hw->dio0.pin;
+	HAL_GPIO_Init(sx_hw->dio0.port, &init);
 
-	init.Pin = hw->nss.pin;
-	HAL_GPIO_Init(hw->nss.port, &init);
+	init.Pin = sx_hw->nss.pin;
+	HAL_GPIO_Init(sx_hw->nss.port, &init);
 
-	init.Pin = hw->reset.pin;
-	HAL_GPIO_Init(hw->reset.port, &init);
+	init.Pin = sx_hw->reset.pin;
+	HAL_GPIO_Init(sx_hw->reset.port, &init);
 }
 
-void POWER_RestoreLoraPins(const SX1278_hw_t *hw){
+void POWER_RestoreLoraPins(SX1278_hw_t *sx_hw){
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+
+	GPIO_InitTypeDef init = {
+			.Mode = GPIO_MODE_OUTPUT_PP,
+			.Pull = GPIO_NOPULL,
+			.Speed = GPIO_SPEED_FREQ_HIGH
+	};
+
+	init.Pin = sx_hw->nss.pin;
+	HAL_GPIO_Init(sx_hw->nss.port, &init);
+	HAL_GPIO_WritePin(sx_hw->nss.port, sx_hw->nss.pin, GPIO_PIN_SET);
+
+	init.Pin = sx_hw->reset.pin;
+	HAL_GPIO_Init(sx_hw->reset.port, &init);
+	HAL_GPIO_WritePin(sx_hw->reset.port, sx_hw->reset.pin, GPIO_PIN_SET);
+
+	init.Mode = GPIO_MODE_IT_RISING;
+	init.Pin = sx_hw->dio0.pin;
+	init.Pull = GPIO_PULLDOWN;
+	HAL_GPIO_Init(sx_hw->dio0.port, &init);
+
 }
 
 void POWER_EnterStop(void){
@@ -83,7 +105,7 @@ void POWER_EnterStop(void){
 	__enable_irq();
 }
 
-void POWER_ExitStop(const SX1278_hw_t *lora_hw){
+void POWER_ExitStop(SX1278_t *sx){
 	RCC_OscInitTypeDef osc = {0};
 	osc.OscillatorType = RCC_OSCILLATORTYPE_HSI;
 	osc.HSIState = RCC_HSI_ON;
@@ -97,31 +119,31 @@ void POWER_ExitStop(const SX1278_hw_t *lora_hw){
 
 	ReinitPeripheralsAfterWakeup();
 
-	if (lora_hw){
-//		SX1278_hw_t *hw = (SX1278_hw_t *)lora_hw;
-//		SX1278_init(&sx1278,
-//					433000000,
-//					SX1278_POWER_17DBM,
-//					SX1278_LORA_SF_7,
-//					SX1278_LORA_BW_125KHZ,
-//					SX1278_LORA_CR_4_5,
-//					SX1278_LORA_CRC_EN,
-//					64);
+	if (sx){
+		POWER_RestoreLoraPins(sx->hw);
+		SX1278_init(sx,
+				  433000000,
+				  SX1278_POWER_17DBM,
+				  SX1278_LORA_SF_7,
+				  SX1278_LORA_BW_125KHZ,
+				  SX1278_LORA_CR_4_5,
+				  SX1278_LORA_CRC_EN,
+				  64);
 	}
 }
 
 
-void POWER_PrepareForSleep(const SX1278_hw_t *lora_hw){
+void POWER_PrepareForSleep(SX1278_hw_t *sx_hw){
 	uint8_t unused_count = sizeof(UNUSED_GPIO_PIN_MASKS) / sizeof(UNUSED_GPIO_PIN_MASKS[0]);
 	POWER_ConfigUnusedPinsAsAnalog(UNUSED_GPIO_PORTS,  UNUSED_GPIO_PIN_MASKS, unused_count);
 	POWER_DisableUnusedPeripherals();
 
-	if (lora_hw)
-		POWER_ConfigLoraPins(lora_hw, GPIO_MODE_ANALOG, GPIO_NOPULL);
+	if (sx_hw)
+		POWER_ConfigLoraPins(sx_hw, GPIO_MODE_ANALOG, GPIO_NOPULL);
 }
 
-void POWER_GoToSleep(const SX1278_hw_t *lora_hw){
-	POWER_PrepareForSleep(lora_hw);
+void POWER_GoToSleep(SX1278_t *sx){
+	POWER_PrepareForSleep(sx->hw);
 	POWER_EnterStop();
-	POWER_ExitStop(lora_hw);
+	POWER_ExitStop(sx);
 }
