@@ -50,12 +50,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
-
 RTC_HandleTypeDef hrtc;
-
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
+
+uint8_t lora_buffer[32];
+volatile uint8_t lora_data_ready = 0;
 
 SX1278_hw_t sx1278_hw;
 SX1278_t sx1278;
@@ -150,7 +151,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // SX1278 module initialization
-  comm_init(&sx1278);
+  comm_init();
 
   // ADC and Sensor Initialization
   HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
@@ -173,6 +174,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+//	  packet_t packet;
+//	  comm_receive(&packet, 3000);
+
 	  POWER_GoToSleep(&sx1278);
 
 	  if (rtc_wakeup_flag){
@@ -434,10 +438,38 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+  * @brief  EXTI line detection callback.
+  * @param  GPIO_Pin Specifies the port pin connected to corresponding EXTI line.
+  * @retval None
+  */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == LORA_DIO0_Pin)
+  {
+    // Handle LoRa interrupt
+    uint8_t received_data[128];
+    uint8_t data_length = 0;
+
+    if (SX1278_available(&sx1278)) {
+
+      data_length = SX1278_read(&sx1278, received_data, 64);
+      if (data_length > 0) {
+        received_data[data_length] = '\0';
+
+        // Kopiowanie danych do bufora globalnego
+        memcpy(lora_buffer, received_data, data_length + 1);
+        lora_data_ready = 1;
+      }
+    }
+  }
+}
+
 void ReinitPeripheralsAfterWakeup(void){
 	MX_ADC_Init();
 	MX_SPI1_Init();
 }
+
 
 /* USER CODE END 4 */
 

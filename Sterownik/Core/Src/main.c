@@ -134,6 +134,7 @@ int main(void)
 			  SX1278_LORA_CR_4_5,
 			  SX1278_LORA_CRC_EN,
 			  64);
+  //comm_init();
   
   // Od razu przejście do trybu nasłuchiwania
   printf("Starting LoRa receiver mode...\n");
@@ -153,11 +154,28 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
+//	  while (1){
+//		  char *data_buffer = "test";
+//		  //bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+//		  bool status = SX1278_transmit(&sx1278, data_buffer, strlen(data_buffer), 1000);
+//		  if (status){
+//			  printf("Packet sent!\n");
+//		  }
+//		  else
+//			  printf("Packet not sent!!!!!!\n");
+//
+////		  if (test_comm()){
+////			  printf("Packet sent!\n");
+////		  }
+////		  else
+////			  printf("Packet not sent!!!!\n");
+//	  }
+
     if (lora_data_ready) {
     	printf("%s\n", lora_buffer);
       //printf("Received LoRa data: %s\n", lora_buffer);
       lora_data_ready = 0;
-      
+
       //printf("Reactivating LoRa receiver mode...\n");
       if (!SX1278_receive(&sx1278, 64, 2000)) {
         //printf("Failed to reactivate receiver mode!\n");

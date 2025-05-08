@@ -32,10 +32,22 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "packet.h"
+#include "comm.h"
+
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+
+extern SPI_HandleTypeDef hspi1;
+
+extern uint8_t lora_buffer[128];
+extern volatile uint8_t lora_data_ready;
+
+extern SX1278_hw_t sx1278_hw;
+extern SX1278_t sx1278;
 
 /* USER CODE END ET */
 

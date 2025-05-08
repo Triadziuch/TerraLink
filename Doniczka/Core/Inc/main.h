@@ -47,6 +47,9 @@ extern ADC_HandleTypeDef hadc;
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
 
+extern uint8_t lora_buffer[32];
+extern volatile uint8_t lora_data_ready;
+
 extern SX1278_hw_t sx1278_hw;
 extern SX1278_t sx1278;
 

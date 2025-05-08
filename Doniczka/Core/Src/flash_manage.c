@@ -15,10 +15,10 @@ bool FLASH_NODE_ID_set(uint8_t new_id){
 
 	HAL_FLASHEx_DATAEEPROM_Unlock();
 
-	// Ustawienie ID
+	// Set Node ID
 	status = HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_BYTE, NODE_ID_ADDR, new_id);
 
-	// Ustawienie flagi zmiany ID
+	// Set Node ID flag already set
 	if (status == HAL_OK){
 		status = HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_BYTE, NODE_ID_FLAG_ADDR, NODE_ID_VALID_FLAG);
 	}

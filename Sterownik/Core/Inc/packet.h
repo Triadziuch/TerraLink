@@ -12,7 +12,8 @@
 #define MAX_RETRIES	3
 
 #include "stdint.h"
-#include "flash_manage.h"
+#include "stdbool.h"
+//#include "flash_manage.h"
 
 //TODO: Flexible array
 #pragma pack(push, 1)
