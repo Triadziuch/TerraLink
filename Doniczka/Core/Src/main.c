@@ -57,11 +57,13 @@ SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
 
-uint8_t lora_buffer[32];
+uint8_t lora_buffer[128];
 volatile uint8_t lora_data_ready = 0;
 
 SX1278_hw_t sx1278_hw;
 SX1278_t sx1278;
+
+int i;
 
 volatile bool rtc_wakeup_flag = false;
 
@@ -170,6 +172,12 @@ int main(void)
   RTC_TimeTypeDef time;
   RTC_DateTypeDef date;
 
+  if (SX1278_receive(&sx1278, 64, 2000)) {
+      printf("LoRa receiver mode activated!\n");
+    } else {
+      printf("Failed to activate LoRa receiver mode!\n");
+    }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -179,32 +187,94 @@ int main(void)
 //	  packet_t packet;
 //	  comm_receive(&packet, 3000);
 
-	  POWER_GoToSleep(&sx1278);
+	  //POWER_GoToSleep(&sx1278);
 
-	  if (rtc_wakeup_flag){
-		  rtc_wakeup_flag = false;
+	  if (lora_data_ready){
+		  HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
+		  lora_data_ready = false;
 
-		  if (ReadSoilMoistureSensor(&soil_moisture)){
-		  		  char data_buffer[64];
-		  		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
+		  HAL_Delay(10);
 
-		  		  HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
-		  		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+		  sscanf(lora_buffer, "%d", &i);
+		  printf("%d\n", i);
 
-		  		  sprintf(data_buffer, "Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n", time.Hours, time.Minutes, time.Seconds, soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
-		  		  HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
-		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 8000);
-		  		  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-		  		  if (status)
-		  			  printf("Wyslano\r\n");
-		  		  else
-		  			  printf("Nie wyslano\r\n");
-		  	  }
-		  	  else{
-		  		  uint8_t message[] = "Wystapil blad!";
-		  		  bool status = comm_tx(message, sizeof(message), 1000);
-		  	  }
+		  char data_buffer[8];
+		  sprintf(data_buffer, "%d", ++i);
+
+		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+
+		  if (SX1278_receive(&sx1278, 64, 2000))
+			  if (i){};
+	  	  }
+	  	  else{
+	  		  static uint32_t last_check = 0;
+	  		  if (HAL_GetTick() - last_check > 2000) {
+	  			last_check = HAL_GetTick();
+
+	  			if (sx1278.status != RX) {
+	  			  HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
+	  			  SX1278_hw_Reset(sx1278.hw);
+	  			  HAL_Delay(100);
+
+	  			  sscanf(lora_buffer, "%d", &i);
+	  			  printf("%d\n", i);
+
+	  			  char data_buffer[8];
+	  			  i += 100000;
+	  			  sprintf(data_buffer, "%d", i);
+
+	  			  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+	  			  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+
+	  			  if (SX1278_receive(&sx1278, 64, 2000))
+	  			  	if (i){};
+	  		  }
+	  	  }
 	  }
+
+//	  static uint32_t last_check = 0;
+//	  if (HAL_GetTick() - last_check > 15000) {
+//		last_check = HAL_GetTick();
+//
+//		if (sx1278.status != RX) {
+//		  printf("LoRa not in RX mode! Current status: %d\n", sx1278.status);
+//		  printf("Resetting and reactivating receiver...\n");
+//
+//		  SX1278_hw_Reset(sx1278.hw);
+//		  HAL_Delay(100);
+//
+//		  if (SX1278_receive(&sx1278, 64, 2000))
+//			printf("Receiver mode restored!\n");
+//		}
+//		else
+//		  printf("LoRa receiver active, status OK\n");
+//	  }
+
+//	  if (rtc_wakeup_flag){
+//		  rtc_wakeup_flag = false;
+//
+//		  if (ReadSoilMoistureSensor(&soil_moisture)){
+//		  		  char data_buffer[64];
+//		  		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
+//
+//		  		  HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+//		  		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+//
+//		  		  sprintf(data_buffer, "Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n", time.Hours, time.Minutes, time.Seconds, soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
+//		  		  HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
+//		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 8000);
+//		  		  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+//		  		  if (status)
+//		  			  printf("Wyslano\r\n");
+//		  		  else
+//		  			  printf("Nie wyslano\r\n");
+//		  	  }
+//		  	  else{
+//		  		  uint8_t message[] = "Wystapil blad!";
+//		  		  bool status = comm_tx(message, sizeof(message), 1000);
+//		  	  }
+//	  }
 
     /* USER CODE END WHILE */
 
