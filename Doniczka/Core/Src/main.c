@@ -50,7 +50,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
+
 RTC_HandleTypeDef hrtc;
+
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
@@ -190,7 +192,13 @@ int main(void)
 		  		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
 
 		  		  sprintf(data_buffer, "Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n", time.Hours, time.Minutes, time.Seconds, soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
-		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
+		  		  HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
+		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 8000);
+		  		  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+		  		  if (status)
+		  			  printf("Wyslano\r\n");
+		  		  else
+		  			  printf("Nie wyslano\r\n");
 		  	  }
 		  	  else{
 		  		  uint8_t message[] = "Wystapil blad!";
@@ -430,6 +438,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_1_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

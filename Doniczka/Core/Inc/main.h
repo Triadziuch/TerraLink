@@ -67,7 +67,6 @@ extern SX1278_t sx1278;
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-void SystemClock_Config(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -79,6 +78,7 @@ void ReinitPeripheralsAfterWakeup(void);
 /* Private defines -----------------------------------------------------------*/
 #define LORA_DIO0_Pin GPIO_PIN_1
 #define LORA_DIO0_GPIO_Port GPIOA
+#define LORA_DIO0_EXTI_IRQn EXTI0_1_IRQn
 #define LORA_RST_Pin GPIO_PIN_3
 #define LORA_RST_GPIO_Port GPIOA
 #define LORA_NSS_Pin GPIO_PIN_4
