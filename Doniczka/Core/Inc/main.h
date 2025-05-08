@@ -33,6 +33,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 
 #include "stdbool.h"
+#include "comm.h"
 
 
 /* USER CODE END Includes */
@@ -45,6 +46,9 @@ extern volatile bool rtc_wakeup_flag;
 extern ADC_HandleTypeDef hadc;
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
+
+extern SX1278_hw_t sx1278_hw;
+extern SX1278_t sx1278;
 
 /* USER CODE END ET */
 
@@ -60,6 +64,7 @@ extern SPI_HandleTypeDef hspi1;
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void SystemClock_Config(void);
 
 /* USER CODE BEGIN EFP */
 

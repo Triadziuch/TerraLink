@@ -112,24 +112,14 @@ void POWER_ExitStop(SX1278_t *sx){
 	osc.PLL.PLLState = RCC_PLL_NONE;
 	HAL_RCC_OscConfig(&osc);
 
-	extern void SystemClockConfig(void);
 	SystemClock_Config();
 
 	HAL_ResumeTick();
 
 	ReinitPeripheralsAfterWakeup();
 
-	if (sx){
+	if (sx)
 		POWER_RestoreLoraPins(sx->hw);
-		SX1278_init(sx,
-				  433000000,
-				  SX1278_POWER_17DBM,
-				  SX1278_LORA_SF_7,
-				  SX1278_LORA_BW_125KHZ,
-				  SX1278_LORA_CR_4_5,
-				  SX1278_LORA_CRC_EN,
-				  64);
-	}
 }
 
 

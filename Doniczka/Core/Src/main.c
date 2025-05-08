@@ -22,7 +22,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 //#include "SX1278.h"
-#include "comm.h"
 #include "string.h"
 #include "hal_rtc.h"
 #include "hal_power.h"
@@ -150,31 +149,11 @@ int main(void)
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 
-
-  // Konfiguracja pinów
-  sx1278_hw.dio0.pin = LORA_DIO0_Pin;
-  sx1278_hw.dio0.port = LORA_DIO0_GPIO_Port;
-  sx1278_hw.nss.pin = LORA_NSS_Pin;
-  sx1278_hw.nss.port = LORA_NSS_GPIO_Port;
-  sx1278_hw.reset.pin = LORA_RST_Pin;
-  sx1278_hw.reset.port = LORA_RST_GPIO_Port;
-  sx1278_hw.spi = &hspi1;
-
-  // Inicjalizacja modułu
-  sx1278.hw = &sx1278_hw;
-  SX1278_init(&sx1278,
-			  433000000,
-			  SX1278_POWER_17DBM,
-			  SX1278_LORA_SF_7,
-			  SX1278_LORA_BW_125KHZ,
-			  SX1278_LORA_CR_4_5,
-			  SX1278_LORA_CRC_EN,
-			  64);
-
+  // SX1278 module initialization
   comm_init(&sx1278);
 
-  // Inicjalizacja ADC i czujnika
-  //HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
+  // ADC and Sensor Initialization
+  HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
   uint16_t soil_moisture = 0;
   uint8_t soil_moisture_percentage = 0;
 
@@ -194,28 +173,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  __HAL_RCC_GPIOA_CLK_ENABLE();
-//	  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-//	  HAL_PWREx_EnableUltraLowPower();
-//	  HAL_PWREx_EnableFastWakeUp();
-//	  __disable_irq();
-//	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-//	  __enable_irq();
-//
-//	  SystemClock_Config();
-//	  HAL_InitTick(TICK_INT_PRIORITY);
-
 	  POWER_GoToSleep(&sx1278);
-//	  SX1278_init(&sx1278,
-//	  			  433000000,
-//	  			  SX1278_POWER_17DBM,
-//	  			  SX1278_LORA_SF_7,
-//	  			  SX1278_LORA_BW_125KHZ,
-//	  			  SX1278_LORA_CR_4_5,
-//	  			  SX1278_LORA_CRC_EN,
-//	  			  64);
 
-	  if (true){
+	  if (rtc_wakeup_flag){
 		  rtc_wakeup_flag = false;
 
 		  if (ReadSoilMoistureSensor(&soil_moisture)){
@@ -226,16 +186,10 @@ int main(void)
 		  		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
 
 		  		  sprintf(data_buffer, "Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n", time.Hours, time.Minutes, time.Seconds, soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
-		  		  //bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
-		  		  //SX1278_transmit(&sx1278, (uint8_t*)data_buffer, strlen(data_buffer), 1000);
-		  		  // Use comm_tx instead of direct SX1278_transmit
 		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
 		  	  }
 		  	  else{
 		  		  uint8_t message[] = "Wystapil blad!";
-		  		  //bool status = comm_tx(message, sizeof(message), 1000);
-		  		  //SX1278_transmit(&sx1278, message, sizeof(message), 1000);
-		  		  // Use comm_tx instead of direct SX1278_transmit
 		  		  bool status = comm_tx(message, sizeof(message), 1000);
 		  	  }
 	  }

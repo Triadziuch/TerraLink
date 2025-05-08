@@ -13,7 +13,6 @@
 #include "stdint.h"
 #include "stdbool.h"
 
-
 void POWER_ConfigUnusedPinsAsAnalog(GPIO_TypeDef *ports[], uint16_t pin_masks[], uint8_t count);
 void POWER_DisableUnusedPeripherals(void);
 void POWER_ConfigLoraPins(SX1278_hw_t *sx_hw, uint32_t mode, uint32_t pull);
