@@ -30,15 +30,14 @@ void comm_init() {
 
 bool comm_send(const packet_t *pkt) {
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
+
 	uint16_t total_len = get_pkt_length(pkt);
-	uint16_t len_no_crc = total_len - sizeof(uint16_t);
-
 	uint8_t buffer[sizeof(packet_t)];
-	memcpy(buffer, pkt, len_no_crc);
-	uint16_t crc = crc16_compute(buffer, len_no_crc);
 
-	buffer[len_no_crc] = crc & 0xFF;
-	buffer[len_no_crc + 1] = (crc >> 8) & 0xFF;
+	memcpy(buffer, pkt, total_len - CRC_SIZE);
+
+	buffer[total_len - 2] = pkt->crc16 & 0xFF;
+	buffer[total_len - 1] = pkt->crc16 >> 8;
 
 	bool status = SX1278_transmit(&sx1278, buffer, total_len, 3000);
 	HAL_NVIC_EnableIRQ(EXTI_LINE);
@@ -77,9 +76,9 @@ bool comm_receive(packet_t *pkt, uint32_t timeout) {
 
 	uint8_t actual_len = HEADER_SIZE + payload_len + CRC_SIZE;
 	uint16_t received_crc;
-	memcpy(&received_crc, rx_buf + actual_len - 2, 2);
+	memcpy(&received_crc, rx_buf + actual_len - CRC_SIZE, CRC_SIZE);
 
-	uint16_t computed_crc = crc16_compute(rx_buf, actual_len - 2);
+	uint16_t computed_crc = crc16_compute(rx_buf, actual_len - CRC_SIZE);
 
 	if (computed_crc != received_crc) {
 		lora_data_ready = 0;
@@ -101,12 +100,12 @@ bool comm_rx(uint8_t length, uint32_t timeout) {
 
 bool handshake_master(void) {
 	packet_t req;
-	req.dst_id = 1;
-	req.src_id = 123; //FLASH_NODE_ID_get();
+	req.dst_id = 255; // broadcast
+	req.src_id = 0; //FLASH_NODE_ID_get();
 	req.pkt_type = PKT_REG_REQ;
 	req.seq = next_seq_number();
 	req.len = 0;
-	req.crc16 = crc16_compute((uint8_t*) &req, get_pkt_length(&req) - 2);
+	req.crc16 = crc16_compute((uint8_t*)&req, get_pkt_length(&req) - CRC_SIZE);
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
@@ -128,8 +127,7 @@ bool handshake_master(void) {
 					ack.pkt_type = PKT_ACK;
 					ack.seq = next_seq_number();
 					ack.len = 0;
-					ack.crc16 = crc16_compute((uint8_t*) &ack,
-							get_pkt_length(&ack) - 2);
+					ack.crc16 = crc16_compute((uint8_t*)&ack, get_pkt_length(&ack) - CRC_SIZE);
 
 					if (!comm_send(&ack))
 						continue;
@@ -155,16 +153,15 @@ bool handshake_slave(const packet_t *received_pkt) {
 	assign_pkt.seq = next_seq_number();
 	assign_pkt.len = 1;
 	assign_pkt.payload[0] = 22;
-	assign_pkt.crc16 = crc16_compute((uint8_t*) &assign_pkt,
-			get_pkt_length(&assign_pkt) - 2);
+	assign_pkt.crc16 = crc16_compute((uint8_t*)&assign_pkt, get_pkt_length(&assign_pkt) - CRC_SIZE);
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
 
-		print_pkt(&assign_pkt);
-
 		if (!comm_send(&assign_pkt))
 			continue;
+
+		print_pkt(&assign_pkt);
 
 		packet_t response;
 		if (comm_receive(&response, 1000)) {
@@ -179,6 +176,8 @@ bool handshake_slave(const packet_t *received_pkt) {
 			}
 		}
 	}
+
+	return false;
 }
 
 void print_pkt(const packet_t *pkt) {

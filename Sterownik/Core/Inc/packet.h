@@ -37,8 +37,6 @@ enum{
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
 uint16_t crc16_compute(const uint8_t *data, uint16_t length);
-bool comm_test_pkt(void);
-bool handshake(void);
 
 
 //TODO: CRC Compute
