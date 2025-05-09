@@ -41,6 +41,8 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
+#define EXTI_LINE EXTI0_1_IRQn
+
 extern volatile bool rtc_wakeup_flag;
 
 extern ADC_HandleTypeDef hadc;

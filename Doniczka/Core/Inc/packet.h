@@ -9,7 +9,6 @@
 #define INC_PACKET_H_
 
 #define MAX_PAYLOAD_SIZE	16
-#define MAX_RETRIES	3
 
 #include "stdint.h"
 #include "flash_manage.h"
@@ -33,9 +32,10 @@ enum{
 	PKT_ACK			= 0x03
 };
 
+uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
 uint16_t crc16_compute(const uint8_t *data, uint16_t length);
-bool test_comm(void);
+bool comm_test_pkt(void);
 bool handshake(void);
 
 

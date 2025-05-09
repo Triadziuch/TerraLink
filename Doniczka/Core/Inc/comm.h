@@ -14,10 +14,18 @@
 #include "SX1278.h"
 #include "main.h"
 
+#define MAX_RETRIES	3
+#define HEADER_SIZE 5
+#define CRC_SIZE 2
+
 void comm_init();
 bool comm_send(const packet_t *pkt);
 bool comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout);
 bool comm_receive(packet_t *pkt, uint32_t timeout);
 bool comm_rx(uint8_t length, uint32_t timeout);
+
+bool handshake_master(void);
+bool handshake_slave(const packet_t *received_pkt);
+void print_pkt(const packet_t* pkt);
 
 #endif /* INC_COMM_H_ */

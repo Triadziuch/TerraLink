@@ -41,6 +41,8 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
+#define EXTI_LINE EXTI9_5_IRQn
+
 extern SPI_HandleTypeDef hspi1;
 
 extern uint8_t lora_buffer[128];
