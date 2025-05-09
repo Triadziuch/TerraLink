@@ -244,7 +244,7 @@ int main(void) {
 	while (1) {
 
 		while (handshake == false){
-			handshake = handshake_master();
+			handshake = comm_handshake_master();
 		}
 
 		//comm_test();

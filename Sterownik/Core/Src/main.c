@@ -226,7 +226,7 @@ while (1) {
 	if (lora_data_ready){
 		if (comm_check(&received_pkt)){
 			printf("Packet check successful\n");
-			handshake_slave(&received_pkt);
+			comm_handshake_slave(&received_pkt);
 		}
 		else{
 			printf("Packet check failed\n");
