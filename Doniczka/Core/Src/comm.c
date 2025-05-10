@@ -20,7 +20,7 @@ uint32_t GetTime(void) {
 	t.tm_sec = clock_time.Seconds;
 	t.tm_isdst = 0;
 
-	return (uint32_t)mktime(&t);
+	return (uint32_t) mktime(&t);
 }
 
 void comm_init() {
@@ -112,7 +112,7 @@ int comm_handshake_master(void) {
 				if (!get_data(&response, 0, &data_record))
 					continue;
 
-				if (data_record.data_type != DATA_ID)
+				if (data_record.type != DATA_ID)
 					continue;
 
 				uint8_t new_id = (uint8_t) data_record.data;
@@ -133,6 +133,44 @@ int comm_handshake_master(void) {
 				}
 			}
 		}
+	}
+
+	return 0;
+}
+
+int comm_send_moisture(void) {
+	sensor_data_raw_t moisture;
+
+	if (!GetSoilMoisturePercentage(&moisture))
+		return 0;
+
+	HAL_Delay(3000);
+
+	data_record_t data_record;
+	data_record.type = DATA_TEMP;
+	data_record.time_offset = GetTime() - moisture.time;
+	data_record.data = moisture.value;
+
+	packet_t data_pkt;
+	data_pkt.dst_id = 69;
+	data_pkt.src_id = FLASH_NODE_ID_get();
+	data_pkt.pkt_type = PKT_DATA;
+	data_pkt.seq = next_seq_number();
+	data_pkt.len = 0;
+	attach_data(&data_pkt, &data_record);
+	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
+			get_pkt_length(&data_pkt) - CRC_SIZE);
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (!comm_send(&data_pkt))
+			continue;
+
+		packet_t response;
+		if (comm_receive(&response))
+			if (response.pkt_type == PKT_ACK && response.dst_id == data_pkt.src_id)
+				return 1;
+
+		HAL_Delay(100);
 	}
 
 	return 0;

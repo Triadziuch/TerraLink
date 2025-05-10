@@ -12,8 +12,8 @@
 #define HEADER_SIZE 5
 #define CRC_SIZE 2
 
-#define MAX_PAYLOAD_SIZE	15
-#define DATA_RECORD_SIZE	5
+#define MAX_PAYLOAD_SIZE	21
+#define DATA_RECORD_SIZE	7
 
 #include "stdint.h"
 #include "flash_manage.h"
@@ -31,25 +31,28 @@ typedef struct{
 } packet_t;
 #pragma pack(pop)
 
+#pragma pack(push, 1)
 typedef struct{
-	uint8_t data_type;
-	uint16_t data_time_offset;
+	uint8_t type;
+	uint32_t time_offset;
 	uint16_t data;
 } data_record_t;
+#pragma pack(pop)
 
 enum{
 	PKT_REG_REQ		= 0x01,
 	PKT_ASSIGN_ID	= 0x02,
 	PKT_ACK			= 0x03,
-	PKT_REQ_DATA	= 0x04,
-	PKT_REQ_ID		= 0x05
+	PKT_DATA		= 0x04,
+	PKT_REQ_DATA	= 0x05,
+	PKT_REQ_ID		= 0x06
 };
 
 enum{
 	DATA_ID				= 0x01,
 	DATA_SOIL_MOISTURE	= 0x02,
 	DATA_LIGHT			= 0x03,
-	DATA_DATA_TEMP		= 0x04
+	DATA_TEMP		= 0x04
 };
 
 uint16_t get_pkt_length(const packet_t* pkt);

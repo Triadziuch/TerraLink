@@ -20,7 +20,7 @@ uint32_t GetTime(void) {
 	t.tm_sec = clock_time.Seconds;
 	t.tm_isdst = 0;
 
-	return (uint32_t)mktime(&t);
+	return (uint32_t) mktime(&t);
 }
 
 void comm_init() {
@@ -94,8 +94,8 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 		return 0;
 
 	data_record_t data;
-	data.data_type = DATA_ID;
-	data.data_time_offset = 0;
+	data.type = DATA_ID;
+	data.time_offset = 0;
 	data.data = 22;
 
 	packet_t assign_pkt;
@@ -122,6 +122,57 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 				return 1;
 
 		}
+	}
+
+	return 0;
+}
+
+int comm_handle_data(const packet_t *received_pkt) {
+	if (received_pkt->pkt_type != PKT_DATA)
+		return 0;
+
+	if (received_pkt->len < DATA_RECORD_SIZE)
+		return 0;
+
+	int data_records_count = received_pkt->len / DATA_RECORD_SIZE;
+	data_record_t *data_records = malloc(data_records_count * DATA_RECORD_SIZE);
+
+	if (data_records == NULL)
+		return 0;
+
+	time_t time_now = (time_t)GetTime();
+	for (int record_id = 0; record_id < data_records_count; ++record_id) {
+		if (!get_data(received_pkt, record_id, &data_records[record_id]))
+			return 0;
+
+		if (data_records[record_id].type != DATA_TEMP)
+			return 0;
+
+		time_t measurement_time = time_now
+				- data_records[record_id].time_offset;
+		struct tm *t = localtime(&measurement_time);
+
+		printf("[%02d:%02d:%02d] Wilgotnosc: %u.%u o czasie %02d:%02d:%02d\n",
+				clock_time.Hours, clock_time.Minutes, clock_time.Seconds,
+				data_records[record_id].data / 10,
+				data_records[record_id].data % 10, t->tm_hour, t->tm_min,
+				t->tm_sec);
+	}
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		packet_t ack;
+		ack.dst_id = received_pkt->src_id;
+		ack.src_id = 69;
+		ack.pkt_type = PKT_ACK;
+		ack.seq = next_seq_number();
+		ack.len = 0;
+		ack.crc16 = crc16_compute((uint8_t*) &ack,
+				get_pkt_length(&ack) - CRC_SIZE);
+
+		if (comm_send(&ack))
+			return 1;
+
+		HAL_Delay(100);
 	}
 
 	return 0;

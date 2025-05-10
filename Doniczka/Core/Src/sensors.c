@@ -39,11 +39,11 @@ int ConvertSoilMoistureToPercentage(uint16_t *soil_moisture,
 	if (*soil_moisture >= ADC_MOISTURE_MAX)
 		*soil_moisture_percentage = 0; // 0%
 	else if (*soil_moisture <= ADC_MOISTURE_MIN)
-		*soil_moisture_percentage = 200; // 100%
+		*soil_moisture_percentage = 1000; // 100%
 	else {
-		uint16_t delta = ADC_MOISTURE_MAX - *soil_moisture;
-		*soil_moisture_percentage = (delta * 1000 + (ADC_MOISTURE_RANGE / 2))
-				/ ADC_MOISTURE_RANGE / 10;
+		uint16_t delta = *soil_moisture - ADC_MOISTURE_MIN;
+		*soil_moisture_percentage = (uint16_t)(((uint32_t)(ADC_MOISTURE_RANGE - delta) * 1000) / ADC_MOISTURE_RANGE);
+
 		return 1;
 	}
 

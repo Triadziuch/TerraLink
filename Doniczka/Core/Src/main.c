@@ -201,15 +201,56 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 
-		while (handshake == false){
+		while (handshake == false) {
 			handshake = comm_handshake_master();
 		}
 
-		//comm_test();
+		POWER_GoToSleep(&sx1278);
+
+		if (rtc_wakeup_flag) {
+			rtc_wakeup_flag = false;
+
+			if (comm_send_moisture())
+			{}
+			else
+			{}
+		}
+
+//		if (rtc_wakeup_flag) {
+//			rtc_wakeup_flag = false;
+//
+//			if (ReadSoilMoistureSensor(&soil_moisture)) {
+//				char data_buffer[64];
+//				ConvertSoilMoistureToPercentage(&soil_moisture,
+//						&soil_moisture_percentage);
+//
+//				HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+//				HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+//
+//				sprintf(data_buffer,
+//						"Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n",
+//						time.Hours, time.Minutes, time.Seconds,
+//						soil_moisture_percentage / 2,
+//						(soil_moisture_percentage % 2) * 5, soil_moisture);
+//				HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
+//				bool status = comm_tx((uint8_t*) data_buffer,
+//						strlen(data_buffer), 8000);
+//				HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+//				if (status)
+//					printf("Wyslano\r\n");
+//				else
+//					printf("Nie wyslano\r\n");
+//			} else {
+//				uint8_t message[] = "Wystapil blad!";
+//				bool status = comm_tx(message, sizeof(message), 1000);
+//			}
+//		}
+
+//comm_test();
 //	  packet_t packet;
 //	  comm_receive(&packet, 3000);
 
-//	  POWER_GoToSleep(&sx1278);
+//
 
 //	  static uint32_t last_check = 0;
 //	  if (HAL_GetTick() - last_check > 15000) {
@@ -227,31 +268,6 @@ int main(void) {
 //		}
 //		else
 //		  printf("LoRa receiver active, status OK\n");
-//	  }
-
-//	  if (rtc_wakeup_flag){
-//		  rtc_wakeup_flag = false;
-//
-//		  if (ReadSoilMoistureSensor(&soil_moisture)){
-//		  		  char data_buffer[64];
-//		  		  ConvertSoilMoistureToPercentage(&soil_moisture, &soil_moisture_percentage);
-//
-//		  		  HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
-//		  		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
-//
-//		  		  sprintf(data_buffer, "Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n", time.Hours, time.Minutes, time.Seconds, soil_moisture_percentage / 2, (soil_moisture_percentage % 2) * 5, soil_moisture);
-//		  		  HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
-//		  		  bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 8000);
-//		  		  HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-//		  		  if (status)
-//		  			  printf("Wyslano\r\n");
-//		  		  else
-//		  			  printf("Nie wyslano\r\n");
-//		  	  }
-//		  	  else{
-//		  		  uint8_t message[] = "Wystapil blad!";
-//		  		  bool status = comm_tx(message, sizeof(message), 1000);
-//		  	  }
 //	  }
 
 		/* USER CODE END WHILE */

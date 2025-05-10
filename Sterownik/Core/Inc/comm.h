@@ -9,6 +9,7 @@
 #define INC_COMM_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "string.h"
 #include "packet.h"
 #include "SX1278.h"
@@ -30,6 +31,7 @@ int comm_send(const packet_t *pkt);
 int comm_receive(packet_t *pkt);
 
 int comm_handshake_slave(const packet_t *received_pkt);
+int comm_handle_data(const packet_t *received_pkt);
 
 void comm_print_pkt(const packet_t* pkt, const char* text);
 
