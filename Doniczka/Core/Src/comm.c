@@ -65,37 +65,10 @@ int comm_receive(packet_t *pkt) {
 		if ((HAL_GetTick() - start_time) > PKT_RX_TIMEOUT)
 			return 0;
 
-	int valid = comm_check(pkt);
+	int valid = verify_pkt(pkt);
 	lora_data_ready = 0;
 
 	return valid;
-}
-
-int comm_check(packet_t *pkt) {
-
-	uint8_t *rx_buf = lora_buffer;
-	if (rx_buf == NULL)
-		return false;
-
-	uint8_t payload_len = rx_buf[4];
-	if (payload_len > MAX_PAYLOAD_SIZE)
-		return false;
-
-	uint8_t actual_len = HEADER_SIZE + payload_len + CRC_SIZE;
-	uint16_t received_crc;
-	memcpy(&received_crc, rx_buf + actual_len - CRC_SIZE, CRC_SIZE);
-
-	uint16_t computed_crc = crc16_compute(rx_buf, actual_len - CRC_SIZE);
-
-	if (computed_crc != received_crc)
-		return false;
-
-	memcpy(pkt, rx_buf, HEADER_SIZE);
-	if (payload_len > 0)
-		memcpy(pkt->payload, rx_buf + HEADER_SIZE, payload_len);
-	memcpy(&pkt->crc16, rx_buf + HEADER_SIZE + payload_len, CRC_SIZE);
-
-	return true;
 }
 
 int comm_handshake_master(void) {
@@ -115,10 +88,18 @@ int comm_handshake_master(void) {
 
 		packet_t response;
 		if (comm_receive(&response)) {
-			if (response.pkt_type == PKT_ASSIGN_ID
-					&& response.dst_id == req.src_id) {
+			if (response.pkt_type
+					== PKT_ASSIGN_ID&& response.dst_id == req.src_id && response.len == DATA_RECORD_SIZE) {
 
-				uint8_t new_id = response.payload[0];
+				data_record_t data_record;
+
+				if (!get_data(&response, 0, &data_record))
+					continue;
+
+				if (data_record.data_type != DATA_ID)
+					continue;
+
+				uint8_t new_id = (uint8_t) data_record.data;
 
 				if (FLASH_NODE_ID_set(new_id)) {
 					packet_t ack;

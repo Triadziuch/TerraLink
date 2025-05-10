@@ -224,7 +224,7 @@ while (1) {
 	/* USER CODE BEGIN 3 */
 
 	if (lora_data_ready){
-		if (comm_check(&received_pkt)){
+		if (verify_pkt(&received_pkt)){
 			printf("Packet check successful\n");
 			comm_handshake_slave(&received_pkt);
 		}

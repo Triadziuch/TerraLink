@@ -15,8 +15,6 @@
 #include "main.h"
 
 #define MAX_RETRIES	3
-#define HEADER_SIZE 5
-#define CRC_SIZE 2
 #define PKT_RX_TIMEOUT 3000
 #define PKT_TX_TIMEOUT 3000
 
@@ -27,7 +25,6 @@ int comm_rx(uint8_t length, uint32_t timeout);
 
 int comm_send(const packet_t *pkt);
 int comm_receive(packet_t *pkt);
-int comm_check(packet_t *pkt);
 
 int comm_handshake_slave(const packet_t *received_pkt);
 

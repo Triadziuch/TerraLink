@@ -67,52 +67,30 @@ int comm_receive(packet_t *pkt) {
 		if ((HAL_GetTick() - start_time) > PKT_RX_TIMEOUT)
 			return 0;
 
-	int valid = comm_check(pkt);
+	int valid = verify_pkt(pkt);
 	lora_data_ready = 0;
 
 	return valid;
-}
-
-int comm_check(packet_t *pkt) {
-
-	uint8_t *rx_buf = lora_buffer;
-	if (rx_buf == NULL)
-		return 0;
-
-	uint8_t payload_len = rx_buf[4];
-	if (payload_len > MAX_PAYLOAD_SIZE)
-		return 0;
-
-	uint8_t actual_len = HEADER_SIZE + payload_len + CRC_SIZE;
-	uint16_t received_crc;
-	memcpy(&received_crc, rx_buf + actual_len - CRC_SIZE, CRC_SIZE);
-
-	uint16_t computed_crc = crc16_compute(rx_buf, actual_len - CRC_SIZE);
-
-	if (computed_crc != received_crc)
-		return 0;
-
-	memcpy(pkt, rx_buf, HEADER_SIZE);
-	if (payload_len > 0)
-		memcpy(pkt->payload, rx_buf + HEADER_SIZE, payload_len);
-	memcpy(&pkt->crc16, rx_buf + HEADER_SIZE + payload_len, CRC_SIZE);
-
-	comm_print_pkt(pkt, "Odebrano pakiet");
-	return 1;
 }
 
 int comm_handshake_slave(const packet_t *received_pkt) {
 	if (received_pkt->pkt_type != PKT_REG_REQ)
 		return 0;
 
+	data_record_t data;
+	data.data_type = DATA_ID;
+	data.data_time_offset = 0;
+	data.data = 22;
+
 	packet_t assign_pkt;
 	assign_pkt.dst_id = received_pkt->src_id;
 	assign_pkt.src_id = 69;
 	assign_pkt.pkt_type = PKT_ASSIGN_ID;
 	assign_pkt.seq = next_seq_number();
-	assign_pkt.len = 1;
-	assign_pkt.payload[0] = 22;
-	assign_pkt.crc16 = crc16_compute((uint8_t*)&assign_pkt, get_pkt_length(&assign_pkt) - CRC_SIZE);
+	assign_pkt.len = 0;
+	attach_data(&assign_pkt, &data);
+	assign_pkt.crc16 = crc16_compute((uint8_t*) &assign_pkt,
+			get_pkt_length(&assign_pkt) - CRC_SIZE);
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
@@ -122,20 +100,18 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 
 		packet_t response;
 		if (comm_receive(&response)) {
-
 			if (response.pkt_type == PKT_ACK
 					&& response.dst_id == assign_pkt.src_id
-					&& response.src_id == assign_pkt.payload[0]) {
-
+					&& response.src_id == data.data)
 				return 1;
-			}
+
 		}
 	}
 
 	return 0;
 }
 
-void comm_print_pkt(const packet_t *pkt, const char* text) {
+void comm_print_pkt(const packet_t *pkt, const char *text) {
 	printf("= = = = = %s = = = = =\n", text);
 	printf("[dst_id] = %u\n", pkt->dst_id);
 	printf("[src_id] = %u\n", pkt->src_id);
