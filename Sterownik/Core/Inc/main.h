@@ -43,7 +43,11 @@ extern "C" {
 
 #define EXTI_LINE EXTI9_5_IRQn
 
+extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
+
+extern RTC_TimeTypeDef clock_time;
+extern RTC_DateTypeDef clock_date;
 
 extern uint8_t lora_buffer[128];
 extern volatile uint8_t lora_data_ready;
@@ -75,6 +79,7 @@ void Error_Handler(void);
 #define LORA_RST_GPIO_Port GPIOC
 #define LORA_DIO0_Pin GPIO_PIN_9
 #define LORA_DIO0_GPIO_Port GPIOA
+#define LORA_DIO0_EXTI_IRQn EXTI9_5_IRQn
 #define LORA_NSS_Pin GPIO_PIN_6
 #define LORA_NSS_GPIO_Port GPIOB
 

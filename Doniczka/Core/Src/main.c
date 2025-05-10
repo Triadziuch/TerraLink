@@ -36,9 +36,6 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define ADC_MOISTURE_MAX 3408
-#define ADC_MOISTURE_MIN 1379
-#define ADC_MOISTURE_RANGE (ADC_MOISTURE_MAX - ADC_MOISTURE_MIN)
 #define RTC_WAKEUP_TIME_S 3
 
 /* USER CODE END PD */
@@ -54,6 +51,10 @@ ADC_HandleTypeDef hadc;
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi1;
+
+RTC_TimeTypeDef clock_time;
+
+RTC_DateTypeDef clock_date;
 
 /* USER CODE BEGIN PV */
 
@@ -144,44 +145,6 @@ void comm_test(void) {
 
 }
 
-bool ReadSoilMoistureSensor(uint16_t *soil_moisture) {
-
-	uint16_t adc_value = { 0 };
-	uint8_t adc_channels_read = 0;
-
-	HAL_ADC_Start(&hadc);
-
-	if (HAL_ADC_PollForConversion(&hadc, 200) == HAL_OK) {
-		adc_value = HAL_ADC_GetValue(&hadc);
-		adc_channels_read++;
-	}
-
-	HAL_ADC_Stop(&hadc);
-
-	if (adc_channels_read == 1) {
-		*soil_moisture = adc_value;
-		return 1;
-	}
-
-	return 0;
-}
-
-// Zakres 0-200, procent = soil_moisture_percentage * 0.5
-bool ConvertSoilMoistureToPercentage(uint16_t *soil_moisture,
-		uint8_t *soil_moisture_percentage) {
-	if (*soil_moisture >= ADC_MOISTURE_MAX)
-		*soil_moisture_percentage = 0; // 0%
-	else if (*soil_moisture <= ADC_MOISTURE_MIN)
-		*soil_moisture_percentage = 200; // 100%
-	else {
-		uint16_t delta = ADC_MOISTURE_MAX - *soil_moisture;
-		*soil_moisture_percentage = (delta * 200 + (ADC_MOISTURE_RANGE / 2))
-				/ ADC_MOISTURE_RANGE;
-		return 1;
-	}
-	return 0;
-}
-
 /* USER CODE END 0 */
 
 /**
@@ -222,8 +185,6 @@ int main(void) {
 
 	// ADC and Sensor Initialization
 	HAL_ADCEx_Calibration_Start(&hadc, ADC_SINGLE_ENDED);
-	uint16_t soil_moisture = 0;
-	uint8_t soil_moisture_percentage = 0;
 
 	// RTC
 	__HAL_RCC_RTC_ENABLE();
@@ -231,9 +192,6 @@ int main(void) {
 	if (HAL_RTC_SetWakeup(RTC_WAKEUP_TIME_S) != HAL_OK) {
 		Error_Handler();
 	}
-
-	RTC_TimeTypeDef time;
-	RTC_DateTypeDef date;
 
 	bool handshake = false;
 

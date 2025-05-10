@@ -35,7 +35,6 @@ extern "C" {
 #include "stdbool.h"
 #include "comm.h"
 
-
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -48,6 +47,8 @@ extern volatile bool rtc_wakeup_flag;
 extern ADC_HandleTypeDef hadc;
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
+extern RTC_TimeTypeDef clock_time;
+extern RTC_DateTypeDef clock_date;
 
 extern uint8_t lora_buffer[128];
 extern volatile uint8_t lora_data_ready;

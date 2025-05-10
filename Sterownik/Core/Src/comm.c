@@ -7,6 +7,22 @@
 
 #include "comm.h"
 
+uint32_t GetTime(void) {
+	HAL_RTC_GetTime(&hrtc, &clock_time, RTC_FORMAT_BIN);
+	HAL_RTC_GetDate(&hrtc, &clock_date, RTC_FORMAT_BIN);
+
+	struct tm t;
+	t.tm_year = 2000 + clock_date.Year - 1900;
+	t.tm_mon = clock_date.Month - 1;
+	t.tm_mday = clock_date.Date;
+	t.tm_hour = clock_time.Hours;
+	t.tm_min = clock_time.Minutes;
+	t.tm_sec = clock_time.Seconds;
+	t.tm_isdst = 0;
+
+	return (uint32_t)mktime(&t);
+}
+
 void comm_init() {
 	sx1278_hw.dio0.pin = LORA_DIO0_Pin;
 	sx1278_hw.dio0.port = LORA_DIO0_GPIO_Port;

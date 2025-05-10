@@ -13,10 +13,13 @@
 #include "packet.h"
 #include "SX1278.h"
 #include "main.h"
+#include "time.h"
 
 #define MAX_RETRIES	3
 #define PKT_RX_TIMEOUT 3000
 #define PKT_TX_TIMEOUT 3000
+
+uint32_t GetTime(void);
 
 void comm_init();
 
