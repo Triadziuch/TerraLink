@@ -8,16 +8,16 @@
 #include "packet.h"
 #include "comm.h"
 
-uint16_t get_pkt_length(const packet_t* pkt){
+uint16_t get_pkt_length(const packet_t *pkt) {
 	return HEADER_SIZE + pkt->len + CRC_SIZE;
 }
 
-uint8_t next_seq_number(){
+uint8_t next_seq_number() {
 	static uint8_t seq = 0;
 	return seq++;
 }
 
-uint16_t crc16_compute(const uint8_t *data, uint16_t length){
+uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
 	return 77;
 }
 
@@ -48,7 +48,7 @@ int verify_pkt(packet_t *pkt) {
 	return true;
 }
 
-int get_data(const packet_t* pkt, uint8_t index, data_record_t* data){
+int get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
 
@@ -63,7 +63,7 @@ int get_data(const packet_t* pkt, uint8_t index, data_record_t* data){
 	return 1;
 }
 
-int attach_data(packet_t* pkt, data_record_t* data){
+int attach_data(packet_t *pkt, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
 
@@ -72,6 +72,38 @@ int attach_data(packet_t* pkt, data_record_t* data){
 
 	memcpy(pkt->payload + pkt->len, data, DATA_RECORD_SIZE);
 	pkt->len += DATA_RECORD_SIZE;
+
+	return 1;
+}
+
+int create_handshake_pkt(packet_t *pkt) {
+	if (pkt == NULL)
+		return 0;
+
+	pkt->dst_id = BROADCAST_ID;
+	pkt->src_id = 0;
+	pkt->pkt_type = PKT_REG_REQ;
+	pkt->seq = next_seq_number();
+	pkt->len = 0;
+
+	STM32_UID_t stm32_uid;
+	FLASH_NODE_UID_get(&stm32_uid);
+
+	data_record_t handshake_data[3];
+
+	handshake_data[0].data = stm32_uid.UID_0;
+	handshake_data[1].data = stm32_uid.UID_1;
+	handshake_data[2].data = stm32_uid.UID_2;
+
+	for (int i = 0; i < 3; ++i) {
+		handshake_data[i].type = DATA_HANDSHAKE;
+		handshake_data[i].time_offset = 0;
+
+		if (!attach_data(pkt, &handshake_data))
+			return 0;
+	}
+
+	pkt->crc16 = crc16_compute((uint8_t*) pkt, get_pkt_length(pkt) - CRC_SIZE);
 
 	return 1;
 }

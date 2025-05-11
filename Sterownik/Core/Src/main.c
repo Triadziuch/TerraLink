@@ -228,12 +228,18 @@ int main(void) {
 
 
 				if (!handshake){
-					if (comm_handshake_slave(&received_pkt))
+					if (comm_handshake_slave(&received_pkt)){
 						handshake = true;
+						SX1278_receive(&sx1278, 64, 2000);
+					}
+
 				}
 				else{
-					if (received_pkt.pkt_type == PKT_DATA)
+					if (received_pkt.pkt_type == PKT_DATA){
 						comm_handle_data(&received_pkt);
+						SX1278_receive(&sx1278, 64, 2000);
+					}
+
 				}
 
 			} else {

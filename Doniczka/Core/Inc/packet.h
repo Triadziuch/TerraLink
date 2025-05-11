@@ -12,8 +12,10 @@
 #define HEADER_SIZE 5
 #define CRC_SIZE 2
 
-#define MAX_PAYLOAD_SIZE	21
-#define DATA_RECORD_SIZE	7
+#define MAX_PAYLOAD_SIZE	27
+#define DATA_RECORD_SIZE	9
+
+#define BROADCAST_ID	255
 
 #include "stdint.h"
 #include "flash_manage.h"
@@ -35,7 +37,7 @@ typedef struct{
 typedef struct{
 	uint8_t type;
 	uint32_t time_offset;
-	uint16_t data;
+	uint32_t data;
 } data_record_t;
 #pragma pack(pop)
 
@@ -50,6 +52,7 @@ enum{
 
 enum{
 	DATA_ID				= 0x01,
+	DATA_HANDSHAKE		= 0x02,
 	DATA_SOIL_MOISTURE	= 0x02,
 	DATA_LIGHT			= 0x03,
 	DATA_TEMP		= 0x04
@@ -61,6 +64,7 @@ uint16_t crc16_compute(const uint8_t *data, uint16_t length);
 int verify_pkt(packet_t *pkt);
 int get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
 int attach_data(packet_t* pkt, data_record_t* data);
+int create_handshake_pkt(packet_t* pkt);
 
 //TODO: CRC Compute
 

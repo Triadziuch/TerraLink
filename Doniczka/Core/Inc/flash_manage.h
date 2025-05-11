@@ -7,6 +7,7 @@
 // Node ID
 #define NODE_ID_ADDR 		0x08080000
 #define NODE_ID_FLAG_ADDR 	(NODE_ID_ADDR + 1)
+#define LINK_ID_ADDR		(NODE_ID_ADDR + 2)
 #define NODE_ID_VALID_FLAG 	0xA5
 
 #include "stdbool.h"
@@ -20,7 +21,6 @@ typedef struct{
 } STM32_UID_t;
 
 void FLASH_NODE_UID_get(STM32_UID_t *stm32_uid);
-
 uint8_t FLASH_NODE_ID_get(void);
 bool FLASH_NODE_ID_set(uint8_t new_id);
 bool FLASH_NODE_ID_is_valid(void);

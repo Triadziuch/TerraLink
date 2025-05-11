@@ -89,12 +89,9 @@ int comm_receive(packet_t *pkt) {
 
 int comm_handshake_master(void) {
 	packet_t req;
-	req.dst_id = 255; // broadcast
-	req.src_id = 0; //FLASH_NODE_ID_get();
-	req.pkt_type = PKT_REG_REQ;
-	req.seq = next_seq_number();
-	req.len = 0;
-	req.crc16 = crc16_compute((uint8_t*) &req, get_pkt_length(&req) - CRC_SIZE);
+
+	if (!create_handshake_pkt(&req))
+		return 0;
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);

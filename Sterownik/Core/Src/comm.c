@@ -93,20 +93,10 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 	if (received_pkt->pkt_type != PKT_REG_REQ)
 		return 0;
 
-	data_record_t data;
-	data.type = DATA_ID;
-	data.time_offset = 0;
-	data.data = 22;
-
 	packet_t assign_pkt;
-	assign_pkt.dst_id = received_pkt->src_id;
-	assign_pkt.src_id = 69;
-	assign_pkt.pkt_type = PKT_ASSIGN_ID;
-	assign_pkt.seq = next_seq_number();
-	assign_pkt.len = 0;
-	attach_data(&assign_pkt, &data);
-	assign_pkt.crc16 = crc16_compute((uint8_t*) &assign_pkt,
-			get_pkt_length(&assign_pkt) - CRC_SIZE);
+	uint8_t assigned_id = create_handshake_response_pkt(received_pkt, &assign_pkt);
+	if (assigned_id == 0)
+		return 0;
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
@@ -118,9 +108,8 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 		if (comm_receive(&response)) {
 			if (response.pkt_type == PKT_ACK
 					&& response.dst_id == assign_pkt.src_id
-					&& response.src_id == data.data)
+					&& response.src_id == assigned_id)
 				return 1;
-
 		}
 	}
 
