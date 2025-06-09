@@ -48,13 +48,11 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
 
+I2C_HandleTypeDef hi2c1;
+
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi1;
-
-RTC_TimeTypeDef clock_time;
-
-RTC_DateTypeDef clock_date;
 
 /* USER CODE BEGIN PV */
 
@@ -62,16 +60,21 @@ RTC_DateTypeDef clock_date;
 SX1278_hw_t sx1278_hw;
 SX1278_t sx1278;
 
+// BH1750
+BH1750_device_t *bh1750;
+
 // Lora data variables
 uint8_t lora_buffer[128];
 volatile uint8_t lora_data_ready = 0;
 
-// Communication test variables
-int i;
-static uint32_t last_check = 0;
+// Communication test variables removed
 
 // RTC Timer variables
 volatile bool rtc_wakeup_flag = false;
+
+// RTC Time and Date variables
+RTC_TimeTypeDef clock_time;
+RTC_DateTypeDef clock_date;
 
 /* USER CODE END PV */
 
@@ -81,69 +84,13 @@ static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_ADC_Init(void);
 static void MX_RTC_Init(void);
+static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-void comm_test(void) {
-
-	if (SX1278_receive(&sx1278, 64, 2000)) {
-	} else {
-	}
-
-	while (1) {
-		if (lora_data_ready) {
-			HAL_NVIC_DisableIRQ(EXTI_LINE);
-			lora_data_ready = false;
-
-			HAL_Delay(10);
-
-			sscanf(lora_buffer, "%d", &i);
-			printf("%d\n", i);
-
-			char data_buffer[8];
-			sprintf(data_buffer, "%d", ++i);
-
-			bool status = comm_tx((uint8_t*) data_buffer, strlen(data_buffer),
-					1000);
-			HAL_NVIC_EnableIRQ(EXTI_LINE);
-
-			if (SX1278_receive(&sx1278, 64, 2000))
-				if (i) {
-				};
-			last_check = HAL_GetTick();
-
-		} else {
-
-			if (HAL_GetTick() - last_check > 2000) {
-				last_check = HAL_GetTick();
-
-				HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
-				SX1278_hw_Reset(sx1278.hw);
-				HAL_Delay(100);
-
-				sscanf(lora_buffer, "%d", &i);
-				printf("%d\n", i);
-
-				char data_buffer[8];
-				i += 100000;
-				sprintf(data_buffer, "%d", i);
-
-				bool status = comm_tx((uint8_t*) data_buffer,
-						strlen(data_buffer), 1000);
-				HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-
-				if (SX1278_receive(&sx1278, 64, 2000))
-					if (i) {
-					};
-			}
-		}
-	}
-
-}
 
 /* USER CODE END 0 */
 
@@ -178,6 +125,7 @@ int main(void) {
 	MX_SPI1_Init();
 	MX_ADC_Init();
 	MX_RTC_Init();
+	MX_I2C1_Init();
 	/* USER CODE BEGIN 2 */
 
 	// SX1278 module initialization
@@ -188,10 +136,27 @@ int main(void) {
 
 	// RTC
 	__HAL_RCC_RTC_ENABLE();
+	HAL_RTC_SetWakeup(4);
 
-	if (HAL_RTC_SetWakeup(RTC_WAKEUP_TIME_S) != HAL_OK) {
-		Error_Handler();
-	}
+	// I2C
+//	if (BH1750_init_i2c(&hi2c1) != HAL_OK) {
+//		Error_Handler();
+//	}
+
+	bh1750 = BH1750_init_dev_struct(&hi2c1, "bh1750", true);
+	BH1750_init_dev(bh1750);
+
+//	if (BH1750_Reset() != BH1750_OK) {
+//		Error_Handler();
+//	}
+
+//	if (BH1750_TriggerManualConversion() != BH1750_OK) {
+//		Error_Handler();
+//	}
+//
+//	if (BH1750_PowerState(0) != BH1750_OK) {
+//		Error_Handler();
+//	}
 
 	bool handshake = false;
 
@@ -200,75 +165,24 @@ int main(void) {
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-
 		while (handshake == false) {
 			handshake = comm_handshake_master();
 		}
 
-		POWER_GoToSleep(&sx1278);
-
 		if (rtc_wakeup_flag) {
 			rtc_wakeup_flag = false;
 
-			if (comm_send_moisture())
-			{}
-			else
-			{}
+			if (comm_send_moisture()) {
+			} else {
+			}
+
+			if (comm_send_lux()) {
+
+			} else {
+			}
 		}
-
-//		if (rtc_wakeup_flag) {
-//			rtc_wakeup_flag = false;
-//
-//			if (ReadSoilMoistureSensor(&soil_moisture)) {
-//				char data_buffer[64];
-//				ConvertSoilMoistureToPercentage(&soil_moisture,
-//						&soil_moisture_percentage);
-//
-//				HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
-//				HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
-//
-//				sprintf(data_buffer,
-//						"Czas: %02d:%02d:%02d\tMoisture: %u.%u%% ADC = %u\n",
-//						time.Hours, time.Minutes, time.Seconds,
-//						soil_moisture_percentage / 2,
-//						(soil_moisture_percentage % 2) * 5, soil_moisture);
-//				HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
-//				bool status = comm_tx((uint8_t*) data_buffer,
-//						strlen(data_buffer), 8000);
-//				HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-//				if (status)
-//					printf("Wyslano\r\n");
-//				else
-//					printf("Nie wyslano\r\n");
-//			} else {
-//				uint8_t message[] = "Wystapil blad!";
-//				bool status = comm_tx(message, sizeof(message), 1000);
-//			}
-//		}
-
-//comm_test();
-//	  packet_t packet;
-//	  comm_receive(&packet, 3000);
-
-//
-
-//	  static uint32_t last_check = 0;
-//	  if (HAL_GetTick() - last_check > 15000) {
-//		last_check = HAL_GetTick();
-//
-//		if (sx1278.status != RX) {
-//		  printf("LoRa not in RX mode! Current status: %d\n", sx1278.status);
-//		  printf("Resetting and reactivating receiver...\n");
-//
-//		  SX1278_hw_Reset(sx1278.hw);
-//		  HAL_Delay(100);
-//
-//		  if (SX1278_receive(&sx1278, 64, 2000))
-//			printf("Receiver mode restored!\n");
-//		}
-//		else
-//		  printf("LoRa receiver active, status OK\n");
-//	  }
+		
+		POWER_GoToSleep(&sx1278);
 
 		/* USER CODE END WHILE */
 
@@ -299,13 +213,10 @@ void SystemClock_Config(void) {
 	 * in the RCC_OscInitTypeDef structure.
 	 */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI
-			| RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_MSI;
+			| RCC_OSCILLATORTYPE_LSE;
 	RCC_OscInitStruct.LSEState = RCC_LSE_ON;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-	RCC_OscInitStruct.MSIState = RCC_MSI_ON;
-	RCC_OscInitStruct.MSICalibrationValue = 0;
-	RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_5;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
@@ -315,15 +226,16 @@ void SystemClock_Config(void) {
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
 			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_MSI;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
 	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
 		Error_Handler();
 	}
-	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
 	PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
 	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
 		Error_Handler();
@@ -380,6 +292,51 @@ static void MX_ADC_Init(void) {
 	/* USER CODE BEGIN ADC_Init 2 */
 
 	/* USER CODE END ADC_Init 2 */
+
+}
+
+/**
+ * @brief I2C1 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_I2C1_Init(void) {
+
+	/* USER CODE BEGIN I2C1_Init 0 */
+
+	/* USER CODE END I2C1_Init 0 */
+
+	/* USER CODE BEGIN I2C1_Init 1 */
+
+	/* USER CODE END I2C1_Init 1 */
+	hi2c1.Instance = I2C1;
+	hi2c1.Init.Timing = 0x00201D2B;
+	hi2c1.Init.OwnAddress1 = 0;
+	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+	hi2c1.Init.OwnAddress2 = 0;
+	hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+	hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+	hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+	if (HAL_I2C_Init(&hi2c1) != HAL_OK) {
+		Error_Handler();
+	}
+
+	/** Configure Analogue filter
+	 */
+	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE)
+			!= HAL_OK) {
+		Error_Handler();
+	}
+
+	/** Configure Digital filter
+	 */
+	if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN I2C1_Init 2 */
+
+	/* USER CODE END I2C1_Init 2 */
 
 }
 
@@ -530,6 +487,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void ReinitPeripheralsAfterWakeup(void) {
 	MX_ADC_Init();
 	MX_SPI1_Init();
+	MX_I2C1_Init();
 }
 
 /* USER CODE END 4 */

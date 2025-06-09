@@ -22,13 +22,15 @@
 
 /* Includes */
 #include <sys/stat.h>
-#include <stdlib.h>
 #include <errno.h>
-#include <stdio.h>
-#include <signal.h>
-#include <time.h>
-#include <sys/time.h>
-#include <sys/times.h>
+/* Removed unused includes to reduce flash usage:
+ * #include <stdlib.h>
+ * #include <stdio.h>  
+ * #include <signal.h>
+ * #include <time.h>
+ * #include <sys/time.h>
+ * #include <sys/times.h>
+ */
 
 
 /* Variables */

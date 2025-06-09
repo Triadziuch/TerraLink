@@ -99,11 +99,24 @@ int create_handshake_pkt(packet_t *pkt) {
 		handshake_data[i].type = DATA_HANDSHAKE;
 		handshake_data[i].time_offset = 0;
 
-		if (!attach_data(pkt, &handshake_data))
+		if (!attach_data(pkt, &handshake_data[i]))
 			return 0;
 	}
 
 	pkt->crc16 = crc16_compute((uint8_t*) pkt, get_pkt_length(pkt) - CRC_SIZE);
+
+	return 1;
+}
+
+int create_data_pkt(packet_t *pkt) {
+	if (pkt == NULL)
+		return 0;
+
+	pkt->dst_id = 69;
+	pkt->src_id = FLASH_NODE_ID_get();
+	pkt->pkt_type = PKT_DATA;
+	pkt->seq = next_seq_number();
+	pkt->len = 0;
 
 	return 1;
 }

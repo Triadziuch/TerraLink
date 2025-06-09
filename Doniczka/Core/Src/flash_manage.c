@@ -11,6 +11,9 @@ uint8_t FLASH_NODE_ID_get(void){
 
 bool FLASH_NODE_ID_set(uint8_t new_id){
 	
+	if (FLASH_NODE_ID_get() == new_id)
+		return 1;
+
 	HAL_StatusTypeDef status;
 
 	HAL_FLASHEx_DATAEEPROM_Unlock();

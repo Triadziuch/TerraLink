@@ -86,6 +86,8 @@ int comm_receive(packet_t *pkt) {
 	int valid = verify_pkt(pkt);
 	lora_data_ready = 0;
 
+	HAL_Delay(20);
+
 	return valid;
 }
 
@@ -94,7 +96,8 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 		return 0;
 
 	packet_t assign_pkt;
-	uint8_t assigned_id = create_handshake_response_pkt(received_pkt, &assign_pkt);
+	uint8_t assigned_id = create_handshake_response_pkt(received_pkt,
+			&assign_pkt);
 	if (assigned_id == 0)
 		return 0;
 
@@ -129,23 +132,29 @@ int comm_handle_data(const packet_t *received_pkt) {
 	if (data_records == NULL)
 		return 0;
 
-	time_t time_now = (time_t)GetTime();
+	time_t time_now = (time_t) GetTime();
 	for (int record_id = 0; record_id < data_records_count; ++record_id) {
 		if (!get_data(received_pkt, record_id, &data_records[record_id]))
-			return 0;
-
-		if (data_records[record_id].type != DATA_TEMP)
 			return 0;
 
 		time_t measurement_time = time_now
 				- data_records[record_id].time_offset;
 		struct tm *t = localtime(&measurement_time);
 
-		printf("[%02d:%02d:%02d] Wilgotnosc: %u.%u o czasie %02d:%02d:%02d\n",
-				clock_time.Hours, clock_time.Minutes, clock_time.Seconds,
-				data_records[record_id].data / 10,
-				data_records[record_id].data % 10, t->tm_hour, t->tm_min,
-				t->tm_sec);
+		if (data_records[record_id].type == DATA_SOIL_MOISTURE) {
+			printf("[%02d:%02d:%02d] Wilgotnosc: %u.%u o czasie %02d:%02d:%02d\n",
+					clock_time.Hours, clock_time.Minutes, clock_time.Seconds,
+					data_records[record_id].data / 10,
+					data_records[record_id].data % 10, t->tm_hour, t->tm_min,
+					t->tm_sec);
+		} else if (data_records[record_id].type == DATA_LIGHT) {
+			printf("[%02d:%02d:%02d] Natezenie swiatla: %u o czasie %02d:%02d:%02d\n",
+					clock_time.Hours, clock_time.Minutes, clock_time.Seconds,
+					data_records[record_id].data, t->tm_hour, t->tm_min, t->tm_sec);
+
+		} else
+			return 0;
+
 	}
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {

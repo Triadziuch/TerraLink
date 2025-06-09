@@ -8,6 +8,7 @@
 #include "packet.h"
 #include "comm.h"
 
+//TODO: Move to FLASH
 int UIDs_count = 0;
 STM32_UID_t UIDs[8] = { 0 };
 uint8_t UIDs_assigned_ID[8] = { 0 };
@@ -102,7 +103,7 @@ uint8_t create_handshake_response_pkt(const packet_t *req_pkt, packet_t *resp_pk
 		if (!get_data(req_pkt, i, &req_data[i]))
 			return 0;
 
-		if (req_data->type != DATA_HANDSHAKE)
+		if (req_data[i].type != DATA_HANDSHAKE)
 			return 0;
 	}
 

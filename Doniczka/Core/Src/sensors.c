@@ -63,3 +63,17 @@ int GetSoilMoisturePercentage(sensor_data_raw_t *moisture_data){
 
 	return 0;
 }
+
+int GetLightSensorValue(sensor_data_raw_t *lux_data){
+	if (lux_data == NULL)
+		return 0;
+
+	float value;
+	if (BH1750_get_lumen(bh1750) == HAL_OK){
+		lux_data->time = GetTime();
+		lux_data->value = bh1750->value;
+		return 1;
+	}
+
+	return 0;
+}

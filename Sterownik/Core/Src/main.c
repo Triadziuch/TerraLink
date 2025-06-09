@@ -155,7 +155,7 @@ int __io_putchar(int ch) {
 void init_time(void){
 	RTC_TimeTypeDef new_time = {0};
 
-	new_time.Hours = 7;
+	new_time.Hours = 12;
 	new_time.Minutes = 0;
 	new_time.Seconds = 0;
 
@@ -209,7 +209,6 @@ int main(void) {
 		printf("Failed to activate LoRa receiver mode!\n");
 	}
 
-	bool handshake = false;
 
 	packet_t received_pkt;
 
@@ -227,11 +226,9 @@ int main(void) {
 				printf("Packet check successful\n");
 
 
-				if (!handshake){
-					if (comm_handshake_slave(&received_pkt)){
-						handshake = true;
-						SX1278_receive(&sx1278, 64, 2000);
-					}
+				if (received_pkt.pkt_type == PKT_REG_REQ){
+					comm_handshake_slave(&received_pkt);
+					SX1278_receive(&sx1278, 64, 2000);
 
 				}
 				else{

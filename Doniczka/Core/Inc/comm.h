@@ -20,6 +20,9 @@
 #define PKT_RX_TIMEOUT 3000
 #define PKT_TX_TIMEOUT 3000
 
+extern RTC_TimeTypeDef clock_time;
+extern RTC_DateTypeDef clock_date;
+
 uint32_t GetTime(void);
 
 void comm_init();
@@ -31,5 +34,6 @@ int comm_receive(packet_t *pkt);
 
 int comm_handshake_master(void);
 int comm_send_moisture(void);
+int comm_send_lux(void);
 
 #endif /* INC_COMM_H_ */

@@ -8,6 +8,7 @@
 #ifndef INC_SENSORS_H_
 #define INC_SENSORS_H_
 
+#include "BH1750.h"
 #include "main.h"
 
 #define ADC_MOISTURE_MAX 3408
@@ -16,6 +17,7 @@
 
 extern uint16_t soil_moisture;
 extern uint16_t soil_moisture_percentage;
+extern BH1750_device_t *bh1750;
 
 typedef struct{
 	uint32_t time;
@@ -27,5 +29,6 @@ int ConvertSoilMoistureToPercentage(uint16_t *soil_moisture,
 		uint16_t *soil_moisture_percentage);
 
 int GetSoilMoisturePercentage(sensor_data_raw_t *moisture_data);
+int GetLightSensorValue(sensor_data_raw_t *lux_data);
 
 #endif /* INC_SENSORS_H_ */

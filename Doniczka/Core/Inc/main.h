@@ -34,6 +34,7 @@ extern "C" {
 
 #include "stdbool.h"
 #include "comm.h"
+#include "BH1750.h"
 
 /* USER CODE END Includes */
 
@@ -55,6 +56,10 @@ extern volatile uint8_t lora_data_ready;
 
 extern SX1278_hw_t sx1278_hw;
 extern SX1278_t sx1278;
+
+extern BH1750_device_t *bh1750;
+
+//extern BH1750_device_t* test_dev;
 
 /* USER CODE END ET */
 
