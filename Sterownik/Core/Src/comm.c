@@ -95,6 +95,10 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 	if (received_pkt->pkt_type != PKT_REG_REQ)
 		return 0;
 
+	if (DEBUG_INFO)
+		printf("[ID: %d] Received PKT_REG_REQ from device ID = %d\n", HIVE_ID,
+				received_pkt->src_id);
+
 	packet_t assign_pkt;
 	uint8_t assigned_id = create_handshake_response_pkt(received_pkt,
 			&assign_pkt);
@@ -107,12 +111,24 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 		if (!comm_send(&assign_pkt))
 			continue;
 
+		if (DEBUG_INFO)
+			printf(
+					"[ID: %d] Sending PKT_ASSIGN_ID = %d to device ID = %d\t\t[attempt = %d]\n",
+					HIVE_ID, assigned_id, assign_pkt.dst_id, attempt);
+
 		packet_t response;
 		if (comm_receive(&response)) {
 			if (response.pkt_type == PKT_ACK
 					&& response.dst_id == assign_pkt.src_id
-					&& response.src_id == assigned_id)
+					&& response.src_id == assigned_id) {
+
+				if (DEBUG_INFO)
+					printf(
+							"[ID: %d] Received handshake PKT_ACK from device ID = %d\t\t[attempt = %d]\n",
+							HIVE_ID, response.src_id, attempt);
 				return 1;
+			}
+
 		}
 	}
 
@@ -122,6 +138,10 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 int comm_handle_data(const packet_t *received_pkt) {
 	if (received_pkt->pkt_type != PKT_DATA)
 		return 0;
+
+	if (DEBUG_INFO)
+		printf("[ID: %d] Received PKT_DATA from device ID = %d\n",
+		HIVE_ID, received_pkt->src_id);
 
 	if (received_pkt->len < DATA_RECORD_SIZE)
 		return 0;
@@ -141,34 +161,87 @@ int comm_handle_data(const packet_t *received_pkt) {
 				- data_records[record_id].time_offset;
 		struct tm *t = localtime(&measurement_time);
 
+		if (DEBUG_INFO == 0)
+			continue;
+
 		if (data_records[record_id].type == DATA_SOIL_MOISTURE) {
-			printf("[%02d:%02d:%02d] Wilgotnosc: %u.%u o czasie %02d:%02d:%02d\n",
-					clock_time.Hours, clock_time.Minutes, clock_time.Seconds,
-					data_records[record_id].data / 10,
+			printf(
+					"[ID: %d] [%02d:%02d:%02d] Wilgotnosc: %u.%u o czasie %02d:%02d:%02d\t\t\t[record_id = %d]\n",
+					HIVE_ID, clock_time.Hours, clock_time.Minutes,
+					clock_time.Seconds, data_records[record_id].data / 10,
 					data_records[record_id].data % 10, t->tm_hour, t->tm_min,
-					t->tm_sec);
+					t->tm_sec, record_id);
 		} else if (data_records[record_id].type == DATA_LIGHT) {
-			printf("[%02d:%02d:%02d] Natezenie swiatla: %u o czasie %02d:%02d:%02d\n",
-					clock_time.Hours, clock_time.Minutes, clock_time.Seconds,
-					data_records[record_id].data, t->tm_hour, t->tm_min, t->tm_sec);
+			printf(
+					"[ID: %d] [%02d:%02d:%02d] Natezenie swiatla: %u o czasie %02d:%02d:%02d\t\t[record_id = %d]\n",
+					HIVE_ID, clock_time.Hours, clock_time.Minutes,
+					clock_time.Seconds, data_records[record_id].data,
+					t->tm_hour, t->tm_min, t->tm_sec, record_id);
 
 		} else
 			return 0;
 
 	}
 
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		packet_t ack;
-		ack.dst_id = received_pkt->src_id;
-		ack.src_id = 69;
-		ack.pkt_type = PKT_ACK;
-		ack.seq = next_seq_number();
-		ack.len = 0;
-		ack.crc16 = crc16_compute((uint8_t*) &ack,
-				get_pkt_length(&ack) - CRC_SIZE);
+	return comm_send_ack(received_pkt);
+}
 
-		if (comm_send(&ack))
+// Returns received packet with data. Returns NULL if didn't get response to request.
+packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
+	if (id_exists(dest_id) == 0)
+		return NULL;
+
+	packet_t req_data_pkt;
+	if (create_request_data_pkt(&req_data_pkt, dest_id, req_data_type) == NULL)
+		return NULL;
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		HAL_Delay(100);
+
+		if (!comm_send(&req_data_pkt))
+			continue;
+
+		if (DEBUG_INFO)
+			printf(
+					"[ID: %d] Sending PKT_REQ_DATA = %d to device ID = %d\t\t[attempt = %d]\n",
+					HIVE_ID, req_data_type, req_data_pkt.dst_id, attempt);
+
+		packet_t *response = malloc(sizeof(packet_t));
+		if (comm_receive(response)) {
+			if (response->pkt_type == PKT_DATA
+					&& response->dst_id == req_data_pkt.src_id
+					&& response->src_id == req_data_pkt.dst_id) {
+
+				if (DEBUG_INFO)
+					printf(
+							"[ID: %d] Received requested data PKT_DATA from device ID = %d\t\t[attempt = %d]\n",
+							HIVE_ID, response->src_id, attempt);
+
+				if (!comm_send_ack(response))
+					return NULL;
+
+				return response;
+			}
+
+		}
+	}
+	return NULL;
+}
+
+int comm_send_ack(const packet_t *received_pkt) {
+	packet_t ack_pkt;
+	if (!create_ack_pkt(received_pkt, ack_pkt))
+		return 0;
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (comm_send(&ack_pkt)) {
+			if (DEBUG_INFO)
+				printf(
+						"[ID: %d] Sent PKT_ACK to PKT_DATA from device ID = %d\t\t\t[attempt = %d]\n",
+						HIVE_ID, received_pkt->src_id, attempt);
+
 			return 1;
+		}
 
 		HAL_Delay(100);
 	}
@@ -177,6 +250,9 @@ int comm_handle_data(const packet_t *received_pkt) {
 }
 
 void comm_print_pkt(const packet_t *pkt, const char *text) {
+	if (DEBUG_PACKET == 0)
+		return;
+
 	printf("= = = = = %s = = = = =\n", text);
 	printf("[dst_id] = %u\n", pkt->dst_id);
 	printf("[src_id] = %u\n", pkt->src_id);

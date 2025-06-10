@@ -139,24 +139,8 @@ int main(void) {
 	HAL_RTC_SetWakeup(4);
 
 	// I2C
-//	if (BH1750_init_i2c(&hi2c1) != HAL_OK) {
-//		Error_Handler();
-//	}
-
 	bh1750 = BH1750_init_dev_struct(&hi2c1, "bh1750", true);
 	BH1750_init_dev(bh1750);
-
-//	if (BH1750_Reset() != BH1750_OK) {
-//		Error_Handler();
-//	}
-
-//	if (BH1750_TriggerManualConversion() != BH1750_OK) {
-//		Error_Handler();
-//	}
-//
-//	if (BH1750_PowerState(0) != BH1750_OK) {
-//		Error_Handler();
-//	}
 
 	bool handshake = false;
 
@@ -167,22 +151,58 @@ int main(void) {
 	while (1) {
 		while (handshake == false) {
 			handshake = comm_handshake_master();
+			SX1278_receive(&sx1278, 64, 2000); // TESTOWO DO DATA_REQ
 		}
 
-		if (rtc_wakeup_flag) {
-			rtc_wakeup_flag = false;
+		if (lora_data_ready) {
+			if (verify_pkt(&received_pkt)) {
+				printf("Packet check successful\n");
 
-			if (comm_send_moisture()) {
+				if (received_pkt.pkt_type == PKT_REQ_DATA) {
+					comm_handshake_slave(&received_pkt);
+					SX1278_receive(&sx1278, 64, 2000);
+
+				}
+
 			} else {
+				printf("Packet check failed\n");
 			}
 
-			if (comm_send_lux()) {
-
-			} else {
-			}
+			lora_data_ready = 0;
 		}
-		
-		POWER_GoToSleep(&sx1278);
+
+		static uint32_t last_check = 0;
+		if (HAL_GetTick() - last_check > 15000) {
+			last_check = HAL_GetTick();
+
+			if (sx1278.status != RX) {
+				printf("LoRa not in RX mode! Current status: %d\n",
+						sx1278.status);
+				printf("Resetting and reactivating receiver...\n");
+
+				SX1278_hw_Reset(sx1278.hw);
+				HAL_Delay(100);
+
+				if (SX1278_receive(&sx1278, 64, 2000))
+					printf("Receiver mode restored!\n");
+			} else
+				printf("LoRa receiver active, status OK\n");
+		}
+
+//		if (rtc_wakeup_flag) {
+//			rtc_wakeup_flag = false;
+//
+//			if (comm_send_moisture()) {
+//			} else {
+//			}
+//
+//			if (comm_send_lux()) {
+//
+//			} else {
+//			}
+//		}
+//
+//		POWER_GoToSleep(&sx1278);
 
 		/* USER CODE END WHILE */
 

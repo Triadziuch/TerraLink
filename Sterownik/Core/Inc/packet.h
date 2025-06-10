@@ -14,7 +14,7 @@
 #define MAX_PAYLOAD_SIZE	27
 #define DATA_RECORD_SIZE	9
 
-#define LINK_ID	96
+#define HIVE_ID	96
 
 #include "stdint.h"
 #include "stdbool.h"
@@ -47,7 +47,7 @@ typedef struct{
 } data_record_t;
 #pragma pack(pop)
 
-enum{
+enum PKT_TYPE{
 	PKT_REG_REQ		= 0x01,
 	PKT_ASSIGN_ID	= 0x02,
 	PKT_ACK			= 0x03,
@@ -56,13 +56,13 @@ enum{
 	PKT_REQ_ID		= 0x06
 };
 
-enum{
+enum DATA_TYPE{
 	DATA_ID				= 0x01,
 	DATA_HANDSHAKE		= 0x02,
 	DATA_SOIL_MOISTURE	= 0x02,
 	DATA_LIGHT			= 0x03,
-	DATA_TEMP		= 0x04
-};
+	DATA_TEMP			= 0x04
+} ;
 
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
@@ -72,7 +72,11 @@ int get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
 int attach_data(packet_t* pkt, data_record_t* data);
 
 uint8_t get_id(STM32_UID_t* uid);
+uint8_t id_exists(uint8_t link_id);
+
+uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t* ack_pkt);
 uint8_t create_handshake_response_pkt(const packet_t *req_pkt, packet_t *resp_pkt);
+uint8_t create_request_data_pkt(packet_t* req_pkt, uint8_t dest_id, DATA_TYPE req_data_type);
 
 //TODO: CRC Compute
 

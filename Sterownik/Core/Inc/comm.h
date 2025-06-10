@@ -20,6 +20,9 @@
 #define PKT_RX_TIMEOUT 3000
 #define PKT_TX_TIMEOUT 3000
 
+#define DEBUG_PACKET 0
+#define DEBUG_INFO 1
+
 uint32_t GetTime(void);
 
 void comm_init();
@@ -32,7 +35,9 @@ int comm_receive(packet_t *pkt);
 
 int comm_handshake_slave(const packet_t *received_pkt);
 int comm_handle_data(const packet_t *received_pkt);
+packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type);
+int comm_send_ack(const packet_t *received_pkt);
 
-void comm_print_pkt(const packet_t* pkt, const char* text);
+void comm_print_pkt(const packet_t *pkt, const char *text);
 
 #endif /* INC_COMM_H_ */

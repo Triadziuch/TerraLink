@@ -152,8 +152,8 @@ int __io_putchar(int ch) {
 	return 1;
 }
 
-void init_time(void){
-	RTC_TimeTypeDef new_time = {0};
+void init_time(void) {
+	RTC_TimeTypeDef new_time = { 0 };
 
 	new_time.Hours = 12;
 	new_time.Minutes = 0;
@@ -209,6 +209,7 @@ int main(void) {
 		printf("Failed to activate LoRa receiver mode!\n");
 	}
 
+	int pkt_req_it = 0;
 
 	packet_t received_pkt;
 
@@ -225,14 +226,12 @@ int main(void) {
 			if (verify_pkt(&received_pkt)) {
 				printf("Packet check successful\n");
 
-
-				if (received_pkt.pkt_type == PKT_REG_REQ){
+				if (received_pkt.pkt_type == PKT_REG_REQ) {
 					comm_handshake_slave(&received_pkt);
 					SX1278_receive(&sx1278, 64, 2000);
 
-				}
-				else{
-					if (received_pkt.pkt_type == PKT_DATA){
+				} else {
+					if (received_pkt.pkt_type == PKT_DATA) {
 						comm_handle_data(&received_pkt);
 						SX1278_receive(&sx1278, 64, 2000);
 					}
@@ -246,49 +245,19 @@ int main(void) {
 			lora_data_ready = 0;
 		}
 
-		//comm_test();
-//	  while (1){
-//		  char *data_buffer = "10";
-//		  //bool status = comm_tx((uint8_t*)data_buffer, strlen(data_buffer), 1000);
-//		  HAL_NVIC_DisableIRQ(EXTI9_5_IRQn);
-//		  bool status = SX1278_transmit(&sx1278, data_buffer, strlen(data_buffer), 1000);
-//		  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-//		  if (status){
-//			  printf("Packet sent!\n");
-//		  }
-//		  else
-//			  printf("Packet not sent!!!!!!\n");
-//
-////		  if (test_comm()){
-////			  printf("Packet sent!\n");
-////		  }
-////		  else
-////			  printf("Packet not sent!!!!\n");
-//	  }
-//    if (lora_data_ready) {
-//    	printf("%s\n", lora_buffer);
-//      //printf("Received LoRa data: %s\n", lora_buffer);
-//      lora_data_ready = 0;
-//
-//      //printf("Reactivating LoRa receiver mode...\n");
-//      if (!SX1278_receive(&sx1278, 64, 2000)) {
-//        //printf("Failed to reactivate receiver mode!\n");
-//
-//        SX1278_hw_Reset(sx1278.hw);
-//        HAL_Delay(100);
-//
-//        SX1278_receive(&sx1278, 64, 2000);
-//        //if (SX1278_receive(&sx1278, 64, 2000))
-//          //printf("Receiver mode restored after reset\n");
-//      }
-//    }
-//    if (!lora_data_ready){
-//    	printf("Entering sleep mode...\n");
-//    	HAL_SuspendTick();
-//    	HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-//    	HAL_ResumeTick();
-//    	printf("Woke up from sleep mode.\n");
-//    }
+		pkt_req_it++;
+
+		if (pkt_req_it == 1000) {
+			pkt_req_it = 0;
+
+			printf("REQUESTING LIGHT DATA\n");
+			packet_t *data_pkt = comm_req_data(1, DATA_LIGHT);
+			if (data_pkt != NULL)
+				comm_handle_data(data_pkt);
+			else
+				printf("REQUESTING LIGHT DATA FAILED\n");
+		}
+
 		static uint32_t last_check = 0;
 		if (HAL_GetTick() - last_check > 15000) {
 			last_check = HAL_GetTick();

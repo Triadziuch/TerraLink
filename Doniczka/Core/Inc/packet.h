@@ -50,13 +50,13 @@ enum{
 	PKT_REQ_ID		= 0x06
 };
 
-enum{
+enum DATA_TYPE{
 	DATA_ID				= 0x01,
 	DATA_HANDSHAKE		= 0x02,
 	DATA_SOIL_MOISTURE	= 0x02,
 	DATA_LIGHT			= 0x03,
-	DATA_TEMP		= 0x04
-};
+	DATA_TEMP			= 0x04
+} ;
 
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
