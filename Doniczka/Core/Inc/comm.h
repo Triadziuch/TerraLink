@@ -35,5 +35,6 @@ int comm_receive(packet_t *pkt);
 int comm_handshake_master(void);
 int comm_send_moisture(void);
 int comm_send_lux(void);
+int comm_handle_req_data(const packet_t *received_pkt);
 
 #endif /* INC_COMM_H_ */

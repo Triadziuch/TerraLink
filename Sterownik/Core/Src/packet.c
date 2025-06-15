@@ -157,7 +157,7 @@ uint8_t create_request_data_pkt(packet_t *req_pkt, uint8_t dest_id,
 		return 0;
 
 	data_record_t req_data_record;
-	req_data_record.type = type;
+	req_data_record.type = req_data_type;
 	req_data_record.time_offset = 0;
 	req_data_record.data = 0;
 
@@ -170,4 +170,6 @@ uint8_t create_request_data_pkt(packet_t *req_pkt, uint8_t dest_id,
 		return 0;
 	req_pkt->crc16 = crc16_compute((uint8_t*) req_pkt,
 			get_pkt_length(req_pkt) - CRC_SIZE);
+
+	return 1;
 }

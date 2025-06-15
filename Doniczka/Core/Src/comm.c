@@ -162,11 +162,8 @@ int comm_send_moisture(void) {
 		if (!comm_send(&data_pkt))
 			continue;
 
-		packet_t response;
-		if (comm_receive(&response))
-			if (response.pkt_type == PKT_ACK
-					&& response.dst_id == data_pkt.src_id)
-				return 1;
+		if (comm_await_ack(&data_pkt))
+			return 1;
 
 		HAL_Delay(100);
 	}
@@ -197,13 +194,47 @@ int comm_send_lux(void) {
 		if (!comm_send(&data_pkt))
 			continue;
 
-		packet_t response;
-		if (comm_receive(&response))
-			if (response.pkt_type == PKT_ACK
-					&& response.dst_id == data_pkt.src_id)
-				return 1;
+		if (comm_await_ack(&data_pkt))
+			return 1;
 
 		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
+int comm_handle_req_data(const packet_t *received_pkt) {
+	if (received_pkt == NULL)
+		return 0;
+
+	if (received_pkt->pkt_type != PKT_REQ_DATA)
+		return 0;
+
+	data_record_t req_data;
+	if (!get_data(received_pkt, 0, &req_data))
+		return 0;
+
+	if (req_data.type == DATA_ID) {
+		return 0;
+	} else if (req_data.type == DATA_SOIL_MOISTURE) {
+		return comm_send_moisture();
+	} else if (req_data.type == DATA_LIGHT) {
+		return comm_send_lux();
+	} else if (req_data.type == DATA_TEMP) {
+		return 0;
+	}
+
+	return 0;
+}
+
+int comm_await_ack(const packet_t *sent_packet) {
+	packet_t response;
+	if (comm_receive(&response)) {
+		if (response.pkt_type == PKT_ACK
+				&& response.dst_id == sent_packet->src_id
+				&& response.src_id == sent_packet->dst_id) {
+			return 1;
+		}
 	}
 
 	return 0;

@@ -246,14 +246,16 @@ int main(void) {
 		}
 
 		pkt_req_it++;
-
-		if (pkt_req_it == 1000) {
+		if (pkt_req_it == 10000000) {
 			pkt_req_it = 0;
 
 			printf("REQUESTING LIGHT DATA\n");
 			packet_t *data_pkt = comm_req_data(1, DATA_LIGHT);
-			if (data_pkt != NULL)
+			if (data_pkt != NULL){
 				comm_handle_data(data_pkt);
+				free(data_pkt);
+			}
+
 			else
 				printf("REQUESTING LIGHT DATA FAILED\n");
 		}

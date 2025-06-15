@@ -112,7 +112,7 @@ int create_data_pkt(packet_t *pkt) {
 	if (pkt == NULL)
 		return 0;
 
-	pkt->dst_id = 69;
+	pkt->dst_id = 96; //TODO: move to flash received TerraLink ID from handshake
 	pkt->src_id = FLASH_NODE_ID_get();
 	pkt->pkt_type = PKT_DATA;
 	pkt->seq = next_seq_number();

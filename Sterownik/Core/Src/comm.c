@@ -92,6 +92,9 @@ int comm_receive(packet_t *pkt) {
 }
 
 int comm_handshake_slave(const packet_t *received_pkt) {
+	if (received_pkt == NULL)
+		return 0;
+
 	if (received_pkt->pkt_type != PKT_REG_REQ)
 		return 0;
 
@@ -108,13 +111,13 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
 
-		if (!comm_send(&assign_pkt))
-			continue;
-
 		if (DEBUG_INFO)
 			printf(
 					"[ID: %d] Sending PKT_ASSIGN_ID = %d to device ID = %d\t\t[attempt = %d]\n",
 					HIVE_ID, assigned_id, assign_pkt.dst_id, attempt);
+
+		if (!comm_send(&assign_pkt))
+			continue;
 
 		packet_t response;
 		if (comm_receive(&response)) {
@@ -123,12 +126,10 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 					&& response.src_id == assigned_id) {
 
 				if (DEBUG_INFO)
-					printf(
-							"[ID: %d] Received handshake PKT_ACK from device ID = %d\t\t[attempt = %d]\n",
-							HIVE_ID, response.src_id, attempt);
+					printf("[ID: %d] Received handshake PKT_ACK from device ID = %d\n",
+					HIVE_ID, response.src_id);
 				return 1;
 			}
-
 		}
 	}
 
@@ -192,7 +193,7 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 		return NULL;
 
 	packet_t req_data_pkt;
-	if (create_request_data_pkt(&req_data_pkt, dest_id, req_data_type) == NULL)
+	if (create_request_data_pkt(&req_data_pkt, dest_id, req_data_type) == 0)
 		return NULL;
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
@@ -230,7 +231,7 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 
 int comm_send_ack(const packet_t *received_pkt) {
 	packet_t ack_pkt;
-	if (!create_ack_pkt(received_pkt, ack_pkt))
+	if (!create_ack_pkt(received_pkt, &ack_pkt))
 		return 0;
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
@@ -244,6 +245,23 @@ int comm_send_ack(const packet_t *received_pkt) {
 		}
 
 		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
+int comm_await_ack(const packet_t *sent_packet) {
+	packet_t response;
+	if (comm_receive(&response)) {
+		if (response.pkt_type == PKT_ACK
+				&& response.dst_id == sent_packet->src_id
+				&& response.src_id == sent_packet->dst_id) {
+
+			if (DEBUG_INFO)
+				printf("[ID: %d] Received PKT_ACK from device ID = %d\n",
+				HIVE_ID, response.src_id);
+			return 1;
+		}
 	}
 
 	return 0;

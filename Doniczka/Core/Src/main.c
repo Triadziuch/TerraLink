@@ -143,6 +143,7 @@ int main(void) {
 	BH1750_init_dev(bh1750);
 
 	bool handshake = false;
+	packet_t received_pkt;
 
 	/* USER CODE END 2 */
 
@@ -151,7 +152,7 @@ int main(void) {
 	while (1) {
 		while (handshake == false) {
 			handshake = comm_handshake_master();
-			SX1278_receive(&sx1278, 64, 2000); // TESTOWO DO DATA_REQ
+			SX1278_receive(&sx1278, 64, 2000);
 		}
 
 		if (lora_data_ready) {
@@ -159,7 +160,7 @@ int main(void) {
 				printf("Packet check successful\n");
 
 				if (received_pkt.pkt_type == PKT_REQ_DATA) {
-					comm_handshake_slave(&received_pkt);
+					comm_handle_req_data(&received_pkt);
 					SX1278_receive(&sx1278, 64, 2000);
 
 				}
@@ -176,31 +177,25 @@ int main(void) {
 			last_check = HAL_GetTick();
 
 			if (sx1278.status != RX) {
-				printf("LoRa not in RX mode! Current status: %d\n",
-						sx1278.status);
-				printf("Resetting and reactivating receiver...\n");
-
 				SX1278_hw_Reset(sx1278.hw);
 				HAL_Delay(100);
 
-				if (SX1278_receive(&sx1278, 64, 2000))
-					printf("Receiver mode restored!\n");
-			} else
-				printf("LoRa receiver active, status OK\n");
+				SX1278_receive(&sx1278, 64, 2000);
+			}
 		}
 
-//		if (rtc_wakeup_flag) {
-//			rtc_wakeup_flag = false;
-//
-//			if (comm_send_moisture()) {
-//			} else {
-//			}
-//
-//			if (comm_send_lux()) {
-//
-//			} else {
-//			}
-//		}
+		if (rtc_wakeup_flag) {
+			rtc_wakeup_flag = false;
+
+			if (comm_send_moisture()) {
+			} else {
+			}
+
+			if (comm_send_lux()) {
+
+			} else {
+			}
+		}
 //
 //		POWER_GoToSleep(&sx1278);
 
