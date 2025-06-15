@@ -53,7 +53,8 @@ enum PKT_TYPE{
 	PKT_ACK			= 0x03,
 	PKT_DATA		= 0x04,
 	PKT_REQ_DATA	= 0x05,
-	PKT_REQ_ID		= 0x06
+	PKT_REQ_ID		= 0x06,
+	PKT_TEST_CONN	= 0x07
 };
 
 typedef enum {
@@ -77,7 +78,7 @@ uint8_t id_exists(uint8_t link_id);
 uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t* ack_pkt);
 uint8_t create_handshake_response_pkt(const packet_t *req_pkt, packet_t *resp_pkt);
 uint8_t create_request_data_pkt(packet_t* req_pkt, uint8_t dest_id, DATA_TYPE req_data_type);
-
+uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id);
 //TODO: CRC Compute
 
 #endif /* INC_PACKET_H_ */

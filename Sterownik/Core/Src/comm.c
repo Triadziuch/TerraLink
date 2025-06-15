@@ -126,8 +126,9 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 					&& response.src_id == assigned_id) {
 
 				if (DEBUG_INFO)
-					printf("[ID: %d] Received handshake PKT_ACK from device ID = %d\n",
-					HIVE_ID, response.src_id);
+					printf(
+							"[ID: %d] Received handshake PKT_ACK from device ID = %d\n",
+							HIVE_ID, response.src_id);
 				return 1;
 			}
 		}
@@ -247,6 +248,30 @@ int comm_send_ack(const packet_t *received_pkt) {
 		HAL_Delay(100);
 	}
 
+	return 0;
+}
+
+int comm_test_conn(uint8_t link_id) {
+	if (id_exists(link_id) == 0)
+		return 0;
+
+	packet_t test_pkt;
+	if (!create_test_conn_pkt(&test_pkt, link_id))
+		return 0;
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (comm_send(&test_pkt)) {
+			if (DEBUG_INFO)
+				printf(
+						"[ID: %d] Sent PKT_TEST_CONN to device ID = %d\t\t\t[attempt = %d]\n",
+						HIVE_ID, test_pkt.dst_id, attempt);
+
+			if (comm_await_ack(&test_pkt))
+				return 1;
+
+			HAL_Delay(100);
+		}
+	}
 	return 0;
 }
 

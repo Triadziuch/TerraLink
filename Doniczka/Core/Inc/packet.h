@@ -47,7 +47,8 @@ enum{
 	PKT_ACK			= 0x03,
 	PKT_DATA		= 0x04,
 	PKT_REQ_DATA	= 0x05,
-	PKT_REQ_ID		= 0x06
+	PKT_REQ_ID		= 0x06,
+	PKT_TEST_CONN	= 0x07
 };
 
 typedef enum {
@@ -66,6 +67,7 @@ int get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
 int attach_data(packet_t* pkt, data_record_t* data);
 int create_handshake_pkt(packet_t* pkt);
 int create_data_pkt(packet_t* pkt);
+uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt);
 
 //TODO: CRC Compute
 

@@ -227,6 +227,34 @@ int comm_handle_req_data(const packet_t *received_pkt) {
 	return 0;
 }
 
+int comm_handle_test_conn(const packet_t *received_pkt) {
+	if (received_pkt == NULL)
+		return 0;
+
+	if (comm_send_ack(received_pkt))
+		return 1;
+
+	return 0;
+}
+
+int comm_send_ack(const packet_t *received_pkt) {
+	packet_t ack_pkt;
+	if (!create_ack_pkt(received_pkt, &ack_pkt))
+		return 0;
+
+	HAL_Delay(100);
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (comm_send(&ack_pkt))
+			return 1;
+
+
+		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
 int comm_await_ack(const packet_t *sent_packet) {
 	packet_t response;
 	if (comm_receive(&response)) {

@@ -173,3 +173,18 @@ uint8_t create_request_data_pkt(packet_t *req_pkt, uint8_t dest_id,
 
 	return 1;
 }
+
+uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id) {
+	if (test_pkt == NULL)
+		return 0;
+
+	test_pkt->dst_id = dest_id;
+	test_pkt->src_id = HIVE_ID;
+	test_pkt->pkt_type = PKT_TEST_CONN;
+	test_pkt->seq = next_seq_number();
+	test_pkt->len = 0;
+	test_pkt->crc16 = crc16_compute((uint8_t*) test_pkt,
+			get_pkt_length(test_pkt) - CRC_SIZE);
+
+	return 1;
+}

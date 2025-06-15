@@ -264,6 +264,8 @@ int main(void) {
 		if (HAL_GetTick() - last_check > 15000) {
 			last_check = HAL_GetTick();
 
+			comm_test_conn(1);
+
 			if (sx1278.status != RX) {
 				printf("LoRa not in RX mode! Current status: %d\n",
 						sx1278.status);

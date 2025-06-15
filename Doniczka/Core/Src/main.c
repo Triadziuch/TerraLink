@@ -161,9 +161,12 @@ int main(void) {
 
 				if (received_pkt.pkt_type == PKT_REQ_DATA) {
 					comm_handle_req_data(&received_pkt);
-					SX1278_receive(&sx1278, 64, 2000);
-
 				}
+				else if (received_pkt.pkt_type == PKT_TEST_CONN){
+					comm_handle_test_conn(&received_pkt);
+				}
+
+				SX1278_receive(&sx1278, 64, 2000);
 
 			} else {
 				printf("Packet check failed\n");
@@ -184,18 +187,18 @@ int main(void) {
 			}
 		}
 
-		if (rtc_wakeup_flag) {
-			rtc_wakeup_flag = false;
-
-			if (comm_send_moisture()) {
-			} else {
-			}
-
-			if (comm_send_lux()) {
-
-			} else {
-			}
-		}
+//		if (rtc_wakeup_flag) {
+//			rtc_wakeup_flag = false;
+//
+//			if (comm_send_moisture()) {
+//			} else {
+//			}
+//
+//			if (comm_send_lux()) {
+//
+//			} else {
+//			}
+//		}
 //
 //		POWER_GoToSleep(&sx1278);
 

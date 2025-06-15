@@ -120,3 +120,18 @@ int create_data_pkt(packet_t *pkt) {
 
 	return 1;
 }
+
+uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt) {
+	if (received_pkt == NULL || ack_pkt == NULL)
+		return 0;
+
+	ack_pkt->dst_id = received_pkt->src_id;
+	ack_pkt->src_id = FLASH_NODE_ID_get();
+	ack_pkt->pkt_type = PKT_ACK;
+	ack_pkt->seq = next_seq_number();
+	ack_pkt->len = 0;
+	ack_pkt->crc16 = crc16_compute((uint8_t*) ack_pkt,
+			get_pkt_length(ack_pkt) - CRC_SIZE);
+
+	return 1;
+}

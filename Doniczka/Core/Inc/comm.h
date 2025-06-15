@@ -36,5 +36,8 @@ int comm_handshake_master(void);
 int comm_send_moisture(void);
 int comm_send_lux(void);
 int comm_handle_req_data(const packet_t *received_pkt);
+int comm_handle_test_conn(const packet_t *received_pkt);
+int comm_send_ack(const packet_t *received_pkt);
+int comm_await_ack(const packet_t *sent_packet);
 
 #endif /* INC_COMM_H_ */
