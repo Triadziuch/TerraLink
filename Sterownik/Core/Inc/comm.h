@@ -37,6 +37,7 @@ int comm_handshake_slave(const packet_t *received_pkt);
 int comm_handle_data(const packet_t *received_pkt);
 packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type);
 int comm_send_ack(const packet_t *received_pkt);
+int comm_await_ack(const packet_t *sent_packet);
 
 void comm_print_pkt(const packet_t *pkt, const char *text);
 

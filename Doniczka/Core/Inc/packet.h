@@ -66,7 +66,7 @@ int verify_pkt(packet_t *pkt);
 int get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
 int attach_data(packet_t* pkt, data_record_t* data);
 int create_handshake_pkt(packet_t* pkt);
-int create_data_pkt(packet_t* pkt);
+int create_data_pkt(packet_t *data_pkt, const packet_t *request_pkt);
 uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt);
 
 //TODO: CRC Compute

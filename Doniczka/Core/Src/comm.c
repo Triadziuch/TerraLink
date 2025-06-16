@@ -104,7 +104,7 @@ int comm_handshake_master(void) {
 		packet_t response;
 		if (comm_receive(&response)) {
 			if (response.pkt_type
-					== PKT_ASSIGN_ID&& response.dst_id == req.src_id && response.len == DATA_RECORD_SIZE) {
+					== PKT_ASSIGN_ID&& response.dst_id == req.src_id && response.len == DATA_RECORD_SIZE && response.seq == req.seq + 1) {
 
 				data_record_t data_record;
 
@@ -121,7 +121,7 @@ int comm_handshake_master(void) {
 					ack.dst_id = response.src_id;
 					ack.src_id = new_id;
 					ack.pkt_type = PKT_ACK;
-					ack.seq = next_seq_number();
+					ack.seq = response.seq + 1;
 					ack.len = 0;
 					ack.crc16 = crc16_compute((uint8_t*) &ack,
 							get_pkt_length(&ack) - CRC_SIZE);
@@ -139,7 +139,7 @@ int comm_handshake_master(void) {
 	return 0;
 }
 
-int comm_send_moisture(void) {
+int comm_send_moisture(const packet_t *request_pkt) {
 	sensor_data_raw_t moisture;
 
 	if (!GetSoilMoisturePercentage(&moisture))
@@ -153,7 +153,7 @@ int comm_send_moisture(void) {
 	data_record.data = moisture.value;
 
 	packet_t data_pkt;
-	create_data_pkt(&data_pkt);
+	create_data_pkt(&data_pkt, request_pkt);
 	attach_data(&data_pkt, &data_record);
 	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
 			get_pkt_length(&data_pkt) - CRC_SIZE);
@@ -171,7 +171,7 @@ int comm_send_moisture(void) {
 	return 0;
 }
 
-int comm_send_lux(void) {
+int comm_send_lux(const packet_t *request_pkt) {
 	sensor_data_raw_t light;
 
 	if (!GetLightSensorValue(&light))
@@ -185,7 +185,7 @@ int comm_send_lux(void) {
 	data_record.data = light.value;
 
 	packet_t data_pkt;
-	create_data_pkt(&data_pkt);
+	create_data_pkt(&data_pkt, request_pkt);
 	attach_data(&data_pkt, &data_record);
 	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
 			get_pkt_length(&data_pkt) - CRC_SIZE);
@@ -217,9 +217,9 @@ int comm_handle_req_data(const packet_t *received_pkt) {
 	if (req_data.type == DATA_ID) {
 		return 0;
 	} else if (req_data.type == DATA_SOIL_MOISTURE) {
-		return comm_send_moisture();
+		return comm_send_moisture(received_pkt);
 	} else if (req_data.type == DATA_LIGHT) {
-		return comm_send_lux();
+		return comm_send_lux(received_pkt);
 	} else if (req_data.type == DATA_TEMP) {
 		return 0;
 	}
@@ -260,7 +260,8 @@ int comm_await_ack(const packet_t *sent_packet) {
 	if (comm_receive(&response)) {
 		if (response.pkt_type == PKT_ACK
 				&& response.dst_id == sent_packet->src_id
-				&& response.src_id == sent_packet->dst_id) {
+				&& response.src_id == sent_packet->dst_id
+				&& response.seq == sent_packet->seq + 1) {
 			return 1;
 		}
 	}

@@ -123,7 +123,8 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 		if (comm_receive(&response)) {
 			if (response.pkt_type == PKT_ACK
 					&& response.dst_id == assign_pkt.src_id
-					&& response.src_id == assigned_id) {
+					&& response.src_id == assigned_id
+					&& response.seq == assign_pkt.seq + 1) {
 
 				if (DEBUG_INFO)
 					printf(
@@ -185,7 +186,7 @@ int comm_handle_data(const packet_t *received_pkt) {
 
 	}
 
-	return comm_send_ack(received_pkt);
+	return comm_send_ack(received_pkt); //TODO: Check if received data comes from request - in that case don't send ACK
 }
 
 // Returns received packet with data. Returns NULL if didn't get response to request.
@@ -280,7 +281,8 @@ int comm_await_ack(const packet_t *sent_packet) {
 	if (comm_receive(&response)) {
 		if (response.pkt_type == PKT_ACK
 				&& response.dst_id == sent_packet->src_id
-				&& response.src_id == sent_packet->dst_id) {
+				&& response.src_id == sent_packet->dst_id
+				&& response.seq == sent_packet->seq + 1) {
 
 			if (DEBUG_INFO)
 				printf("[ID: %d] Received PKT_ACK from device ID = %d\n",
