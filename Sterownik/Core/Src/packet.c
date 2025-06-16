@@ -108,7 +108,7 @@ uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt) {
 	ack_pkt->dst_id = received_pkt->src_id;
 	ack_pkt->src_id = HIVE_ID;
 	ack_pkt->pkt_type = PKT_ACK;
-	ack_pkt->seq = next_seq_number();
+	ack_pkt->seq = received_pkt->seq + 1;
 	ack_pkt->len = 0;
 	ack_pkt->crc16 = crc16_compute((uint8_t*) ack_pkt,
 			get_pkt_length(ack_pkt) - CRC_SIZE);
@@ -141,7 +141,7 @@ uint8_t create_handshake_response_pkt(const packet_t *req_pkt,
 	resp_pkt->dst_id = req_pkt->src_id;
 	resp_pkt->src_id = HIVE_ID;
 	resp_pkt->pkt_type = PKT_ASSIGN_ID;
-	resp_pkt->seq = next_seq_number();
+	resp_pkt->seq = req_pkt->seq + 1;
 	resp_pkt->len = 0;
 	if (!attach_data(resp_pkt, &resp_data))
 		return 0;

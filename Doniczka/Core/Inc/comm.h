@@ -33,8 +33,8 @@ int comm_send(const packet_t *pkt);
 int comm_receive(packet_t *pkt);
 
 int comm_handshake_master(void);
-int comm_send_moisture(void);
-int comm_send_lux(void);
+int comm_send_moisture(const packet_t *request_pkt);
+int comm_send_lux(const packet_t *request_pkt);
 int comm_handle_req_data(const packet_t *received_pkt);
 int comm_handle_test_conn(const packet_t *received_pkt);
 int comm_send_ack(const packet_t *received_pkt);

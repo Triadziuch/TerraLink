@@ -108,15 +108,23 @@ int create_handshake_pkt(packet_t *pkt) {
 	return 1;
 }
 
-int create_data_pkt(packet_t *pkt) {
-	if (pkt == NULL)
+int create_data_pkt(packet_t *data_pkt, const packet_t *request_pkt) {
+	if (data_pkt == NULL)
 		return 0;
 
-	pkt->dst_id = 96; //TODO: move to flash received TerraLink ID from handshake
-	pkt->src_id = FLASH_NODE_ID_get();
-	pkt->pkt_type = PKT_DATA;
-	pkt->seq = next_seq_number();
-	pkt->len = 0;
+	data_pkt->src_id = FLASH_NODE_ID_get();
+	data_pkt->pkt_type = PKT_DATA;
+
+	if (request_pkt == NULL){
+		data_pkt->dst_id = 96; //TODO: move to flash received TerraLink ID from handshake
+		data_pkt->seq = next_seq_number();
+	}
+	else{
+		data_pkt->dst_id = request_pkt->src_id;
+		data_pkt->seq = request_pkt->seq + 1;
+	}
+
+	data_pkt->len = 0;
 
 	return 1;
 }
@@ -128,7 +136,7 @@ uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt) {
 	ack_pkt->dst_id = received_pkt->src_id;
 	ack_pkt->src_id = FLASH_NODE_ID_get();
 	ack_pkt->pkt_type = PKT_ACK;
-	ack_pkt->seq = next_seq_number();
+	ack_pkt->seq = received_pkt->seq + 1;
 	ack_pkt->len = 0;
 	ack_pkt->crc16 = crc16_compute((uint8_t*) ack_pkt,
 			get_pkt_length(ack_pkt) - CRC_SIZE);
