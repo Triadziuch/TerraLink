@@ -8,7 +8,6 @@
 #ifndef INC_PACKET_H_
 #define INC_PACKET_H_
 
-
 #define HEADER_SIZE 5
 #define CRC_SIZE 2
 
@@ -62,12 +61,14 @@ typedef enum {
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
 uint16_t crc16_compute(const uint8_t *data, uint16_t length);
-int verify_pkt(packet_t *pkt);
-int get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
-int attach_data(packet_t* pkt, data_record_t* data);
-int create_handshake_pkt(packet_t* pkt);
-int create_data_pkt(packet_t *data_pkt, const packet_t *request_pkt);
-uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt);
+
+uint8_t verify_pkt(packet_t *pkt);
+uint8_t get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
+uint8_t attach_data(packet_t* pkt, data_record_t* data);
+
+uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt);
+uint8_t create_handshake_pkt(packet_t* pkt);
+uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt);
 
 //TODO: CRC Compute
 

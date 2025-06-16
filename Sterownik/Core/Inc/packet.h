@@ -68,17 +68,19 @@ typedef enum {
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
 uint16_t crc16_compute(const uint8_t *data, uint16_t length);
-int verify_pkt(packet_t *pkt);
-int get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
-int attach_data(packet_t* pkt, data_record_t* data);
 
 uint8_t get_id(STM32_UID_t* uid);
 uint8_t id_exists(uint8_t link_id);
 
-uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t* ack_pkt);
-uint8_t create_handshake_response_pkt(const packet_t *req_pkt, packet_t *resp_pkt);
+uint8_t verify_pkt(packet_t *pkt);
+uint8_t get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
+uint8_t attach_data(packet_t* pkt, data_record_t* data);
+
+uint8_t create_ack_pkt(packet_t* ack_pkt, const packet_t *received_pkt);
+uint8_t create_handshake_response_pkt(packet_t *resp_pkt, const packet_t *req_pkt);
 uint8_t create_request_data_pkt(packet_t* req_pkt, uint8_t dest_id, DATA_TYPE req_data_type);
 uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id);
+
 //TODO: CRC Compute
 
 #endif /* INC_PACKET_H_ */

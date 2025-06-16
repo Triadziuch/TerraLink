@@ -26,7 +26,7 @@ uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
 	return 77;
 }
 
-int verify_pkt(packet_t *pkt) {
+uint8_t verify_pkt(packet_t *pkt) {
 
 	uint8_t *rx_buf = lora_buffer;
 	if (rx_buf == NULL)
@@ -54,7 +54,7 @@ int verify_pkt(packet_t *pkt) {
 	return 1;
 }
 
-int get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
+uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
 
@@ -69,7 +69,7 @@ int get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	return 1;
 }
 
-int attach_data(packet_t *pkt, data_record_t *data) {
+uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
 
@@ -101,7 +101,7 @@ uint8_t id_exists(uint8_t link_id) {
 	return 0;
 }
 
-uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt) {
+uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt) {
 	if (received_pkt == NULL || ack_pkt == NULL)
 		return 0;
 
@@ -116,8 +116,8 @@ uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt) {
 	return 1;
 }
 
-uint8_t create_handshake_response_pkt(const packet_t *req_pkt,
-		packet_t *resp_pkt) {
+uint8_t create_handshake_response_pkt(packet_t *resp_pkt,
+		const packet_t *req_pkt) {
 	if (req_pkt->len != 3 * DATA_RECORD_SIZE)
 		return 0;
 

@@ -251,13 +251,19 @@ int main(void) {
 
 			printf("REQUESTING LIGHT DATA\n");
 			packet_t *data_pkt = comm_req_data(1, DATA_LIGHT);
-			if (data_pkt != NULL){
+			if (data_pkt != NULL) {
 				comm_handle_data(data_pkt);
 				free(data_pkt);
-			}
-
-			else
+			} else
 				printf("REQUESTING LIGHT DATA FAILED\n");
+
+			printf("REQUESTING SOIL MOISTURE DATA\n");
+			packet_t *data_pkt1 = comm_req_data(1, DATA_SOIL_MOISTURE);
+			if (data_pkt1 != NULL) {
+				comm_handle_data(data_pkt1);
+				free(data_pkt1);
+			} else
+				printf("REQUESTING SOIL MOISTURE DATA FAILED\n");
 		}
 
 		static uint32_t last_check = 0;

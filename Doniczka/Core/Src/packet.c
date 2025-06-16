@@ -21,7 +21,7 @@ uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
 	return 77;
 }
 
-int verify_pkt(packet_t *pkt) {
+uint8_t verify_pkt(packet_t *pkt) {
 
 	uint8_t *rx_buf = lora_buffer;
 	if (rx_buf == NULL)
@@ -48,7 +48,7 @@ int verify_pkt(packet_t *pkt) {
 	return true;
 }
 
-int get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
+uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
 
@@ -63,7 +63,7 @@ int get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	return 1;
 }
 
-int attach_data(packet_t *pkt, data_record_t *data) {
+uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
 
@@ -76,7 +76,22 @@ int attach_data(packet_t *pkt, data_record_t *data) {
 	return 1;
 }
 
-int create_handshake_pkt(packet_t *pkt) {
+uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt) {
+	if (received_pkt == NULL || ack_pkt == NULL)
+		return 0;
+
+	ack_pkt->dst_id = received_pkt->src_id;
+	ack_pkt->src_id = FLASH_NODE_ID_get();
+	ack_pkt->pkt_type = PKT_ACK;
+	ack_pkt->seq = received_pkt->seq + 1;
+	ack_pkt->len = 0;
+	ack_pkt->crc16 = crc16_compute((uint8_t*) ack_pkt,
+			get_pkt_length(ack_pkt) - CRC_SIZE);
+
+	return 1;
+}
+
+uint8_t create_handshake_pkt(packet_t *pkt) {
 	if (pkt == NULL)
 		return 0;
 
@@ -108,38 +123,23 @@ int create_handshake_pkt(packet_t *pkt) {
 	return 1;
 }
 
-int create_data_pkt(packet_t *data_pkt, const packet_t *request_pkt) {
+uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt) {
 	if (data_pkt == NULL)
 		return 0;
 
 	data_pkt->src_id = FLASH_NODE_ID_get();
 	data_pkt->pkt_type = PKT_DATA;
 
-	if (request_pkt == NULL){
+	if (received_pkt == NULL){
 		data_pkt->dst_id = 96; //TODO: move to flash received TerraLink ID from handshake
 		data_pkt->seq = next_seq_number();
 	}
 	else{
-		data_pkt->dst_id = request_pkt->src_id;
-		data_pkt->seq = request_pkt->seq + 1;
+		data_pkt->dst_id = received_pkt->src_id;
+		data_pkt->seq = received_pkt->seq + 1;
 	}
 
 	data_pkt->len = 0;
-
-	return 1;
-}
-
-uint8_t create_ack_pkt(const packet_t *received_pkt, packet_t *ack_pkt) {
-	if (received_pkt == NULL || ack_pkt == NULL)
-		return 0;
-
-	ack_pkt->dst_id = received_pkt->src_id;
-	ack_pkt->src_id = FLASH_NODE_ID_get();
-	ack_pkt->pkt_type = PKT_ACK;
-	ack_pkt->seq = received_pkt->seq + 1;
-	ack_pkt->len = 0;
-	ack_pkt->crc16 = crc16_compute((uint8_t*) ack_pkt,
-			get_pkt_length(ack_pkt) - CRC_SIZE);
 
 	return 1;
 }

@@ -26,18 +26,18 @@
 uint32_t GetTime(void);
 
 void comm_init();
+uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout);
+uint8_t comm_rx(uint8_t length, uint32_t timeout);
 
-int comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout);
-int comm_rx(uint8_t length, uint32_t timeout);
+uint8_t comm_send(const packet_t *pkt);
+uint8_t comm_receive(packet_t *pkt);
 
-int comm_send(const packet_t *pkt);
-int comm_receive(packet_t *pkt);
-
-int comm_handshake_slave(const packet_t *received_pkt);
-int comm_handle_data(const packet_t *received_pkt);
 packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type);
-int comm_send_ack(const packet_t *received_pkt);
-int comm_await_ack(const packet_t *sent_packet);
+uint8_t comm_send_ack(const packet_t *received_pkt);
+uint8_t comm_await_ack(const packet_t *sent_packet);
+
+uint8_t comm_handshake_slave(const packet_t *received_pkt);
+uint8_t comm_handle_data(const packet_t *received_pkt);
 
 void comm_print_pkt(const packet_t *pkt, const char *text);
 

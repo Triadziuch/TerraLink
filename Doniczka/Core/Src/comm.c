@@ -42,18 +42,18 @@ void comm_init() {
 	SX1278_LORA_CRC_EN, 64);
 }
 
-int comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout) {
+uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout) {
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 	int status = SX1278_transmit(&sx1278, txBuf, length, timeout);
 	HAL_NVIC_EnableIRQ(EXTI_LINE);
 	return status;
 }
 
-int comm_rx(uint8_t length, uint32_t timeout) {
+uint8_t comm_rx(uint8_t length, uint32_t timeout) {
 	return SX1278_receive(&sx1278, length, timeout);
 }
 
-int comm_send(const packet_t *pkt) {
+uint8_t comm_send(const packet_t *pkt) {
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 
 	uint16_t total_len = get_pkt_length(pkt);
@@ -70,7 +70,7 @@ int comm_send(const packet_t *pkt) {
 	return status;
 }
 
-int comm_receive(packet_t *pkt) {
+uint8_t comm_receive(packet_t *pkt) {
 	lora_data_ready = 0;
 
 	if (!SX1278_receive(&sx1278, sizeof(packet_t), PKT_RX_TIMEOUT))
@@ -89,7 +89,99 @@ int comm_receive(packet_t *pkt) {
 	return valid;
 }
 
-int comm_handshake_master(void) {
+uint8_t comm_send_moisture(const packet_t *request_pkt) {
+	sensor_data_raw_t moisture;
+
+	if (!GetSoilMoisturePercentage(&moisture))
+		return 0;
+
+	data_record_t data_record;
+	data_record.type = DATA_SOIL_MOISTURE;
+	data_record.time_offset = GetTime() - moisture.time;
+	data_record.data = moisture.value;
+
+	packet_t data_pkt;
+	create_data_pkt(&data_pkt, request_pkt);
+	attach_data(&data_pkt, &data_record);
+	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
+			get_pkt_length(&data_pkt) - CRC_SIZE);
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (!comm_send(&data_pkt))
+			continue;
+
+		if (comm_await_ack(&data_pkt))
+			return 1;
+
+		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
+uint8_t comm_send_lux(const packet_t *request_pkt) {
+	sensor_data_raw_t light;
+
+	if (!GetLightSensorValue(&light))
+		return 0;
+
+	data_record_t data_record;
+	data_record.type = DATA_LIGHT;
+	data_record.time_offset = GetTime() - light.time;
+	data_record.data = light.value;
+
+	packet_t data_pkt;
+	create_data_pkt(&data_pkt, request_pkt);
+	attach_data(&data_pkt, &data_record);
+	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
+			get_pkt_length(&data_pkt) - CRC_SIZE);
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (!comm_send(&data_pkt))
+			continue;
+
+		if (comm_await_ack(&data_pkt))
+			return 1;
+
+		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
+uint8_t comm_send_ack(const packet_t *received_pkt) {
+	packet_t ack_pkt;
+	if (!create_ack_pkt(&ack_pkt, received_pkt))
+		return 0;
+
+	HAL_Delay(100);
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (comm_send(&ack_pkt))
+			return 1;
+
+
+		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
+uint8_t comm_await_ack(const packet_t *sent_packet) {
+	packet_t response;
+	if (comm_receive(&response)) {
+		if (response.pkt_type == PKT_ACK
+				&& response.dst_id == sent_packet->src_id
+				&& response.src_id == sent_packet->dst_id
+				&& response.seq == sent_packet->seq + 1) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+uint8_t comm_handshake_master(void) {
 	packet_t req;
 
 	if (!create_handshake_pkt(&req))
@@ -139,71 +231,7 @@ int comm_handshake_master(void) {
 	return 0;
 }
 
-int comm_send_moisture(const packet_t *request_pkt) {
-	sensor_data_raw_t moisture;
-
-	if (!GetSoilMoisturePercentage(&moisture))
-		return 0;
-
-	//HAL_Delay(3000);
-
-	data_record_t data_record;
-	data_record.type = DATA_SOIL_MOISTURE;
-	data_record.time_offset = GetTime() - moisture.time;
-	data_record.data = moisture.value;
-
-	packet_t data_pkt;
-	create_data_pkt(&data_pkt, request_pkt);
-	attach_data(&data_pkt, &data_record);
-	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
-			get_pkt_length(&data_pkt) - CRC_SIZE);
-
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (!comm_send(&data_pkt))
-			continue;
-
-		if (comm_await_ack(&data_pkt))
-			return 1;
-
-		HAL_Delay(100);
-	}
-
-	return 0;
-}
-
-int comm_send_lux(const packet_t *request_pkt) {
-	sensor_data_raw_t light;
-
-	if (!GetLightSensorValue(&light))
-		return 0;
-
-	//HAL_Delay(3000);
-
-	data_record_t data_record;
-	data_record.type = DATA_LIGHT;
-	data_record.time_offset = GetTime() - light.time;
-	data_record.data = light.value;
-
-	packet_t data_pkt;
-	create_data_pkt(&data_pkt, request_pkt);
-	attach_data(&data_pkt, &data_record);
-	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
-			get_pkt_length(&data_pkt) - CRC_SIZE);
-
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (!comm_send(&data_pkt))
-			continue;
-
-		if (comm_await_ack(&data_pkt))
-			return 1;
-
-		HAL_Delay(100);
-	}
-
-	return 0;
-}
-
-int comm_handle_req_data(const packet_t *received_pkt) {
+uint8_t comm_handle_req_data(const packet_t *received_pkt) {
 	if (received_pkt == NULL)
 		return 0;
 
@@ -227,44 +255,12 @@ int comm_handle_req_data(const packet_t *received_pkt) {
 	return 0;
 }
 
-int comm_handle_test_conn(const packet_t *received_pkt) {
+uint8_t comm_handle_test_conn(const packet_t *received_pkt) {
 	if (received_pkt == NULL)
 		return 0;
 
 	if (comm_send_ack(received_pkt))
 		return 1;
-
-	return 0;
-}
-
-int comm_send_ack(const packet_t *received_pkt) {
-	packet_t ack_pkt;
-	if (!create_ack_pkt(received_pkt, &ack_pkt))
-		return 0;
-
-	HAL_Delay(100);
-
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (comm_send(&ack_pkt))
-			return 1;
-
-
-		HAL_Delay(100);
-	}
-
-	return 0;
-}
-
-int comm_await_ack(const packet_t *sent_packet) {
-	packet_t response;
-	if (comm_receive(&response)) {
-		if (response.pkt_type == PKT_ACK
-				&& response.dst_id == sent_packet->src_id
-				&& response.src_id == sent_packet->dst_id
-				&& response.seq == sent_packet->seq + 1) {
-			return 1;
-		}
-	}
 
 	return 0;
 }

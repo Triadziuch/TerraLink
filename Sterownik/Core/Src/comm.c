@@ -42,18 +42,18 @@ void comm_init() {
 	SX1278_LORA_CRC_EN, 64);
 }
 
-int comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout) {
+uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout) {
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 	int status = SX1278_transmit(&sx1278, txBuf, length, timeout);
 	HAL_NVIC_EnableIRQ(EXTI_LINE);
 	return status;
 }
 
-int comm_rx(uint8_t length, uint32_t timeout) {
+uint8_t comm_rx(uint8_t length, uint32_t timeout) {
 	return SX1278_receive(&sx1278, length, timeout);
 }
 
-int comm_send(const packet_t *pkt) {
+uint8_t comm_send(const packet_t *pkt) {
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 
 	uint16_t total_len = get_pkt_length(pkt);
@@ -72,7 +72,7 @@ int comm_send(const packet_t *pkt) {
 	return status;
 }
 
-int comm_receive(packet_t *pkt) {
+uint8_t comm_receive(packet_t *pkt) {
 	lora_data_ready = 0;
 
 	if (!SX1278_receive(&sx1278, sizeof(packet_t), PKT_RX_TIMEOUT))
@@ -91,7 +91,7 @@ int comm_receive(packet_t *pkt) {
 	return valid;
 }
 
-int comm_handshake_slave(const packet_t *received_pkt) {
+uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 	if (received_pkt == NULL)
 		return 0;
 
@@ -103,8 +103,7 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 				received_pkt->src_id);
 
 	packet_t assign_pkt;
-	uint8_t assigned_id = create_handshake_response_pkt(received_pkt,
-			&assign_pkt);
+	uint8_t assigned_id = create_handshake_response_pkt(&assign_pkt, received_pkt);
 	if (assigned_id == 0)
 		return 0;
 
@@ -138,7 +137,7 @@ int comm_handshake_slave(const packet_t *received_pkt) {
 	return 0;
 }
 
-int comm_handle_data(const packet_t *received_pkt) {
+uint8_t comm_handle_data(const packet_t *received_pkt) {
 	if (received_pkt->pkt_type != PKT_DATA)
 		return 0;
 
@@ -213,7 +212,8 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 		if (comm_receive(response)) {
 			if (response->pkt_type == PKT_DATA
 					&& response->dst_id == req_data_pkt.src_id
-					&& response->src_id == req_data_pkt.dst_id) {
+					&& response->src_id == req_data_pkt.dst_id
+					&& response->seq == req_data_pkt.seq + 1){
 
 				if (DEBUG_INFO)
 					printf(
@@ -231,9 +231,9 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 	return NULL;
 }
 
-int comm_send_ack(const packet_t *received_pkt) {
+uint8_t comm_send_ack(const packet_t *received_pkt) {
 	packet_t ack_pkt;
-	if (!create_ack_pkt(received_pkt, &ack_pkt))
+	if (!create_ack_pkt(&ack_pkt, received_pkt))
 		return 0;
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
@@ -252,7 +252,7 @@ int comm_send_ack(const packet_t *received_pkt) {
 	return 0;
 }
 
-int comm_test_conn(uint8_t link_id) {
+uint8_t comm_test_conn(uint8_t link_id) {
 	if (id_exists(link_id) == 0)
 		return 0;
 
@@ -276,7 +276,7 @@ int comm_test_conn(uint8_t link_id) {
 	return 0;
 }
 
-int comm_await_ack(const packet_t *sent_packet) {
+uint8_t comm_await_ack(const packet_t *sent_packet) {
 	packet_t response;
 	if (comm_receive(&response)) {
 		if (response.pkt_type == PKT_ACK
