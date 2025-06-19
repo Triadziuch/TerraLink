@@ -57,6 +57,16 @@ enum PKT_TYPE{
 	PKT_TEST_CONN	= 0x07
 };
 
+/*
+CMD for:
+set communication wakeup timer interval
+set communication wakeup timer time awake
+set measurement wakeup timer interval
+set measurement wakeup timer time awake
+set HIVE ID
+
+
+*/
 typedef enum {
 	DATA_ID				= 0x01,
 	DATA_HANDSHAKE		= 0x02,

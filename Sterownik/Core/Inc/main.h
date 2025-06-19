@@ -44,6 +44,7 @@ extern "C" {
 #define EXTI_LINE EXTI9_5_IRQn
 
 extern RTC_HandleTypeDef hrtc;
+extern CRC_HandleTypeDef hcrc;
 extern SPI_HandleTypeDef hspi1;
 
 extern RTC_TimeTypeDef clock_time;
