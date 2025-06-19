@@ -46,6 +46,7 @@ extern "C" {
 extern volatile bool rtc_wakeup_flag;
 
 extern ADC_HandleTypeDef hadc;
+extern CRC_HandleTypeDef hcrc;
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
 extern RTC_TimeTypeDef clock_time;

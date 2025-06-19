@@ -23,7 +23,11 @@ uint8_t next_seq_number() {
 }
 
 uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
-	return 77;
+	uint32_t crc_result;
+
+	crc_result = HAL_CRC_Calculate(&hcrc, (uint32_t*)data, length);
+
+	return (uint16_t)(crc_result & 0xFFFF);
 }
 
 uint8_t verify_pkt(packet_t *pkt) {
