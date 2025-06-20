@@ -153,6 +153,9 @@ int main(void)
 	// CRC Init
 	__HAL_RCC_CRC_CLK_ENABLE();
 
+	if (node_config() == 0)
+		Error_Handler();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
