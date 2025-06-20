@@ -135,7 +135,7 @@ uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt) {
 	data_pkt->pkt_type = PKT_DATA;
 
 	if (received_pkt == NULL){
-		data_pkt->dst_id = 96; //TODO: move to flash received TerraLink ID from handshake
+		data_pkt->dst_id = HIVE_ID;
 		data_pkt->seq = next_seq_number();
 	}
 	else{

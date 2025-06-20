@@ -208,7 +208,7 @@ uint8_t comm_handshake_master(void) {
 
 				uint8_t new_id = (uint8_t) data_record.data;
 
-				if (FLASH_NODE_ID_set(new_id)) {
+				if (FLASH_NODE_ID_set(new_id) && FLASH_HIVE_ID_set(response.src_id)) {
 					packet_t ack;
 					ack.dst_id = response.src_id;
 					ack.src_id = new_id;

@@ -47,33 +47,41 @@ typedef struct{
 } data_record_t;
 #pragma pack(pop)
 
-enum PKT_TYPE{
+enum{
 	PKT_REG_REQ		= 0x01,
 	PKT_ASSIGN_ID	= 0x02,
 	PKT_ACK			= 0x03,
 	PKT_DATA		= 0x04,
 	PKT_REQ_DATA	= 0x05,
 	PKT_REQ_ID		= 0x06,
-	PKT_TEST_CONN	= 0x07
+	PKT_TEST_CONN	= 0x07,
+	PKT_CMD			= 0x08,
+	PKT_CMD_DATA	= 0x09
 };
 
-/*
-CMD for:
-set communication wakeup timer interval
-set communication wakeup timer time awake
-set measurement wakeup timer interval
-set measurement wakeup timer time awake
-set HIVE ID
-
-
-*/
 typedef enum {
 	DATA_ID				= 0x01,
 	DATA_HANDSHAKE		= 0x02,
 	DATA_SOIL_MOISTURE	= 0x03,
 	DATA_LIGHT			= 0x04,
-	DATA_TEMP			= 0x05
+	DATA_TEMP			= 0x05,
+	DATA_CMD			= 0x06
 } DATA_TYPE;
+
+typedef enum{
+	CMD_GET_COMM_WAKEUP_TIMER_INTERVAL,
+	CMD_SET_COMM_WAKEUP_TIMER_INTERVAL,
+	CMD_GET_COMM_WAKEUP_TIMER_TIME_AWAKE,
+	CMD_SET_COMM_WAKEUP_TIMER_TIME_AWAKE,
+	CMD_GET_MEASUREMENT_WAKEUP_TIMER_INTERVAL,
+	CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL,
+	CMD_GET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
+	CMD_SET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
+	CMD_GET_HIVE_ID,
+	CMD_SET_HIVE_ID,
+	CMD_GET_NODE_ID,
+	CMD_SET_NODE_ID
+};
 
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();

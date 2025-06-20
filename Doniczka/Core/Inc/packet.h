@@ -47,7 +47,9 @@ enum{
 	PKT_DATA		= 0x04,
 	PKT_REQ_DATA	= 0x05,
 	PKT_REQ_ID		= 0x06,
-	PKT_TEST_CONN	= 0x07
+	PKT_TEST_CONN	= 0x07,
+	PKT_CMD			= 0x08,
+	PKT_CMD_DATA	= 0x09
 };
 
 typedef enum {
@@ -55,7 +57,8 @@ typedef enum {
 	DATA_HANDSHAKE		= 0x02,
 	DATA_SOIL_MOISTURE	= 0x03,
 	DATA_LIGHT			= 0x04,
-	DATA_TEMP			= 0x05
+	DATA_TEMP			= 0x05,
+	DATA_CMD			= 0x06
 } DATA_TYPE;
 
 uint16_t get_pkt_length(const packet_t* pkt);
