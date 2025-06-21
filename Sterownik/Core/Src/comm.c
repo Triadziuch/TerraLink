@@ -103,7 +103,8 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 				received_pkt->src_id);
 
 	packet_t assign_pkt;
-	uint8_t assigned_id = create_handshake_response_pkt(&assign_pkt, received_pkt);
+	uint8_t assigned_id = create_handshake_response_pkt(&assign_pkt,
+			received_pkt);
 	if (assigned_id == 0)
 		return 0;
 
@@ -213,7 +214,7 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 			if (response->pkt_type == PKT_DATA
 					&& response->dst_id == req_data_pkt.src_id
 					&& response->src_id == req_data_pkt.dst_id
-					&& response->seq == req_data_pkt.seq + 1){
+					&& response->seq == req_data_pkt.seq + 1) {
 
 				if (DEBUG_INFO)
 					printf(
@@ -229,6 +230,52 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 		}
 	}
 	return NULL;
+}
+
+uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value) {
+	if (id_exists(dest_id) == 0)
+		return 0;
+
+	packet_t cmd_pkt;
+	if (create_cmd_pkt(&cmd_pkt, dest_id, cmd_type, value) == 0)
+		return 0;
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		HAL_Delay(100);
+
+		if (!comm_send(&cmd_pkt))
+			continue;
+
+		if (DEBUG_INFO)
+			printf(
+					"[ID: %d] Sending CMD_PKT = %d to device ID = %d\t\t[attempt = %d]\n",
+					HIVE_ID, cmd_type, cmd_pkt.dst_id, attempt);
+
+		packet_t response;
+		if (comm_receive(&response)) {
+			if (response.pkt_type == PKT_CMD_DATA
+					&& response.dst_id == cmd_pkt.src_id
+					&& response.src_id == cmd_pkt.dst_id
+					&& response.seq == cmd_pkt.seq + 1) {
+
+				cmd_record_t cmd_record;
+				if (!get_cmd_data(&response, &cmd_record) && cmd_record.type != cmd_type)
+					continue;
+
+				if (DEBUG_INFO)
+					printf(
+							"[ID: %d] Received CMD confirmation PKT_CMD_DATA = %d, value = %d from device ID = %d\t\t[attempt = %d]\n",
+							HIVE_ID, cmd_record.type, cmd_record.value, response.src_id, attempt);
+
+				if (!comm_send_ack(&response))
+					return NULL;
+
+				return 1;
+			}
+
+		}
+	}
+	return 0;
 }
 
 uint8_t comm_send_ack(const packet_t *received_pkt) {

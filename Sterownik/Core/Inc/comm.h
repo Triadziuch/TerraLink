@@ -33,6 +33,7 @@ uint8_t comm_send(const packet_t *pkt);
 uint8_t comm_receive(packet_t *pkt);
 
 packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type);
+uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value);
 uint8_t comm_send_ack(const packet_t *received_pkt);
 uint8_t comm_await_ack(const packet_t *sent_packet);
 

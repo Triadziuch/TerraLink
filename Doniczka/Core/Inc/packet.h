@@ -13,6 +13,7 @@
 
 #define MAX_PAYLOAD_SIZE	27
 #define DATA_RECORD_SIZE	9
+#define CMD_RECORD_SIZE		3
 
 #define BROADCAST_ID	255
 
@@ -57,9 +58,23 @@ typedef enum {
 	DATA_HANDSHAKE		= 0x02,
 	DATA_SOIL_MOISTURE	= 0x03,
 	DATA_LIGHT			= 0x04,
-	DATA_TEMP			= 0x05,
-	DATA_CMD			= 0x06
+	DATA_TEMP			= 0x05
 } DATA_TYPE;
+
+typedef enum{
+	CMD_GET_COMM_WAKEUP_TIMER_INTERVAL			= 0x01,
+	CMD_SET_COMM_WAKEUP_TIMER_INTERVAL			= 0x02, // 2
+	CMD_GET_COMM_WAKEUP_TIMER_TIME_AWAKE		= 0x03,
+	CMD_SET_COMM_WAKEUP_TIMER_TIME_AWAKE		= 0x04, // 1
+	CMD_GET_MEASUREMENT_WAKEUP_TIMER_INTERVAL	= 0x05,
+	CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL	= 0x06, // 2
+	CMD_GET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE	= 0x07,
+	CMD_SET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE	= 0x08, // 1
+	CMD_GET_HIVE_ID	= 0x09,
+	CMD_SET_HIVE_ID	= 0x0A, // 1
+	CMD_GET_NODE_ID	= 0x0B,
+	CMD_SET_NODE_ID = 0x0C  // 1
+} CMD_TYPE;
 
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
@@ -68,11 +83,12 @@ uint16_t crc16_compute(const uint8_t *data, uint16_t length);
 uint8_t verify_pkt(packet_t *pkt);
 uint8_t get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
 uint8_t attach_data(packet_t* pkt, data_record_t* data);
+uint8_t attach_cmd(packet_t* pkt, cmd_record_t* cmd);
 
 uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt);
 uint8_t create_handshake_pkt(packet_t* pkt);
 uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt);
-
+uint8_t create_cmd_data_pkt(packet_t *cmd_data_pkt, CMD_TYPE cmd);
 //TODO: CRC Compute
 
 #endif /* INC_PACKET_H_ */
