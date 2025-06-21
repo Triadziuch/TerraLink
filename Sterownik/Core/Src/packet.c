@@ -25,9 +25,9 @@ uint8_t next_seq_number() {
 uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
 	uint32_t crc_result;
 
-	crc_result = HAL_CRC_Calculate(&hcrc, (uint32_t*)data, length);
+	crc_result = HAL_CRC_Calculate(&hcrc, (uint32_t*) data, length);
 
-	return (uint16_t)(crc_result & 0xFFFF);
+	return (uint16_t) (crc_result & 0xFFFF);
 }
 
 uint8_t verify_pkt(packet_t *pkt) {
@@ -73,6 +73,15 @@ uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	return 1;
 }
 
+uint8_t get_cmd_data(const packet_t* pkt, cmd_record_t* cmd_data){
+	if (pkt == NULL || cmd_data == NULL || pkt->len < CMD_RECORD_SIZE)
+		return 0;
+
+	memcpy(cmd_data, pkt->payload, CMD_RECORD_SIZE);
+
+	return 1;
+}
+
 uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
@@ -82,6 +91,16 @@ uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 
 	memcpy(pkt->payload + pkt->len, data, DATA_RECORD_SIZE);
 	pkt->len += DATA_RECORD_SIZE;
+
+	return 1;
+}
+
+uint8_t attach_cmd(packet_t *pkt, cmd_record_t *cmd) {
+	if (pkt == NULL || cmd == NULL)
+		return 0;
+
+	memcpy(pkt->payload + pkt->len, cmd, CMD_RECORD_SIZE);
+	pkt->len += CMD_RECORD_SIZE;
 
 	return 1;
 }
@@ -189,6 +208,39 @@ uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id) {
 	test_pkt->len = 0;
 	test_pkt->crc16 = crc16_compute((uint8_t*) test_pkt,
 			get_pkt_length(test_pkt) - CRC_SIZE);
+
+	return 1;
+}
+
+uint8_t create_cmd_pkt(packet_t *cmd_pkt, uint8_t dest_id, CMD_TYPE cmd,
+		uint16_t value) {
+	if (cmd_pkt == NULL)
+		return 0;
+
+	cmd_pkt->dst_id = dest_id;
+	cmd_pkt->src_id = HIVE_ID;
+	cmd_pkt->pkt_type = PKT_CMD;
+	cmd_pkt->seq = next_seq_number();
+	cmd_pkt->len = 0;
+
+	// If set command
+	if (cmd % 2 == 0) {
+		if (cmd != CMD_SET_COMM_WAKEUP_TIMER_INTERVAL
+				&& cmd != CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL)
+			if (value > 255)
+				return 0;
+
+		cmd_record_t cmd_record;
+		cmd_record.type = cmd;
+		cmd_record.value = value;
+
+		if (!attach_cmd(cmd_pkt, &cmd_record))
+			return 0;
+
+	}
+
+	cmd_pkt->crc16 = crc16_compute((uint8_t*) cmd_pkt,
+			get_pkt_length(cmd_pkt) - CRC_SIZE);
 
 	return 1;
 }

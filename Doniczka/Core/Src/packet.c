@@ -80,6 +80,10 @@ uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 	return 1;
 }
 
+uint8_t attach_cmd(packet_t* pkt, cmd_record_t* cmd){
+
+}
+
 uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt) {
 	if (received_pkt == NULL || ack_pkt == NULL)
 		return 0;
@@ -146,4 +150,8 @@ uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt) {
 	data_pkt->len = 0;
 
 	return 1;
+}
+
+uint8_t create_cmd_data_pkt(packet_t *cmd_data_pkt, CMD_TYPE cmd){
+
 }
