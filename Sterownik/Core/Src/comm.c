@@ -126,10 +126,19 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 					&& response.src_id == assigned_id
 					&& response.seq == assign_pkt.seq + 1) {
 
+				data_record_t req_data[3];
+				for (int i = 0; i < 3; ++i)
+					get_data(received_pkt, i, &req_data[i]);
+				STM32_UID_t uid = { req_data[0].data, req_data[1].data,
+						req_data[2].data };
+				if (FLASH_NODE_UID_ID_add(&uid, assigned_id) == 0)
+					return 0;
+
 				if (DEBUG_INFO)
 					printf(
 							"[ID: %d] Received handshake PKT_ACK from device ID = %d\n",
 							HIVE_ID, response.src_id);
+
 				return 1;
 			}
 		}
@@ -191,7 +200,7 @@ uint8_t comm_handle_data(const packet_t *received_pkt) {
 
 // Returns received packet with data. Returns NULL if didn't get response to request.
 packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
-	if (id_exists(dest_id) == 0)
+	if (find_id(dest_id) < 0)
 		return NULL;
 
 	packet_t req_data_pkt;
@@ -233,7 +242,7 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 }
 
 uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value) {
-	if (id_exists(dest_id) == 0)
+	if (find_id(dest_id) < 0)
 		return 0;
 
 	packet_t cmd_pkt;
@@ -259,16 +268,22 @@ uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value) {
 					&& response.seq == cmd_pkt.seq + 1) {
 
 				cmd_record_t cmd_record;
-				if (!get_cmd_data(&response, &cmd_record) && cmd_record.type != cmd_type)
+				if (!get_cmd_data(&response, &cmd_record)
+						&& cmd_record.type != cmd_type)
 					continue;
 
 				if (DEBUG_INFO)
 					printf(
 							"[ID: %d] Received CMD confirmation PKT_CMD_DATA = %d, value = %d from device ID = %d\t\t[attempt = %d]\n",
-							HIVE_ID, cmd_record.type, cmd_record.value, response.src_id, attempt);
+							HIVE_ID, cmd_record.type, cmd_record.value,
+							response.src_id, attempt);
 
 				if (!comm_send_ack(&response))
-					return NULL;
+					return 0;
+
+				//TODO: Dodać instrukcje odpowiednie dla każdego z typów poleceń
+//				if (!set_id(dest_id, value))
+//					return 0;
 
 				return 1;
 			}
@@ -300,7 +315,7 @@ uint8_t comm_send_ack(const packet_t *received_pkt) {
 }
 
 uint8_t comm_test_conn(uint8_t link_id) {
-	if (id_exists(link_id) == 0)
+	if (find_id(link_id) < 0)
 		return 0;
 
 	packet_t test_pkt;

@@ -217,8 +217,12 @@ int main(void) {
 	}
 
 	int pkt_req_it = 0;
-
+	int cmd_i = 12;
+	int current_id = 1;
 	packet_t received_pkt;
+
+	if (link_config() != HAL_OK)
+		Error_Handler();
 
 	/* USER CODE END 2 */
 
@@ -257,7 +261,7 @@ int main(void) {
 			pkt_req_it = 0;
 
 			printf("REQUESTING LIGHT DATA\n");
-			packet_t *data_pkt = comm_req_data(1, DATA_LIGHT);
+			packet_t *data_pkt = comm_req_data(current_id, DATA_LIGHT);
 			if (data_pkt != NULL) {
 				comm_handle_data(data_pkt);
 				free(data_pkt);
@@ -265,12 +269,27 @@ int main(void) {
 				printf("REQUESTING LIGHT DATA FAILED\n");
 
 			printf("REQUESTING SOIL MOISTURE DATA\n");
-			packet_t *data_pkt1 = comm_req_data(1, DATA_SOIL_MOISTURE);
+			packet_t *data_pkt1 = comm_req_data(current_id, DATA_SOIL_MOISTURE);
 			if (data_pkt1 != NULL) {
 				comm_handle_data(data_pkt1);
 				free(data_pkt1);
 			} else
 				printf("REQUESTING SOIL MOISTURE DATA FAILED\n");
+
+//			if (++cmd_i == 256)
+//				cmd_i = 12;
+//			else if (cmd_i == 96)
+//				cmd_i = 97;
+//
+//			printf("SETTING NODE ID TO %d\n", cmd_i);
+//			if (comm_send_cmd(current_id, CMD_SET_NODE_ID, cmd_i)){
+//				printf("SETTING NODE ID SUCCESSFUL\n");
+//				current_id = cmd_i;
+//			}
+//			else{
+//				printf("ERROR OCURRED SETTING NODE ID\n");
+//			}
+
 		}
 
 		static uint32_t last_check = 0;

@@ -19,13 +19,7 @@
 
 #include "stdint.h"
 #include "stdbool.h"
-//#include "flash_manage.h"
-
-typedef struct{
-	uint32_t UID_0;
-	uint32_t UID_1;
-	uint32_t UID_2;
-} STM32_UID_t;
+#include "flash_manage.h"
 
 //TODO: Flexible array
 #pragma pack(push, 1)
@@ -96,6 +90,7 @@ uint16_t crc16_compute(const uint8_t *data, uint16_t length);
 
 uint8_t get_id(STM32_UID_t* uid);
 uint8_t id_exists(uint8_t link_id);
+uint8_t set_id(uint8_t current_id, uint8_t new_id);
 
 uint8_t verify_pkt(packet_t *pkt);
 uint8_t get_data(const packet_t* pkt, uint8_t index, data_record_t* data);

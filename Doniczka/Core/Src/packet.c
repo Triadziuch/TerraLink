@@ -20,9 +20,9 @@ uint8_t next_seq_number() {
 uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
 	uint32_t crc_result;
 
-	crc_result = HAL_CRC_Calculate(&hcrc, (uint32_t*)data, length);
+	crc_result = HAL_CRC_Calculate(&hcrc, (uint32_t*) data, length);
 
-	return (uint16_t)(crc_result & 0xFFFF);
+	return (uint16_t) (crc_result & 0xFFFF);
 }
 
 uint8_t verify_pkt(packet_t *pkt) {
@@ -67,6 +67,15 @@ uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	return 1;
 }
 
+uint8_t get_cmd_data(const packet_t *pkt, cmd_record_t *cmd_data) {
+	if (pkt == NULL || cmd_data == NULL || pkt->len < CMD_RECORD_SIZE)
+		return 0;
+
+	memcpy(cmd_data, pkt->payload, CMD_RECORD_SIZE);
+
+	return 1;
+}
+
 uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 	if (pkt == NULL || data == NULL)
 		return 0;
@@ -80,8 +89,14 @@ uint8_t attach_data(packet_t *pkt, data_record_t *data) {
 	return 1;
 }
 
-uint8_t attach_cmd(packet_t* pkt, cmd_record_t* cmd){
+uint8_t attach_cmd(packet_t *pkt, cmd_record_t *cmd) {
+	if (pkt == NULL || cmd == NULL)
+		return 0;
 
+	memcpy(pkt->payload + pkt->len, cmd, CMD_RECORD_SIZE);
+	pkt->len += CMD_RECORD_SIZE;
+
+	return 1;
 }
 
 uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt) {
@@ -138,11 +153,10 @@ uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt) {
 	data_pkt->src_id = FLASH_NODE_ID_get();
 	data_pkt->pkt_type = PKT_DATA;
 
-	if (received_pkt == NULL){
+	if (received_pkt == NULL) {
 		data_pkt->dst_id = HIVE_ID;
 		data_pkt->seq = next_seq_number();
-	}
-	else{
+	} else {
 		data_pkt->dst_id = received_pkt->src_id;
 		data_pkt->seq = received_pkt->seq + 1;
 	}
@@ -152,6 +166,73 @@ uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt) {
 	return 1;
 }
 
-uint8_t create_cmd_data_pkt(packet_t *cmd_data_pkt, CMD_TYPE cmd){
+uint8_t create_cmd_data_resp_pkt(packet_t *cmd_data_pkt,
+		const packet_t *received_pkt) {
+	if (!cmd_data_pkt || !received_pkt)
+		return 0;
 
+	cmd_record_t cmd_data;
+	if (!get_cmd_data(received_pkt, &cmd_data))
+		return 0;
+
+	cmd_data_pkt->dst_id = FLASH_HIVE_ID_get();
+	cmd_data_pkt->src_id = FLASH_NODE_ID_get();
+	cmd_data_pkt->pkt_type = PKT_CMD_DATA;
+	cmd_data_pkt->seq = received_pkt->seq + 1;
+	cmd_data_pkt->len = 0;
+
+	switch (cmd_data.type) {
+	case CMD_SET_COMM_WAKEUP_TIMER_INTERVAL:
+		if (!FLASH_COMM_WAKEUP_TIMER_INTERVAL_set(cmd_data.value))
+			return 0;
+	case CMD_GET_COMM_WAKEUP_TIMER_INTERVAL:
+		cmd_data.value = FLASH_COMM_WAKEUP_TIMER_INTERVAL_get();
+		break;
+
+	case CMD_SET_COMM_WAKEUP_TIMER_TIME_AWAKE:
+		if (!FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_set(cmd_data.value))
+			return 0;
+	case CMD_GET_COMM_WAKEUP_TIMER_TIME_AWAKE:
+		cmd_data.value = FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_get();
+		break;
+
+	case CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL:
+		if (!FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_set(cmd_data.value))
+			return 0;
+	case CMD_GET_MEASUREMENT_WAKEUP_TIMER_INTERVAL:
+		cmd_data.value = FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_get();
+		break;
+
+	case CMD_SET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE:
+		if (!FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(cmd_data.value))
+			return 0;
+	case CMD_GET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE:
+		cmd_data.value = FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get();
+		break;
+
+	case CMD_SET_HIVE_ID:
+		if (!FLASH_HIVE_ID_set(cmd_data.value))
+			return 0;
+	case CMD_GET_HIVE_ID:
+		cmd_data.value = FLASH_HIVE_ID_get();
+		break;
+
+	case CMD_SET_NODE_ID:
+		if (!FLASH_NODE_ID_set(cmd_data.value))
+			return 0;
+	case CMD_GET_NODE_ID:
+		cmd_data.value = FLASH_NODE_ID_get();
+		break;
+
+	default:
+		return 0;
+	}
+
+	if (!attach_cmd(cmd_data_pkt, &cmd_data))
+		return 0;
+
+	cmd_data_pkt->crc16 = crc16_compute((uint8_t*) cmd_data_pkt,
+			get_pkt_length(cmd_data_pkt) - CRC_SIZE);
+
+	return 1;
 }

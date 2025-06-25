@@ -50,7 +50,7 @@ uint8_t FLASH_HIVE_ID_get(void) {
 }
 
 uint8_t FLASH_HIVE_ID_set(uint8_t hive_id) {
-	if (FLASH_HIVE_ID_get() == hive_id)
+	if (FLASH_HIVE_ID_get() == hive_id && FLASH_HIVE_ID_is_valid())
 		return 1;
 
 	HAL_StatusTypeDef status;

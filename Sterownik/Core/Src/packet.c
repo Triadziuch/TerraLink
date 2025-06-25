@@ -8,11 +8,6 @@
 #include "packet.h"
 #include "comm.h"
 
-//TODO: Move to FLASH
-int UIDs_count = 0;
-STM32_UID_t UIDs[8] = { 0 };
-uint8_t UIDs_assigned_ID[8] = { 0 };
-
 uint16_t get_pkt_length(const packet_t *pkt) {
 	return HEADER_SIZE + pkt->len + CRC_SIZE;
 }
@@ -105,24 +100,14 @@ uint8_t attach_cmd(packet_t *pkt, cmd_record_t *cmd) {
 	return 1;
 }
 
-uint8_t get_id(STM32_UID_t *uid) {
-	for (int i = 0; i < UIDs_count; ++i)
-		if (uid->UID_0 == UIDs[i].UID_0 && uid->UID_1 == UIDs[i].UID_1
-				&& uid->UID_2 == UIDs[i].UID_2) {
-			printf("UID already exists!");
-			return UIDs_assigned_ID[i];
-		}
-
-	UIDs[UIDs_count++] = *uid;
-	return UIDs_assigned_ID[UIDs_count - 1] = UIDs_count;
-}
-
-uint8_t id_exists(uint8_t link_id) {
-	for (int i = 0; i < UIDs_count; ++i)
-		if (UIDs_assigned_ID[i] == link_id)
-			return 1;
-	return 0;
-}
+//uint8_t set_id(uint8_t current_id, uint8_t new_id){
+//	for (int i = 0; i < UIDs_count; ++i)
+//		if (UIDs_assigned_ID[i] == current_id){
+//			UIDs_assigned_ID[i] = new_id;
+//			return 1;
+//		}
+//	return 0;
+//}
 
 uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt) {
 	if (received_pkt == NULL || ack_pkt == NULL)
@@ -154,7 +139,12 @@ uint8_t create_handshake_response_pkt(packet_t *resp_pkt,
 	}
 
 	STM32_UID_t uid = { req_data[0].data, req_data[1].data, req_data[2].data };
-	uint8_t assigned_id = get_id(&uid);
+	int8_t uid_found_pos = find_uid(&uid);
+	uint8_t assigned_id = 0;
+	if (uid_found_pos >= 0)
+		assigned_id = FLASH_NODE_ID_get(uid_found_pos);
+	else
+		assigned_id = get_new_id();
 
 	data_record_t resp_data;
 	resp_data.type = DATA_ID;

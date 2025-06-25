@@ -149,6 +149,21 @@ uint8_t comm_send_lux(const packet_t *request_pkt) {
 	return 0;
 }
 
+//TODO: Refactorize redundant code
+uint8_t comm_send_cmd_data(const packet_t *cmd_packet) {
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		if (!comm_send(cmd_packet))
+			continue;
+
+		if (comm_await_ack(cmd_packet))
+			return 1;
+
+		HAL_Delay(100);
+	}
+
+	return 0;
+}
+
 uint8_t comm_send_ack(const packet_t *received_pkt) {
 	packet_t ack_pkt;
 	if (!create_ack_pkt(&ack_pkt, received_pkt))
@@ -159,7 +174,6 @@ uint8_t comm_send_ack(const packet_t *received_pkt) {
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		if (comm_send(&ack_pkt))
 			return 1;
-
 
 		HAL_Delay(100);
 	}
@@ -195,8 +209,10 @@ uint8_t comm_handshake_master(void) {
 
 		packet_t response;
 		if (comm_receive(&response)) {
-			if (response.pkt_type
-					== PKT_ASSIGN_ID&& response.dst_id == req.src_id && response.len == DATA_RECORD_SIZE && response.seq == req.seq + 1) {
+			if (response.pkt_type == PKT_ASSIGN_ID
+					&& response.dst_id == req.src_id
+					&& response.len == DATA_RECORD_SIZE
+					&& response.seq == req.seq + 1) {
 
 				data_record_t data_record;
 
@@ -208,7 +224,8 @@ uint8_t comm_handshake_master(void) {
 
 				uint8_t new_id = (uint8_t) data_record.data;
 
-				if (FLASH_NODE_ID_set(new_id) && FLASH_HIVE_ID_set(response.src_id)) {
+				if (FLASH_NODE_ID_set(new_id)
+						&& FLASH_HIVE_ID_set(response.src_id)) {
 					packet_t ack;
 					ack.dst_id = response.src_id;
 					ack.src_id = new_id;
@@ -263,4 +280,18 @@ uint8_t comm_handle_test_conn(const packet_t *received_pkt) {
 		return 1;
 
 	return 0;
+}
+
+uint8_t comm_handle_cmd(const packet_t *received_pkt) {
+	if (received_pkt == NULL)
+		return 0;
+
+	if (received_pkt->pkt_type != PKT_CMD)
+		return 0;
+
+	packet_t cmd_response;
+	if (create_cmd_data_resp_pkt(&cmd_response, received_pkt) == 0)
+		return 0;
+
+	return comm_send_cmd_data(&cmd_response);
 }
