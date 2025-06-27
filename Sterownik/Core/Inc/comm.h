@@ -34,11 +34,13 @@ uint8_t comm_send(const packet_t *pkt);
 uint8_t comm_receive(packet_t *pkt);
 
 packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type);
-uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value);
+cmd_record_t* comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value);
 uint8_t comm_send_ack(const packet_t *received_pkt);
 uint8_t comm_await_ack(const packet_t *sent_packet);
 
 uint8_t comm_handshake_slave(const packet_t *received_pkt);
+uint8_t configure_new_node(uint8_t node_id);
+uint8_t configure_field(uint8_t node_id, uint8_t get_cmd, uint8_t set_cmd, uint16_t default_value, uint8_t (*flash_set)(uint8_t, uint16_t));
 uint8_t comm_handle_data(const packet_t *received_pkt);
 
 void comm_print_pkt(const packet_t *pkt, const char *text);

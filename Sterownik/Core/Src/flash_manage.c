@@ -225,17 +225,19 @@ uint8_t FLASH_NODE_count_get(void) {
 
 uint16_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+			+ FFLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_OFFSET;
+
+	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint16_t*) (NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ NODE_COMM_WAKEUP_TIMER_INTERVAL_OFFSET);
+	return *(uint8_t*) address;
 }
 
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 		uint16_t value) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	if (n < 0 || value == 0)
 		return 0;
 
 	uint8_t buffer[NODE_COMM_WAKEUP_TIMER_INTERVAL_SIZE];
@@ -253,17 +255,19 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+			+ FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
+
+	if (n < 0 || *(uint8_t*) (address + sizeof(uint8_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint8_t*) (NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_OFFSET);
+	return *(uint8_t*) address;
 }
 
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 		uint8_t value) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	if (n < 0 || value == 0)
 		return 0;
 
 	uint8_t buffer[NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_SIZE];
@@ -281,17 +285,19 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 
 uint16_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+			+ FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_OFFSET;
+
+	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint16_t*) (NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_OFFSET);
+	return *(uint8_t*) address;
 }
 
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 		uint16_t value) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	if (n < 0 || value == 0)
 		return 0;
 
 	uint8_t buffer[NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_SIZE];
@@ -301,7 +307,7 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 			+ n * NODE_DATA_SIZE;
 
 	if (flash_write(write_addr, buffer,
-			NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_SIZE) != HAL_OK)
+	NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_SIZE) != HAL_OK)
 		return 0;
 
 	return 1;
@@ -309,17 +315,19 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+			+ FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
+
+	if (n < 0 || *(uint8_t*) (address + sizeof(uint8_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint8_t*) (NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_OFFSET);
+	return *(uint8_t*) address;
 }
 
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 		uint8_t value) {
 	int8_t n = find_id(node_id);
-	if (n < 0)
+	if (n < 0 || value == 0)
 		return 0;
 
 	uint8_t buffer[NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_SIZE];
@@ -329,7 +337,34 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 			+ n * NODE_DATA_SIZE;
 
 	if (flash_write(write_addr, buffer,
-			NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_SIZE) != HAL_OK)
+	NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_SIZE) != HAL_OK)
+		return 0;
+
+	return 1;
+}
+
+uint16_t FLASH_NODE_NEXT_WAKEUP_get(uint8_t node_id) {
+	int8_t n = find_id(node_id);
+	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+			+ NODE_NEXT_WAKEUP_OFFSET;
+
+	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
+		return 0;
+
+	return *(uint16_t*) address;
+}
+
+uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint16_t value) {
+	int8_t n = find_id(node_id);
+	if (n < 0 || value == 0)
+		return 0;
+
+	uint8_t buffer[NODE_NEXT_WAKEUP_SIZE];
+	memcpy(buffer, &value, sizeof(uint16_t));
+	buffer[NODE_NEXT_WAKEUP_SIZE - 1] = VALID_FLAG;
+	uint32_t write_addr = NODE_NEXT_WAKEUP_ADDR + n * NODE_DATA_SIZE;
+
+	if (flash_write(write_addr, buffer, NODE_NEXT_WAKEUP_SIZE) != HAL_OK)
 		return 0;
 
 	return 1;

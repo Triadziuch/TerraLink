@@ -24,7 +24,7 @@ uint32_t GetTime(void) {
 }
 
 //TODO: Dokończyć
-uint8_t execute_cmd(const packet_t* cmd, const packet_t* cmd_data){
+uint8_t execute_cmd(const packet_t *cmd, const packet_t *cmd_data) {
 	if (cmd == NULL || cmd_data == NULL)
 		return 0;
 
@@ -33,9 +33,8 @@ uint8_t execute_cmd(const packet_t* cmd, const packet_t* cmd_data){
 		return 0;
 	CMD_TYPE type = cmd_record.type;
 
-	switch(type){
+	switch (type) {
 	case CMD_SET_COMM_WAKEUP_TIMER_INTERVAL:
-
 
 	}
 }
@@ -151,7 +150,9 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 				if (FLASH_NODE_UID_ID_add(&uid, assigned_id) == 0)
 					return 0;
 
-				// Powysyłać komendy do ustawienia tych timerów
+				// Node config
+				if (configure_new_node(assigned_id) == 0)
+					return 0;
 
 				if (DEBUG_INFO)
 					printf(
@@ -161,6 +162,76 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 				return 1;
 			}
 		}
+	}
+
+	return 0;
+}
+
+uint8_t configure_new_node(uint8_t node_id) {
+
+	// Comm wakeup timer interval
+	if (!configure_field(node_id, CMD_GET_COMM_WAKEUP_TIMER_INTERVAL,
+			CMD_SET_COMM_WAKEUP_TIMER_INTERVAL,
+			DEFAULT_COMM_WAKEUP_TIMER_INTERVAL,
+			(uint8_t (*)(uint8_t, uint32_t)) FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set))
+		return 0;
+
+	// Comm wakeup timer time awake
+	if (!configure_field(node_id, CMD_GET_COMM_WAKEUP_TIMER_TIME_AWAKE,
+			CMD_SET_COMM_WAKEUP_TIME_AWAKE,
+			DEFAULT_COMM_WAKEUP_TIMER_TIME_AWAKE,
+			(uint8_t (*)(uint8_t, uint32_t)) FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set))
+		return 0;
+
+	// Measurement wakeup timer interval
+	if (!configure_field(node_id, CMD_GET_MEASUREMENT_WAKEUP_TIMER_INTERVAL,
+			CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL,
+			DEFAULT_MEASUREMENT_WAKEUP_TIMER_INTERVAL,
+			(uint8_t (*)(uint8_t, uint32_t)) FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set))
+		return 0;
+
+	// Measurement wakeup timer time awake
+	if (!configure_field(node_id, CMD_GET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
+			CMD_SET_MEASUREMENT_WAKEUP_TIME_AWAKE,
+			DEFAULT_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
+			(uint8_t (*)(uint8_t, uint32_t)) FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set))
+		return 0;
+
+	return 1;
+}
+
+uint8_t configure_field(uint8_t node_id, uint8_t get_cmd, uint8_t set_cmd,
+		uint16_t default_value, uint8_t (*flash_set)(uint8_t, uint16_t)) {
+
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+		cmd_record_t *record = comm_send_cmd(node_id, get_cmd, 0);
+
+		if (record == NULL)
+			continue;
+
+		uint16_t value = record->value;
+		if (value == 0) {
+			free(record);
+
+			record = comm_send_cmd(node_id, set_cmd, default_value);
+
+			if (record == NULL)
+				continue;
+
+			if (record->value != default_value) {
+				free(record);
+				continue;
+			}
+
+			value = record->value;
+		}
+
+		if (flash_set(node_id, value)) {
+			free(record);
+			return 1;
+		}
+
+		free(record);
 	}
 
 	return 0;
@@ -260,13 +331,14 @@ packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type) {
 	return NULL;
 }
 
-uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value) {
+// Returns received packed with data, either from SET or GET command. Returns NULL if didn't get response to request.
+cmd_record_t* comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value) {
 	if (find_id(dest_id) < 0)
-		return 0;
+		return NULL;
 
 	packet_t cmd_pkt;
 	if (create_cmd_pkt(&cmd_pkt, dest_id, cmd_type, value) == 0)
-		return 0;
+		return NULL;
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
@@ -286,30 +358,26 @@ uint8_t comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value) {
 					&& response.src_id == cmd_pkt.dst_id
 					&& response.seq == cmd_pkt.seq + 1) {
 
-				cmd_record_t cmd_record;
-				if (!get_cmd_data(&response, &cmd_record)
-						&& cmd_record.type != cmd_type)
+				cmd_record_t *cmd_record = malloc(sizeof(cmd_record_t));
+				if (!get_cmd_data(&response, cmd_record)
+						&& cmd_record->type != cmd_type)
 					continue;
 
 				if (DEBUG_INFO)
 					printf(
 							"[ID: %d] Received CMD confirmation PKT_CMD_DATA = %d, value = %d from device ID = %d\t\t[attempt = %d]\n",
-							HIVE_ID, cmd_record.type, cmd_record.value,
+							HIVE_ID, cmd_record->type, cmd_record->value,
 							response.src_id, attempt);
 
 				if (!comm_send_ack(&response))
-					return 0;
+					return NULL;
 
-				//TODO: Dodać instrukcje odpowiednie dla każdego z typów poleceń
-//				if (!set_id(dest_id, value))
-//					return 0;
-
-				return 1;
+				return cmd_record;
 			}
 
 		}
 	}
-	return 0;
+	return NULL;
 }
 
 uint8_t comm_send_ack(const packet_t *received_pkt) {
