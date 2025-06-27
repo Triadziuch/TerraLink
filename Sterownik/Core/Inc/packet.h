@@ -69,6 +69,7 @@ typedef enum {
 	DATA_TEMP			= 0x05
 } DATA_TYPE;
 
+//TODO: Zapisywać to we flashu dla każdego Node'a
 typedef enum{
 	CMD_GET_COMM_WAKEUP_TIMER_INTERVAL			= 0x01,
 	CMD_SET_COMM_WAKEUP_TIMER_INTERVAL			= 0x02,

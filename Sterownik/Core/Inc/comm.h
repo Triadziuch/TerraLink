@@ -24,6 +24,7 @@
 #define DEBUG_INFO 1
 
 uint32_t GetTime(void);
+uint8_t execute_cmd(const packet_t* cmd, const packet_t* cmd_data);
 
 void comm_init();
 uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout);

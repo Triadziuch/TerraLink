@@ -23,6 +23,23 @@ uint32_t GetTime(void) {
 	return (uint32_t) mktime(&t);
 }
 
+//TODO: Dokończyć
+uint8_t execute_cmd(const packet_t* cmd, const packet_t* cmd_data){
+	if (cmd == NULL || cmd_data == NULL)
+		return 0;
+
+	cmd_record_t cmd_record;
+	if (get_cmd_data(cmd, &cmd_record) == 0)
+		return 0;
+	CMD_TYPE type = cmd_record.type;
+
+	switch(type){
+	case CMD_SET_COMM_WAKEUP_TIMER_INTERVAL:
+
+
+	}
+}
+
 void comm_init() {
 	sx1278_hw.dio0.pin = LORA_DIO0_Pin;
 	sx1278_hw.dio0.port = LORA_DIO0_GPIO_Port;
@@ -133,6 +150,8 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 						req_data[2].data };
 				if (FLASH_NODE_UID_ID_add(&uid, assigned_id) == 0)
 					return 0;
+
+				// Powysyłać komendy do ustawienia tych timerów
 
 				if (DEBUG_INFO)
 					printf(
