@@ -68,7 +68,7 @@ uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 }
 
 uint8_t get_cmd_data(const packet_t *pkt, cmd_record_t *cmd_data) {
-	if (pkt == NULL || cmd_data == NULL || pkt->len < CMD_RECORD_SIZE)
+	if (pkt == NULL || cmd_data == NULL)
 		return 0;
 
 	memcpy(cmd_data, pkt->payload, CMD_RECORD_SIZE);

@@ -150,14 +150,24 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 				if (FLASH_NODE_UID_ID_add(&uid, assigned_id) == 0)
 					return 0;
 
-				// Node config
-				if (configure_new_node(assigned_id) == 0)
-					return 0;
-
 				if (DEBUG_INFO)
 					printf(
 							"[ID: %d] Received handshake PKT_ACK from device ID = %d\n",
 							HIVE_ID, response.src_id);
+
+				// Node config
+				if (configure_new_node(assigned_id) == 0)
+					return 0;
+
+				//TODO: Send packet to allow regular operation
+				packet_t start_pkt;
+				create_start_pkt(&start_pkt, assigned_id);
+				if (!comm_send(&start_pkt))
+					return 0;
+
+				if (DEBUG_INFO)
+					printf("[ID: %d] Sent PKT_START\n",
+					HIVE_ID);
 
 				return 1;
 			}
@@ -168,7 +178,6 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt) {
 }
 
 uint8_t configure_new_node(uint8_t node_id) {
-
 	// Comm wakeup timer interval
 	if (!configure_field(node_id, CMD_GET_COMM_WAKEUP_TIMER_INTERVAL,
 			CMD_SET_COMM_WAKEUP_TIMER_INTERVAL,
@@ -178,7 +187,7 @@ uint8_t configure_new_node(uint8_t node_id) {
 
 	// Comm wakeup timer time awake
 	if (!configure_field(node_id, CMD_GET_COMM_WAKEUP_TIMER_TIME_AWAKE,
-			CMD_SET_COMM_WAKEUP_TIME_AWAKE,
+			CMD_SET_COMM_WAKEUP_TIMER_TIME_AWAKE,
 			DEFAULT_COMM_WAKEUP_TIMER_TIME_AWAKE,
 			(uint8_t (*)(uint8_t, uint32_t)) FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set))
 		return 0;
@@ -192,7 +201,7 @@ uint8_t configure_new_node(uint8_t node_id) {
 
 	// Measurement wakeup timer time awake
 	if (!configure_field(node_id, CMD_GET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
-			CMD_SET_MEASUREMENT_WAKEUP_TIME_AWAKE,
+			CMD_SET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
 			DEFAULT_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE,
 			(uint8_t (*)(uint8_t, uint32_t)) FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set))
 		return 0;

@@ -195,6 +195,17 @@ uint8_t comm_await_ack(const packet_t *sent_packet) {
 	return 0;
 }
 
+uint8_t comm_await_start(void){
+	packet_t packet;
+	if (comm_receive(&packet) && packet.dst_id == NODE_ID){
+		if (packet.pkt_type == PKT_START)
+			return 1;
+		else if (packet.pkt_type == PKT_CMD)
+			comm_handle_cmd(&packet);
+	}
+	return 0;
+}
+
 uint8_t comm_handshake_master(void) {
 	packet_t req;
 
@@ -228,7 +239,7 @@ uint8_t comm_handshake_master(void) {
 						&& FLASH_HIVE_ID_set(response.src_id)) {
 					packet_t ack;
 					ack.dst_id = response.src_id;
-					ack.src_id = new_id;
+					ack.src_id = NODE_ID;
 					ack.pkt_type = PKT_ACK;
 					ack.seq = response.seq + 1;
 					ack.len = 0;

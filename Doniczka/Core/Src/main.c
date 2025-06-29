@@ -152,6 +152,9 @@ int main(void) {
 	// CRC Init
 	__HAL_RCC_CRC_CLK_ENABLE();
 
+	// TEMP
+	//node_restart();
+
 	if (node_config() == 0)
 		Error_Handler();
 
@@ -160,6 +163,8 @@ int main(void) {
 		handshake = comm_handshake_master();
 		SX1278_receive(&sx1278, 64, 2000);
 	}
+
+	while (!comm_await_start()){}
 
 	/* USER CODE END 2 */
 

@@ -57,7 +57,8 @@ enum{
 	PKT_REQ_ID		= 0x06,
 	PKT_TEST_CONN	= 0x07,
 	PKT_CMD			= 0x08,
-	PKT_CMD_DATA	= 0x09
+	PKT_CMD_DATA	= 0x09,
+	PKT_START		= 0x0A
 };
 
 typedef enum {

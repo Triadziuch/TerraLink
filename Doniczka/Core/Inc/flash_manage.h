@@ -31,7 +31,7 @@ extern uint16_t COMM_WAKEUP_TIMER_INTERVAL,
 		MEASUREMENT_WAKEUP_TIMER_INTERVAL;
 extern uint8_t COMM_WAKEUP_TIMER_TIME_AWAKE,
 		MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE;
-extern uint8_t HIVE_ID;
+extern uint8_t HIVE_ID, NODE_ID;
 
 typedef struct {
 	uint32_t UID_0;
@@ -63,6 +63,8 @@ uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_is_valid(void);
 uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t time);
 uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get(void);
 uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_is_valid(void);
+
+void node_restart(void);
 
 uint8_t node_config(void);
 #endif

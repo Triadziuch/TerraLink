@@ -208,6 +208,9 @@ int main(void) {
 
 	init_time();
 
+	// TEMP
+	FLASH_NODE_ID_remove(1);
+
 	// Od razu przejście do trybu nasłuchiwania
 	printf("Starting LoRa receiver mode...\n");
 	if (SX1278_receive(&sx1278, 64, 2000)) {

@@ -37,6 +37,7 @@ uint8_t comm_send_lux(const packet_t *request_pkt);
 uint8_t comm_send_cmd_data(const packet_t *cmd_packet);
 uint8_t comm_send_ack(const packet_t *received_pkt);
 uint8_t comm_await_ack(const packet_t *sent_packet);
+uint8_t comm_await_start(void);
 
 uint8_t comm_handshake_master(void);
 uint8_t comm_handle_req_data(const packet_t *received_pkt);

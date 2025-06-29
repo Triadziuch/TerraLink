@@ -58,7 +58,8 @@ enum{
 	PKT_REQ_ID		= 0x06,
 	PKT_TEST_CONN	= 0x07,
 	PKT_CMD			= 0x08,
-	PKT_CMD_DATA	= 0x09
+	PKT_CMD_DATA	= 0x09,
+	PKT_START		= 0x0A
 };
 
 typedef enum {
@@ -104,6 +105,7 @@ uint8_t create_handshake_response_pkt(packet_t *resp_pkt, const packet_t *req_pk
 uint8_t create_request_data_pkt(packet_t* req_pkt, uint8_t dest_id, DATA_TYPE req_data_type);
 uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id);
 uint8_t create_cmd_pkt(packet_t *cmd_pkt, uint8_t dest_id, CMD_TYPE cmd, uint16_t value);
+uint8_t create_start_pkt(packet_t *start_pkt, uint8_t dest_id);
 
 //TODO: CRC Compute
 

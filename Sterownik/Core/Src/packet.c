@@ -68,7 +68,7 @@ uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
 	return 1;
 }
 
-uint8_t get_cmd_data(const packet_t* pkt, cmd_record_t* cmd_data){
+uint8_t get_cmd_data(const packet_t *pkt, cmd_record_t *cmd_data) {
 	if (pkt == NULL || cmd_data == NULL || pkt->len < CMD_RECORD_SIZE)
 		return 0;
 
@@ -227,10 +227,32 @@ uint8_t create_cmd_pkt(packet_t *cmd_pkt, uint8_t dest_id, CMD_TYPE cmd,
 		if (!attach_cmd(cmd_pkt, &cmd_record))
 			return 0;
 
+	} else {
+		cmd_record_t cmd_record;
+		cmd_record.type = cmd;
+		cmd_record.value = 0;
+
+		if (!attach_cmd(cmd_pkt, &cmd_record))
+			return 0;
 	}
 
 	cmd_pkt->crc16 = crc16_compute((uint8_t*) cmd_pkt,
 			get_pkt_length(cmd_pkt) - CRC_SIZE);
+
+	return 1;
+}
+
+uint8_t create_start_pkt(packet_t *start_pkt, uint8_t dest_id) {
+	if (find_id(dest_id) < 0)
+		return 0;
+
+	start_pkt->dst_id = dest_id;
+	start_pkt->src_id = HIVE_ID;
+	start_pkt->pkt_type = PKT_START;
+	start_pkt->seq = next_seq_number();
+	start_pkt->len = 0;
+	start_pkt->crc16 = crc16_compute((uint8_t*) start_pkt,
+			get_pkt_length(start_pkt) - CRC_SIZE);
 
 	return 1;
 }

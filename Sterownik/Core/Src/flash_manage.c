@@ -226,7 +226,7 @@ uint8_t FLASH_NODE_count_get(void) {
 uint16_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
 	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ FFLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_OFFSET;
+			+ NODE_COMM_WAKEUP_TIMER_INTERVAL_OFFSET;
 
 	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
@@ -256,7 +256,7 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
 	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
+			+ NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
 
 	if (n < 0 || *(uint8_t*) (address + sizeof(uint8_t)) != VALID_FLAG)
 		return 0;
@@ -286,7 +286,7 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 uint16_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
 	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_OFFSET;
+			+ NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_OFFSET;
 
 	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
@@ -316,7 +316,7 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
 	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
-			+ FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
+			+ NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
 
 	if (n < 0 || *(uint8_t*) (address + sizeof(uint8_t)) != VALID_FLAG)
 		return 0;
@@ -354,7 +354,7 @@ uint16_t FLASH_NODE_NEXT_WAKEUP_get(uint8_t node_id) {
 	return *(uint16_t*) address;
 }
 
-uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint16_t value) {
+uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint8_t node_id, uint16_t value) {
 	int8_t n = find_id(node_id);
 	if (n < 0 || value == 0)
 		return 0;

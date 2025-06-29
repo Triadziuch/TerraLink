@@ -94,7 +94,7 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id);
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id, uint8_t value);
 
 uint16_t FLASH_NODE_NEXT_WAKEUP_get(uint8_t node_id);
-uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint16_t value);
+uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint8_t node_id, uint16_t value);
 
 HAL_StatusTypeDef link_config(void);
 
