@@ -208,20 +208,13 @@ int main(void) {
 
 	init_time();
 
-	// TEMP
-	FLASH_NODE_ID_remove(1);
-
 	// Od razu przejście do trybu nasłuchiwania
 	printf("Starting LoRa receiver mode...\n");
-	if (SX1278_receive(&sx1278, 64, 2000)) {
+	if (SX1278_receive(&sx1278, 64, 2000))
 		printf("LoRa receiver mode activated!\n");
-	} else {
+	else
 		printf("Failed to activate LoRa receiver mode!\n");
-	}
 
-	int pkt_req_it = 0;
-	int cmd_i = 12;
-	int current_id = 1;
 	packet_t received_pkt;
 
 	if (link_config() != HAL_OK)
@@ -242,42 +235,43 @@ int main(void) {
 
 				if (received_pkt.pkt_type == PKT_REG_REQ) {
 					comm_handshake_slave(&received_pkt);
-					SX1278_receive(&sx1278, 64, 2000);
 
 				} else {
 					if (received_pkt.pkt_type == PKT_DATA) {
 						comm_handle_data(&received_pkt);
-						SX1278_receive(&sx1278, 64, 2000);
+					} else if (received_pkt.pkt_type == PKT_CMD_DATA) {
+						comm_handle_cmd_data(&received_pkt);
 					}
-
 				}
 
 			} else {
 				printf("Packet check failed\n");
 			}
+			SX1278_receive(&sx1278, 64, 2000);
 
 			lora_data_ready = 0;
 		}
 
-		pkt_req_it++;
-		if (pkt_req_it == 10000000) {
-			pkt_req_it = 0;
-
-			printf("REQUESTING LIGHT DATA\n");
-			packet_t *data_pkt = comm_req_data(current_id, DATA_LIGHT);
-			if (data_pkt != NULL) {
-				comm_handle_data(data_pkt);
-				free(data_pkt);
-			} else
-				printf("REQUESTING LIGHT DATA FAILED\n");
-
-			printf("REQUESTING SOIL MOISTURE DATA\n");
-			packet_t *data_pkt1 = comm_req_data(current_id, DATA_SOIL_MOISTURE);
-			if (data_pkt1 != NULL) {
-				comm_handle_data(data_pkt1);
-				free(data_pkt1);
-			} else
-				printf("REQUESTING SOIL MOISTURE DATA FAILED\n");
+//		pkt_req_it++;
+//		if (pkt_req_it == 10000000) {
+//			pkt_req_it = 0;
+//
+//			printf("REQUESTING LIGHT DATA\n");
+//			packet_t *data_pkt = comm_req_data(current_id, DATA_LIGHT);
+//			if (data_pkt != NULL) {
+//				comm_handle_data(data_pkt);
+//				free(data_pkt);
+//			} else
+//				printf("REQUESTING LIGHT DATA FAILED\n");
+//
+//			printf("REQUESTING SOIL MOISTURE DATA\n");
+//			packet_t *data_pkt1 = comm_req_data(current_id, DATA_SOIL_MOISTURE);
+//			if (data_pkt1 != NULL) {
+//				comm_handle_data(data_pkt1);
+//				free(data_pkt1);
+//			} else
+//				printf("REQUESTING SOIL MOISTURE DATA FAILED\n");
+//	}
 
 //			if (++cmd_i == 256)
 //				cmd_i = 12;
@@ -293,13 +287,11 @@ int main(void) {
 //				printf("ERROR OCURRED SETTING NODE ID\n");
 //			}
 
-		}
-
 		static uint32_t last_check = 0;
-		if (HAL_GetTick() - last_check > 15000) {
+		if (HAL_GetTick() - last_check > 5000) {
 			last_check = HAL_GetTick();
 
-			comm_test_conn(1);
+			//comm_test_conn(1);
 
 			if (sx1278.status != RX) {
 				printf("LoRa not in RX mode! Current status: %d\n",

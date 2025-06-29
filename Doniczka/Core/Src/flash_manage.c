@@ -84,8 +84,10 @@ uint8_t FLASH_HIVE_ID_is_valid(void) {
 }
 
 uint8_t FLASH_COMM_WAKEUP_TIMER_INTERVAL_set(uint16_t interval) {
-	if (FLASH_COMM_WAKEUP_TIMER_INTERVAL_get() == interval)
+	if (FLASH_COMM_WAKEUP_TIMER_INTERVAL_get() == interval){
+		COMM_WAKEUP_TIMER_INTERVAL = interval;
 		return 1;
+	}
 
 	HAL_StatusTypeDef status;
 
@@ -119,8 +121,10 @@ uint8_t FLASH_COMM_WAKEUP_TIMER_INTERVAL_is_valid(void) {
 }
 
 uint8_t FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t time) {
-	if (FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_get() == time)
+	if (FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_get() == time){
+		COMM_WAKEUP_TIMER_TIME_AWAKE = time;
 		return 1;
+	}
 
 	HAL_StatusTypeDef status;
 
@@ -154,8 +158,10 @@ uint8_t FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_is_valid(void) {
 }
 
 uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_set(uint16_t interval) {
-	if (FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_get() == interval)
+	if (FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_get() == interval){
+		MEASUREMENT_WAKEUP_TIMER_INTERVAL = interval;
 		return 1;
+	}
 
 	HAL_StatusTypeDef status;
 
@@ -189,8 +195,11 @@ uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_is_valid(void) {
 }
 
 uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t time) {
-	if (FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get() == time)
+	if (FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get() == time){
+		MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE = time;
 		return 1;
+	}
+
 
 	HAL_StatusTypeDef status;
 

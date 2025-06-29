@@ -452,6 +452,32 @@ uint8_t comm_await_ack(const packet_t *sent_packet) {
 	return 0;
 }
 
+uint8_t comm_handle_cmd_data(const packet_t *received_pkt) {
+	if (received_pkt->pkt_type == PKT_CMD_DATA && received_pkt->dst_id == HIVE_ID
+			&& find_id(received_pkt->src_id) >= 0) {
+
+		cmd_record_t cmd_record;
+		if (!get_cmd_data(received_pkt, &cmd_record))
+			return 0;
+
+		if (cmd_record.type == CMD_INFO_NEXT_WAKEUP) {
+			if (DEBUG_INFO)
+				printf(
+						"[ID: %d] Received CMD_INFO_NEXT_WAKEUP. Next wakeup of device ID = %d in %d seconds\n",
+						HIVE_ID, received_pkt->src_id, cmd_record.value);
+
+			if (!comm_send_ack(received_pkt))
+				return 0;
+
+			FLASH_NODE_NEXT_WAKEUP_set(received_pkt->src_id, cmd_record.value);
+
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 void comm_print_pkt(const packet_t *pkt, const char *text) {
 	if (DEBUG_PACKET == 0)
 		return;

@@ -73,6 +73,9 @@ volatile uint8_t lora_data_ready = 0;
 
 // RTC Timer variables
 volatile bool rtc_wakeup_flag = false;
+wakeup_t *wakeup_info;
+bool handshake = false;
+packet_t received_pkt;
 
 // RTC Time and Date variables
 RTC_TimeTypeDef clock_time;
@@ -94,6 +97,69 @@ static void MX_CRC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void handle_received_pkt(packet_t *received_pkt) {
+	if (received_pkt->pkt_type == PKT_REQ_DATA) {
+		comm_handle_req_data(received_pkt);
+	} else if (received_pkt->pkt_type == PKT_TEST_CONN) {
+		comm_handle_test_conn(received_pkt);
+	} else if (received_pkt->pkt_type == PKT_ASSIGN_ID) {
+
+	} else if (received_pkt->pkt_type == PKT_REQ_ID) {
+
+	} else if (received_pkt->pkt_type == PKT_CMD) {
+		comm_handle_cmd(received_pkt);
+	}
+}
+
+void handle_measurement() {
+	comm_send_moisture(NULL);
+	comm_send_lux(NULL);
+}
+
+void handle_communication(uint8_t awake_time) {
+	uint32_t time = HAL_GetTick();
+	while (HAL_GetTick() - time >= awake_time * 1000) {
+		time = HAL_GetTick();
+
+		SX1278_receive(&sx1278, 64, 1000);
+		if (lora_data_ready) {
+			if (verify_pkt(&received_pkt)) {
+				switch (received_pkt.pkt_type) {
+				case PKT_REQ_DATA:
+					comm_handle_req_data(&received_pkt);
+					break;
+				case PKT_TEST_CONN:
+					comm_handle_test_conn(&received_pkt);
+					break;
+				case PKT_CMD:
+					comm_handle_cmd(&received_pkt);
+					break;
+				case PKT_ASSIGN_ID:
+					break;
+				case PKT_REQ_ID:
+					break;
+				}
+			}
+			lora_data_ready = 0;
+		}
+	}
+}
+
+void handle_wakeup() {
+	if (wakeup_info->wakeup_type == MEASUREMENT) {
+		handle_measurement();
+		handle_communication(MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE);
+	} else {
+		handle_communication(COMM_WAKEUP_TIMER_TIME_AWAKE);
+	}
+
+	free(wakeup_info);
+	while ((wakeup_info = comm_send_next_wakeup()) == NULL) {
+	}
+	HAL_RTC_SetWakeup(wakeup_info->time);
+	POWER_GoToSleep(&sx1278);
+}
 
 /* USER CODE END 0 */
 
@@ -140,20 +206,13 @@ int main(void) {
 
 	// RTC
 	__HAL_RCC_RTC_ENABLE();
-	HAL_RTC_SetWakeup(4);
 
 	// I2C
 	bh1750 = BH1750_init_dev_struct(&hi2c1, "bh1750", true);
 	BH1750_init_dev(bh1750);
 
-	bool handshake = false;
-	packet_t received_pkt;
-
 	// CRC Init
 	__HAL_RCC_CRC_CLK_ENABLE();
-
-	// TEMP
-	//node_restart();
 
 	if (node_config() == 0)
 		Error_Handler();
@@ -161,52 +220,59 @@ int main(void) {
 	// Validate Hive Connection
 	while (handshake == false) {
 		handshake = comm_handshake_master();
-		SX1278_receive(&sx1278, 64, 2000);
+		SX1278_receive(&sx1278, 64, 500);
 	}
 
-	while (!comm_await_start()){}
+	while (!comm_await_start()) {
+	}
 
+	wakeup_info = malloc(sizeof(wakeup_t));
+	wakeup_info->wakeup_type = MEASUREMENT;
+	wakeup_info->time = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		if (lora_data_ready) {
-			if (verify_pkt(&received_pkt)) {
-				printf("Packet check successful\n");
+		handle_wakeup();
+//		if (lora_data_ready) {
+//			if (verify_pkt(&received_pkt)) {
+//				printf("Packet check successful\n");
+//
+//				if (received_pkt.pkt_type == PKT_REQ_DATA) {
+//					comm_handle_req_data(&received_pkt);
+//				} else if (received_pkt.pkt_type == PKT_TEST_CONN) {
+//					comm_handle_test_conn(&received_pkt);
+//				} else if (received_pkt.pkt_type == PKT_ASSIGN_ID) {
+//
+//				} else if (received_pkt.pkt_type == PKT_REQ_ID) {
+//
+//				} else if (received_pkt.pkt_type == PKT_CMD) {
+//					comm_handle_cmd(&received_pkt);
+//				}
+//
+//				SX1278_receive(&sx1278, 64, 2000);
+//
+//			} else {
+//				printf("Packet check failed\n");
+//			}
+//
+//			lora_data_ready = 0;
+//		}
 
-				if (received_pkt.pkt_type == PKT_REQ_DATA) {
-					comm_handle_req_data(&received_pkt);
-				} else if (received_pkt.pkt_type == PKT_TEST_CONN) {
-					comm_handle_test_conn(&received_pkt);
-				} else if (received_pkt.pkt_type == PKT_ASSIGN_ID) {
+//		POWER_GoToSleep(&sx1278);
 
-				} else if (received_pkt.pkt_type == PKT_REQ_ID) {
-
-				} else if (received_pkt.pkt_type == PKT_CMD) {
-					comm_handle_cmd(&received_pkt);
-				}
-
-				SX1278_receive(&sx1278, 64, 2000);
-
-			} else {
-				printf("Packet check failed\n");
-			}
-
-			lora_data_ready = 0;
-		}
-
-		static uint32_t last_check = 0;
-		if (HAL_GetTick() - last_check > 15000) {
-			last_check = HAL_GetTick();
-
-			if (sx1278.status != RX) {
-				SX1278_hw_Reset(sx1278.hw);
-				HAL_Delay(100);
-
-				SX1278_receive(&sx1278, 64, 2000);
-			}
-		}
+//		static uint32_t last_check = 0;
+//		if (HAL_GetTick() - last_check > 15000) {
+//			last_check = HAL_GetTick();
+//
+//			if (sx1278.status != RX) {
+//				SX1278_hw_Reset(sx1278.hw);
+//				HAL_Delay(100);
+//
+//				SX1278_receive(&sx1278, 64, 2000);
+//			}
+//		}
 
 //		if (rtc_wakeup_flag) {
 //			rtc_wakeup_flag = false;
@@ -221,7 +287,6 @@ int main(void) {
 //			}
 //		}
 //
-//		POWER_GoToSleep(&sx1278);
 
 		/* USER CODE END WHILE */
 
@@ -440,12 +505,11 @@ static void MX_RTC_Init(void) {
 		Error_Handler();
 	}
 
-	/** Enable the WakeUp
-	 */
-	if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0, RTC_WAKEUPCLOCK_RTCCLK_DIV16)
-			!= HAL_OK) {
-		Error_Handler();
-	}
+	/* Enable the WakeUp */
+//	if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0, RTC_WAKEUPCLOCK_RTCCLK_DIV16)
+//			!= HAL_OK) {
+//		Error_Handler();
+//	}
 	/* USER CODE BEGIN RTC_Init 2 */
 
 	/* USER CODE END RTC_Init 2 */

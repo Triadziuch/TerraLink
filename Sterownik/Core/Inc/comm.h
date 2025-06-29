@@ -42,6 +42,7 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt);
 uint8_t configure_new_node(uint8_t node_id);
 uint8_t configure_field(uint8_t node_id, uint8_t get_cmd, uint8_t set_cmd, uint16_t default_value, uint8_t (*flash_set)(uint8_t, uint16_t));
 uint8_t comm_handle_data(const packet_t *received_pkt);
+uint8_t comm_handle_cmd_data(const packet_t *received_pkt);
 
 void comm_print_pkt(const packet_t *pkt, const char *text);
 

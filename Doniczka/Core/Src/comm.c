@@ -7,6 +7,8 @@
 
 #include "comm.h"
 
+int16_t next_comm_wakeup_in, next_measurement_wakeup_in;
+
 uint32_t GetTime(void) {
 	HAL_RTC_GetTime(&hrtc, &clock_time, RTC_FORMAT_BIN);
 	HAL_RTC_GetDate(&hrtc, &clock_date, RTC_FORMAT_BIN);
@@ -164,6 +166,60 @@ uint8_t comm_send_cmd_data(const packet_t *cmd_packet) {
 	return 0;
 }
 
+wakeup_t* comm_send_next_wakeup(void) {
+	static WAKEUP_TYPE next_wakeup = MEASUREMENT;
+	uint16_t sleep_time = 0;
+
+	// Next wakeup is measurement
+	if (next_measurement_wakeup_in <= next_comm_wakeup_in) {
+		next_wakeup = MEASUREMENT;
+
+		if (next_comm_wakeup_in <= MEASUREMENT_WAKEUP_TIMER_INTERVAL)
+			sleep_time = next_comm_wakeup_in;
+		else
+			sleep_time = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
+
+		next_comm_wakeup_in -= sleep_time;
+		next_measurement_wakeup_in = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
+	} // is communication
+	else {
+		next_wakeup = COMMUNICATION;
+
+		if (next_measurement_wakeup_in <= COMM_WAKEUP_TIMER_INTERVAL)
+			sleep_time = next_measurement_wakeup_in;
+		else
+			sleep_time = COMM_WAKEUP_TIMER_INTERVAL;
+
+		next_comm_wakeup_in = COMM_WAKEUP_TIMER_INTERVAL;
+		next_measurement_wakeup_in -= sleep_time;
+	}
+
+	cmd_record_t wakeup_record;
+	wakeup_record.type = CMD_INFO_NEXT_WAKEUP;
+	wakeup_record.value = sleep_time;
+
+	packet_t *pkt = malloc(sizeof(packet_t));
+	pkt->dst_id = HIVE_ID;
+	pkt->src_id = NODE_ID;
+	pkt->pkt_type = PKT_CMD_DATA;
+	pkt->seq = next_seq_number();
+	pkt->len = 0;
+	if (!attach_cmd(pkt, &wakeup_record))
+		return 0;
+	pkt->crc16 = crc16_compute((uint8_t*) pkt, get_pkt_length(pkt) - CRC_SIZE);
+
+	if (!comm_send_cmd_data(pkt)) {
+		free(pkt);
+		return NULL;
+	}
+	free(pkt);
+
+	wakeup_t *wakeup = malloc(sizeof(wakeup_t));
+	wakeup->wakeup_type = next_wakeup;
+	wakeup->time = sleep_time;
+	return wakeup;
+}
+
 uint8_t comm_send_ack(const packet_t *received_pkt) {
 	packet_t ack_pkt;
 	if (!create_ack_pkt(&ack_pkt, received_pkt))
@@ -195,11 +251,15 @@ uint8_t comm_await_ack(const packet_t *sent_packet) {
 	return 0;
 }
 
-uint8_t comm_await_start(void){
+uint8_t comm_await_start(void) {
 	packet_t packet;
-	if (comm_receive(&packet) && packet.dst_id == NODE_ID){
-		if (packet.pkt_type == PKT_START)
+	if (comm_receive(&packet) && packet.dst_id == NODE_ID) {
+		if (packet.pkt_type == PKT_START) {
+			next_comm_wakeup_in = COMM_WAKEUP_TIMER_INTERVAL;
+			next_measurement_wakeup_in = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
 			return 1;
+		}
+
 		else if (packet.pkt_type == PKT_CMD)
 			comm_handle_cmd(&packet);
 	}

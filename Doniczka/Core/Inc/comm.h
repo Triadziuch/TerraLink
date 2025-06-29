@@ -15,6 +15,7 @@
 #include "main.h"
 #include "sensors.h"
 #include "time.h"
+#include "stdlib.h"
 
 #define MAX_RETRIES	3
 #define PKT_RX_TIMEOUT 3000
@@ -22,6 +23,18 @@
 
 extern RTC_TimeTypeDef clock_time;
 extern RTC_DateTypeDef clock_date;
+
+typedef enum {
+	COMMUNICATION,
+	MEASUREMENT
+} WAKEUP_TYPE;
+
+#pragma pack(push, 1)
+typedef struct{
+	WAKEUP_TYPE wakeup_type;
+	uint16_t time;
+} wakeup_t;
+#pragma pack(pop)
 
 uint32_t GetTime(void);
 
@@ -36,6 +49,7 @@ uint8_t comm_send_moisture(const packet_t *request_pkt);
 uint8_t comm_send_lux(const packet_t *request_pkt);
 uint8_t comm_send_cmd_data(const packet_t *cmd_packet);
 uint8_t comm_send_ack(const packet_t *received_pkt);
+wakeup_t* comm_send_next_wakeup(void);
 uint8_t comm_await_ack(const packet_t *sent_packet);
 uint8_t comm_await_start(void);
 

@@ -83,7 +83,8 @@ typedef enum{
 	CMD_GET_HIVE_ID	= 0x09,
 	CMD_SET_HIVE_ID	= 0x0A,
 	CMD_GET_NODE_ID	= 0x0B,
-	CMD_SET_NODE_ID = 0x0C
+	CMD_SET_NODE_ID = 0x0C,
+	CMD_INFO_NEXT_WAKEUP = 0x0D
 } CMD_TYPE;
 
 uint16_t get_pkt_length(const packet_t* pkt);
