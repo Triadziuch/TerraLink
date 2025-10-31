@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "STM32L476RG",
+            "compilerPath": "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm",
+            "defines": [
+                "STM32L476xx",
+                "USE_HAL_DRIVER",
+                "DEBUG"
+            ],
+            "includePath": [
+                "${workspaceFolder}/Inc",
+                "${workspaceFolder}/Src",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32L4xx/Include",
+                "${workspaceFolder}/Drivers/STM32L4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"
+            ]
+        }
+    ],
+    "version": 4
+}

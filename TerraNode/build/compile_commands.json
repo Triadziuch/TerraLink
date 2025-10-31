@@ -1,0 +1,224 @@
+[
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\main.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\main.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/main.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/main.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\stm32l0xx_hal_msp.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\stm32l0xx_hal_msp.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/stm32l0xx_hal_msp.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_hal_msp.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\stm32l0xx_it.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\stm32l0xx_it.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/stm32l0xx_it.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_it.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\system_stm32l0xx.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\system_stm32l0xx.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/system_stm32l0xx.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/system_stm32l0xx.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\syscalls.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\syscalls.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/syscalls.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/syscalls.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\sysmem.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\sysmem.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/sysmem.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/sysmem.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\BH1750.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\BH1750.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/BH1750.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/BH1750.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\comm.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\comm.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/comm.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/comm.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\flash_manage.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\flash_manage.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/flash_manage.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/flash_manage.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\hal_power.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\hal_power.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/hal_power.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/hal_power.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\hal_rtc.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\hal_rtc.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/hal_rtc.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/hal_rtc.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\packet.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\packet.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/packet.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/packet.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\sensors.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\sensors.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/sensors.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/sensors.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\SX1278_hw.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\SX1278_hw.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/SX1278_hw.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/SX1278_hw.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Src\\SX1278.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Src\\SX1278.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Src/SX1278.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Src/SX1278.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -x assembler-with-cpp -g -o CMakeFiles\\stm32l031_project.elf.dir\\startup_stm32l031k6tx.s.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\startup_stm32l031k6tx.s",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/startup_stm32l031k6tx.s",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/startup_stm32l031k6tx.s.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_adc.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_adc.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_adc_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_adc_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_cortex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_cortex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_crc.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_crc.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_crc_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_crc_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_dma.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_dma.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_exti.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_exti.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_flash.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_flash.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_flash_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_flash_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_flash_ramfunc.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_flash_ramfunc.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_gpio.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_gpio.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_i2c.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_i2c.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_i2c_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_i2c_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_pwr.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_pwr.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_pwr_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_pwr_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rcc.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rcc.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rcc_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rcc_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rtc.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rtc.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rtc_ex.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_rtc_ex.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c.obj"
+},
+{
+  "directory": "C:/Users/kurow/source/VSCode/TerraNode/build",
+  "command": "C:\\PROGRA~2\\ARMGNU~1\\142BCE~1.3RE\\bin\\AR19DD~1.EXE -DSTM32L031xx -DUSE_HAL_DRIVER -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g -o CMakeFiles\\stm32l031_project.elf.dir\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_spi.c.obj -c C:\\Users\\kurow\\source\\VSCode\\TerraNode\\Drivers\\STM32L0xx_HAL_Driver\\Src\\stm32l0xx_hal_spi.c",
+  "file": "C:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c",
+  "output": "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c.obj"
+}
+]

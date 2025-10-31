@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug STM32L031K6T6 (ST-Link + OpenOCD)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stlink",
+            "executable": "${workspaceFolder}/build/stm32l031_project.elf",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32l0x.cfg"
+            ],
+            "preLaunchTask": "cmake: build",
+            "svdFile": "${workspaceFolder}/STM32L031xx.svd",
+            "device": "STM32L031K6T6",
+            "serialNumber": "0669FF515152827187223058",
+            "cwd": "${workspaceFolder}",
+            "showDevDebugOutput": "none",
+        }
+    ]
+}

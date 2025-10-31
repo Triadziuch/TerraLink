@@ -1,0 +1,3 @@
+C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/stm32l031_project.elf.dir
+C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/edit_cache.dir
+C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/rebuild_cache.dir

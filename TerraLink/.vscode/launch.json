@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug STM32L476RG (ST-Link + OpenOCD)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stlink",
+            "executable": "${workspaceFolder}/build/stm32l476_project.elf",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32l4x.cfg"
+            ],
+            "preLaunchTask": "cmake: build",
+            "svdFile": "${workspaceFolder}/STM32L476xx.svd",
+            "device": "STM32L476RG",
+            "serialNumber": "066DFF555185754867172414",
+            "cwd": "${workspaceFolder}",
+            "showDevDebugOutput": "none"
+        }
+    ]
+}

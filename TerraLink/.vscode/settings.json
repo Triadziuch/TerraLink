@@ -1,0 +1,9 @@
+{
+  "cmake.configureOnOpen": true,
+  "cmake.generator": "Ninja",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.configureArgs": [
+    "-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/arm-gcc-toolchain.cmake"
+  ],
+  "cmake.buildBeforeRun": true
+}
