@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "stm32l476_project.elf"
+			"path" : "stm32l031_project.elf"
 		}
 	],
 	"backtrace" : 1,
@@ -27,13 +27,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 49,
+				"line" : 53,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 51,
+				"line" : 55,
 				"parent" : 0
 			},
 			{
@@ -45,7 +45,7 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 40,
+				"line" : 44,
 				"parent" : 0
 			}
 		]
@@ -61,14 +61,14 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g"
+					"fragment" : "-mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g"
 				}
 			],
 			"defines" : 
 			[
 				{
 					"backtrace" : 3,
-					"define" : "STM32L476xx"
+					"define" : "STM32L031xx"
 				},
 				{
 					"backtrace" : 3,
@@ -79,23 +79,23 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Inc"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/CMSIS/Include"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/CMSIS/Device/ST/STM32L4xx/Include"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/STM32L4xx_HAL_Driver/Inc"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy"
 				}
 			],
 			"language" : "C",
@@ -112,10 +112,10 @@
 				8,
 				9,
 				10,
+				11,
 				12,
 				13,
 				14,
-				15,
 				16,
 				17,
 				18,
@@ -134,21 +134,23 @@
 				31,
 				32,
 				33,
-				34
+				34,
+				35,
+				36
 			]
 		},
 		{
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -x assembler-with-cpp -g"
+					"fragment" : "-mcpu=cortex-m0plus -mthumb  -x assembler-with-cpp -g"
 				}
 			],
 			"defines" : 
 			[
 				{
 					"backtrace" : 3,
-					"define" : "STM32L476xx"
+					"define" : "STM32L031xx"
 				},
 				{
 					"backtrace" : 3,
@@ -159,53 +161,53 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Inc"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/CMSIS/Include"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/CMSIS/Device/ST/STM32L4xx/Include"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/STM32L4xx_HAL_Driver/Inc"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/kurow/source/VSCode/TerraLink/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"
+					"path" : "C:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy"
 				}
 			],
 			"language" : "ASM",
 			"sourceIndexes" : 
 			[
-				11
+				15
 			]
 		}
 	],
-	"id" : "stm32l476_project.elf::@6890427a1f51a3e7e1df",
+	"id" : "stm32l031_project.elf::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g",
+				"fragment" : "-mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wl,--gc-sections -specs=nano.specs -specs=nosys.specs",
-				"role" : "flags"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "-TC:/Users/kurow/source/VSCode/TerraLink/STM32L476RGTX_FLASH.ld",
+				"fragment" : "-mcpu=cortex-m0plus -mthumb  -Wl,--gc-sections -specs=nano.specs -specs=nosys.specs",
 				"role" : "flags"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-Wl,-Map=stm32l476_project.map,--cref",
+				"fragment" : "-TC:/Users/kurow/source/VSCode/TerraLink/TerraNode/STM32L031K6TX_FLASH.ld",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-Wl,-Map=stm32l031_project.map,--cref",
 				"role" : "flags"
 			},
 			{
@@ -216,8 +218,8 @@
 		],
 		"language" : "C"
 	},
-	"name" : "stm32l476_project.elf",
-	"nameOnDisk" : "stm32l476_project.elf",
+	"name" : "stm32l031_project.elf",
+	"nameOnDisk" : "stm32l031_project.elf",
 	"paths" : 
 	{
 		"build" : ".",
@@ -240,10 +242,10 @@
 				8,
 				9,
 				10,
+				11,
 				12,
 				13,
 				14,
-				15,
 				16,
 				17,
 				18,
@@ -262,14 +264,16 @@
 				31,
 				32,
 				33,
-				34
+				34,
+				35,
+				36
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				11
+				15
 			]
 		}
 	],
@@ -284,19 +288,19 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Src/stm32l4xx_hal_msp.c",
+			"path" : "Src/stm32l0xx_hal_msp.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Src/stm32l4xx_it.c",
+			"path" : "Src/stm32l0xx_it.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Src/system_stm32l4xx.c",
+			"path" : "Src/system_stm32l0xx.c",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -314,6 +318,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "Src/BH1750.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "Src/comm.c",
 			"sourceGroupIndex" : 0
 		},
@@ -326,7 +336,25 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "Src/hal_power.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Src/hal_rtc.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "Src/packet.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Src/sensors.c",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -344,145 +372,133 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 1,
-			"path" : "startup_stm32l476rgtx.s",
+			"path" : "startup_stm32l031k6tx.s",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_crc.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_crc_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rtc.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rtc_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_spi_ex.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c",
+			"path" : "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c",
 			"sourceGroupIndex" : 0
 		}
 	],

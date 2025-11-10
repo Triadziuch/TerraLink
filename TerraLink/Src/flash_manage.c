@@ -4,7 +4,9 @@
  *  Created on: Jun 23, 2025
  *      Author: kurow
  */
+#include <stdint.h>
 #include "flash_manage.h"
+#include "Flash.h"
 
 //int UIDs_count = 0;
 //STM32_UID_t UIDs[8] = { 0 };
@@ -41,41 +43,7 @@ int8_t find_uid(const STM32_UID_t *uid) {
 	return -1;
 }
 
-HAL_StatusTypeDef flash_write(uint32_t address, const uint8_t *data,
-		uint16_t length) {
-	if (address < FLASH_PAGE_ADDR
-			|| (address + length) > (FLASH_PAGE_ADDR + FLASH_PAGE_SIZE))
-		return HAL_ERROR;
 
-	uint8_t pageBuffer[FLASH_PAGE_SIZE];
-	memcpy(pageBuffer, (uint8_t*) FLASH_PAGE_ADDR, FLASH_PAGE_SIZE);
-	memcpy(&pageBuffer[address - FLASH_PAGE_ADDR], data, length);
-
-	HAL_FLASH_Unlock();
-	FLASH_EraseInitTypeDef EraseInit = { .TypeErase = FLASH_TYPEERASE_PAGES,
-			.Page = (FLASH_PAGE_ADDR - FLASH_BASE) / FLASH_PAGE_SIZE, .NbPages =
-					1, .Banks = FLASH_BANK };
-
-	uint32_t pageError;
-	HAL_StatusTypeDef status = HAL_FLASHEx_Erase(&EraseInit, &pageError);
-	if (status != HAL_OK) {
-		HAL_FLASH_Lock();
-		return status;
-	}
-
-	for (uint32_t offset = 0; offset < FLASH_PAGE_SIZE; offset += 8) {
-		uint64_t word;
-		memcpy(&word, &pageBuffer[offset], sizeof(word));
-		status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD,
-		FLASH_PAGE_ADDR + offset, word);
-
-		if (status != HAL_OK)
-			break;
-	}
-
-	HAL_FLASH_Lock();
-	return status;
-}
 
 //TODO: Dać w forze wskaźnik i inkrementować o NODE_DATA_SIZE
 uint8_t FLASH_NODE_UID_get(STM32_UID_t *stm32_uid, uint8_t node_id) {
@@ -154,7 +122,7 @@ uint8_t FLASH_NODE_UID_ID_add(STM32_UID_t *stm32_uid, uint8_t assigned_id) {
 	pageBuffer[NODE_COUNT_OFFSET] = node_count + 1;
 	pageBuffer[NODE_COUNT_FLAG_OFFSET] = VALID_FLAG;
 
-	if (flash_write(NODE_DATA_ADDR, pageBuffer, RESERVED_MEMORY_SIZE) != HAL_OK)
+	if (Flash_write(NODE_DATA_ADDR, pageBuffer, RESERVED_MEMORY_SIZE) != HAL_OK)
 		return 0;
 
 	return assigned_id;
@@ -179,7 +147,7 @@ uint8_t FLASH_NODE_ID_update(uint8_t old_id, uint8_t new_id) {
 	pageBuffer[node_offset + NODE_UID_SIZE] = new_id;
 	pageBuffer[node_offset + NODE_UID_SIZE + 1] = VALID_FLAG;
 
-	if (flash_write(NODE_DATA_ADDR, pageBuffer, RESERVED_MEMORY_SIZE) != HAL_OK)
+	if (Flash_write(NODE_DATA_ADDR, pageBuffer, RESERVED_MEMORY_SIZE) != HAL_OK)
 		return 0;
 
 	return 1;
@@ -213,7 +181,7 @@ uint8_t FLASH_NODE_ID_remove(uint8_t id) {
 	pageBuffer[NODE_COUNT_OFFSET] = node_count - 1;
 	pageBuffer[NODE_COUNT_OFFSET + 1] = VALID_FLAG;
 
-	if (flash_write(NODE_DATA_ADDR, pageBuffer, RESERVED_MEMORY_SIZE) != HAL_OK)
+	if (Flash_write(NODE_DATA_ADDR, pageBuffer, RESERVED_MEMORY_SIZE) != HAL_OK)
 		return 0;
 
 	return 1;
@@ -225,13 +193,13 @@ uint8_t FLASH_NODE_count_get(void) {
 
 uint16_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+	uint32_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
 			+ NODE_COMM_WAKEUP_TIMER_INTERVAL_OFFSET;
 
-	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
+	if (n < 0 || *(uint8_t*) (uintptr_t)(address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint8_t*) address;
+	return *(uint8_t*) (uintptr_t)address;
 }
 
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
@@ -247,7 +215,7 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 	uint32_t write_addr = NODE_COMM_WAKEUP_TIMER_INTERVAL_ADDR
 			+ n * NODE_DATA_SIZE;
 
-	if (flash_write(write_addr, buffer, NODE_COMM_WAKEUP_TIMER_INTERVAL_SIZE)
+	if (Flash_write(write_addr, buffer, NODE_COMM_WAKEUP_TIMER_INTERVAL_SIZE)
 			!= HAL_OK)
 		return 0;
 
@@ -256,13 +224,13 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+	uint32_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
 			+ NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
 
-	if (n < 0 || *(uint8_t*) (address + sizeof(uint8_t)) != VALID_FLAG)
+	if (n < 0 || *(uint8_t*) (uintptr_t)(address + sizeof(uint8_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint8_t*) address;
+	return *(uint8_t*) (uintptr_t)address;
 }
 
 uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
@@ -278,7 +246,7 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 	uint32_t write_addr = NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_ADDR
 			+ n * NODE_DATA_SIZE;
 
-	if (flash_write(write_addr, buffer, NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_SIZE)
+	if (Flash_write(write_addr, buffer, NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_SIZE)
 			!= HAL_OK)
 		return 0;
 
@@ -287,13 +255,13 @@ uint8_t FLASH_NODE_COMM_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 
 uint16_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+	uint32_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
 			+ NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_OFFSET;
 
-	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
+	if (n < 0 || *(uint8_t*) (uintptr_t)(address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint8_t*) address;
+	return *(uint8_t*) (uintptr_t)address;
 }
 
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
@@ -309,7 +277,7 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 	uint32_t write_addr = NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_ADDR
 			+ n * NODE_DATA_SIZE;
 
-	if (flash_write(write_addr, buffer,
+	if (Flash_write(write_addr, buffer,
 	NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_SIZE) != HAL_OK)
 		return 0;
 
@@ -318,13 +286,13 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_INTERVAL_set(uint8_t node_id,
 
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+	uint32_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
 			+ NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_OFFSET;
 
-	if (n < 0 || *(uint8_t*) (address + sizeof(uint8_t)) != VALID_FLAG)
+	if (n < 0 || *(uint8_t*) (uintptr_t)(address + sizeof(uint8_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint8_t*) address;
+	return *(uint8_t*) (uintptr_t)address;
 }
 
 uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
@@ -340,7 +308,7 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 	uint32_t write_addr = NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_ADDR
 			+ n * NODE_DATA_SIZE;
 
-	if (flash_write(write_addr, buffer,
+	if (Flash_write(write_addr, buffer,
 	NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_SIZE) != HAL_OK)
 		return 0;
 
@@ -349,13 +317,13 @@ uint8_t FLASH_NODE_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(uint8_t node_id,
 
 uint16_t FLASH_NODE_NEXT_WAKEUP_get(uint8_t node_id) {
 	int8_t n = find_id(node_id);
-	uint16_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
+	uint32_t address = NODE_DATA_ADDR + n * NODE_DATA_SIZE
 			+ NODE_NEXT_WAKEUP_OFFSET;
 
-	if (n < 0 || *(uint8_t*) (address + sizeof(uint16_t)) != VALID_FLAG)
+	if (n < 0 || *(uint8_t*) (uintptr_t)(address + sizeof(uint16_t)) != VALID_FLAG)
 		return 0;
 
-	return *(uint16_t*) address;
+	return *(uint16_t*) (uintptr_t)address;
 }
 
 uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint8_t node_id, uint32_t value) {
@@ -369,7 +337,7 @@ uint8_t FLASH_NODE_NEXT_WAKEUP_set(uint8_t node_id, uint32_t value) {
 	buffer[NODE_NEXT_WAKEUP_SIZE - 1] = VALID_FLAG;
 	uint32_t write_addr = NODE_NEXT_WAKEUP_ADDR + n * NODE_DATA_SIZE;
 
-	if (flash_write(write_addr, buffer, NODE_NEXT_WAKEUP_SIZE) != HAL_OK)
+	if (Flash_write(write_addr, buffer, NODE_NEXT_WAKEUP_SIZE) != HAL_OK)
 		return 0;
 
 	return 1;
@@ -380,7 +348,7 @@ HAL_StatusTypeDef link_config(void) {
 
 	if (*((uint8_t*) NODE_COUNT_FLAG_ADDR) != VALID_FLAG) {
 		uint8_t buffer[2] = { 0, VALID_FLAG };
-		status = flash_write(NODE_COUNT_ADDR, buffer, 2);
+		status = Flash_write(NODE_COUNT_ADDR, buffer, 2);
 		if (status != HAL_OK)
 			return status;
 	}

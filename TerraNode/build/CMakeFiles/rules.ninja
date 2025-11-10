@@ -52,7 +52,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\kurow\source\VSCode\TerraNode -BC:\Users\kurow\source\VSCode\TerraNode\build
+  command = "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\kurow\source\VSCode\TerraLink\TerraNode -BC:\Users\kurow\source\VSCode\TerraLink\TerraNode\build
   description = Re-running CMake...
   generator = 1
 

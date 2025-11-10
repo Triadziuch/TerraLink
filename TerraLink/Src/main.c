@@ -104,14 +104,13 @@ void comm_test() {
 
 			HAL_Delay(10);
 
-			sscanf(lora_buffer, "%d", &i);
+			sscanf((char*)lora_buffer, "%d", &i);
 			printf("%d\n", i);
 
-			char data_buffer[8];
-			sprintf(data_buffer, "%d", ++i);
+			char data_buffer[16];
+			snprintf(data_buffer, sizeof(data_buffer), "%d", ++i);
 
-			bool status = comm_tx((uint8_t*) data_buffer, strlen(data_buffer),
-					1000);
+			comm_tx((uint8_t*) data_buffer, strlen(data_buffer), 1000);
 			HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 			if (SX1278_receive(&sx1278, 64, 2000))
@@ -128,14 +127,13 @@ void comm_test() {
 
 				printf("Zrestartowano sterownik!\n");
 
-				sscanf(lora_buffer, "%d", &i);
+				sscanf((char*)lora_buffer, "%d", &i);
 				printf("%d\n", i);
 
-				char data_buffer[8];
-				sprintf(data_buffer, "%d", i);
+				char data_buffer[16];
+				snprintf(data_buffer, sizeof(data_buffer), "%d", i);
 
-				bool status = comm_tx((uint8_t*) data_buffer,
-						strlen(data_buffer), 1000);
+				comm_tx((uint8_t*) data_buffer, strlen(data_buffer), 1000);
 				HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 				if (SX1278_receive(&sx1278, 64, 2000)) {
@@ -205,7 +203,6 @@ int main(void) {
 	__HAL_RCC_CRC_CLK_ENABLE();
 
 	comm_init();
-
 	init_time();
 
 	// Od razu przejście do trybu nasłuchiwania
@@ -215,7 +212,9 @@ int main(void) {
 	else
 		printf("Failed to activate LoRa receiver mode!\n");
 
-	packet_t received_pkt;
+	packet_t *received_pkt = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (received_pkt == NULL)
+		Error_Handler();
 
 	if (link_config() != HAL_OK)
 		Error_Handler();
@@ -230,17 +229,17 @@ int main(void) {
 		/* USER CODE BEGIN 3 */
 
 		if (lora_data_ready) {
-			if (verify_pkt(&received_pkt)) {
+			if (verify_pkt(received_pkt)) {
 				printf("Packet check successful\n");
 
-				if (received_pkt.pkt_type == PKT_REG_REQ) {
-					comm_handshake_slave(&received_pkt);
+				if (received_pkt->pkt_type == PKT_REG_REQ) {
+					comm_handshake_slave(received_pkt);
 
 				} else {
-					if (received_pkt.pkt_type == PKT_DATA) {
-						comm_handle_data(&received_pkt);
-					} else if (received_pkt.pkt_type == PKT_CMD_DATA) {
-						comm_handle_cmd_data(&received_pkt);
+					if (received_pkt->pkt_type == PKT_DATA) {
+						comm_handle_data(received_pkt);
+					} else if (received_pkt->pkt_type == PKT_CMD_DATA) {
+						comm_handle_cmd_data(received_pkt);
 					}
 				}
 

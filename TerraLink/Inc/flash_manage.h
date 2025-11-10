@@ -13,7 +13,6 @@
 #include "string.h"
 
 #define FLASH_PAGE_ADDR    0x08080000U
-#define FLASH_PAGE_SIZE    2048U
 #define FLASH_BANK         FLASH_BANK_2
 
 // Node ID

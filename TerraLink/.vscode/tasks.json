@@ -18,7 +18,7 @@
       "type": "shell",
       "command": "cmake",
       "args": [
-        "--build", "${workspaceFolder}/build",
+        "--build", "${workspaceFolder}/build"
       ],
       "group": {
         "kind": "build",

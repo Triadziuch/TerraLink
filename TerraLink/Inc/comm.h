@@ -38,12 +38,12 @@ cmd_record_t* comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value);
 uint8_t comm_send_ack(const packet_t *received_pkt);
 uint8_t comm_await_ack(const packet_t *sent_packet);
 
+uint8_t comm_test_conn(uint8_t link_id);
 uint8_t comm_handshake_slave(const packet_t *received_pkt);
-uint8_t configure_new_node(uint8_t node_id);
-uint8_t configure_field(uint8_t node_id, uint8_t get_cmd, uint8_t set_cmd, uint32_t default_value, uint8_t (*flash_set)(uint8_t, uint32_t));
+bool Comm_SyncConfig(uint8_t node_id);
 uint8_t comm_handle_data(const packet_t *received_pkt);
 uint8_t comm_handle_cmd_data(const packet_t *received_pkt);
-
+bool Comm_NodeStart(uint8_t node_id);
 void comm_print_pkt(const packet_t *pkt, const char *text);
 
 #endif /* INC_COMM_H_ */

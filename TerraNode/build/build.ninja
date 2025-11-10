@@ -39,7 +39,7 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = C$:/Users/kurow/source/VSCode/TerraNode/build/
+cmake_ninja_workdir = C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/build/
 # =============================================================================
 # Object build statements for EXECUTABLE target stm32l031_project.elf
 
@@ -49,372 +49,372 @@ cmake_ninja_workdir = C$:/Users/kurow/source/VSCode/TerraNode/build/
 
 build cmake_object_order_depends_target_stm32l031_project.elf: phony || .
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/main.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/main.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/main.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/main.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\main.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_hal_msp.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/stm32l0xx_hal_msp.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_hal_msp.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/stm32l0xx_hal_msp.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\stm32l0xx_hal_msp.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_it.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/stm32l0xx_it.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_it.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/stm32l0xx_it.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\stm32l0xx_it.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/system_stm32l0xx.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/system_stm32l0xx.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/system_stm32l0xx.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/system_stm32l0xx.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\system_stm32l0xx.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/syscalls.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/syscalls.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/syscalls.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/syscalls.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\syscalls.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/sysmem.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/sysmem.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/sysmem.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/sysmem.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\sysmem.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/BH1750.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/BH1750.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/BH1750.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/BH1750.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\BH1750.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/comm.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/comm.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/comm.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/comm.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\comm.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/flash_manage.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/flash_manage.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/flash_manage.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/flash_manage.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\flash_manage.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/hal_power.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/hal_power.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/hal_power.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/hal_power.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\hal_power.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/hal_rtc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/hal_rtc.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/hal_rtc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/hal_rtc.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\hal_rtc.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/packet.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/packet.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/packet.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/packet.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\packet.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/sensors.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/sensors.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/sensors.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/sensors.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\sensors.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/SX1278_hw.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/SX1278_hw.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/SX1278_hw.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/SX1278_hw.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\SX1278_hw.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Src/SX1278.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Src/SX1278.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Src/SX1278.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Src/SX1278.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Src\SX1278.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/startup_stm32l031k6tx.s.obj: ASM_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/startup_stm32l031k6tx.s || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/startup_stm32l031k6tx.s.obj: ASM_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/startup_stm32l031k6tx.s || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\startup_stm32l031k6tx.s.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -x assembler-with-cpp -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_adc.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_adc_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_cortex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_crc.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_crc_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_dma.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_exti.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ramfunc.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_gpio.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_i2c.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_i2c_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_pwr.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_pwr_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rcc.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rcc_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rtc.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rtc_ex.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
 
-build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c || cmake_object_order_depends_target_stm32l031_project.elf
+build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c.obj: C_COMPILER__stm32l031_project.2eelf_unscanned_Debug C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c || cmake_object_order_depends_target_stm32l031_project.elf
   CONFIG = Debug
   DEFINES = -DSTM32L031xx -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_spi.c.obj.d
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
+  INCLUDES = -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/CMSIS/Device/ST/STM32L0xx/Include -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc -IC:/Users/kurow/source/VSCode/TerraLink/TerraNode/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32l031_project.elf.dir\Drivers\STM32L0xx_HAL_Driver\Src
   TARGET_SUPPORT_DIR = CMakeFiles\stm32l031_project.elf.dir
@@ -430,9 +430,9 @@ build CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm3
 build stm32l031_project.elf: C_EXECUTABLE_LINKER__stm32l031_project.2eelf_Debug CMakeFiles/stm32l031_project.elf.dir/Src/main.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_hal_msp.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/stm32l0xx_it.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/system_stm32l0xx.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/syscalls.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/sysmem.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/BH1750.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/comm.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/flash_manage.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/hal_power.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/hal_rtc.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/packet.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/sensors.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/SX1278_hw.c.obj CMakeFiles/stm32l031_project.elf.dir/Src/SX1278.c.obj CMakeFiles/stm32l031_project.elf.dir/startup_stm32l031k6tx.s.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_crc_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_exti.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c.obj CMakeFiles/stm32l031_project.elf.dir/Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c.obj
   CONFIG = Debug
   FLAGS = -mcpu=cortex-m0plus -mthumb  -Os -g3 -Wall -fdata-sections -ffunction-sections -fno-common -g
-  LINK_FLAGS = -mcpu=cortex-m0plus -mthumb  -Wl,--gc-sections -specs=nano.specs -specs=nosys.specs -TC:/Users/kurow/source/VSCode/TerraNode/STM32L031K6TX_FLASH.ld -Wl,-Map=stm32l031_project.map,--cref -Wl,--print-memory-usage
+  LINK_FLAGS = -mcpu=cortex-m0plus -mthumb  -Wl,--gc-sections -specs=nano.specs -specs=nosys.specs -TC:/Users/kurow/source/VSCode/TerraLink/TerraNode/STM32L031K6TX_FLASH.ld -Wl,-Map=stm32l031_project.map,--cref -Wl,--print-memory-usage
   OBJECT_DIR = CMakeFiles\stm32l031_project.elf.dir
-  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\kurow\source\VSCode\TerraNode\build && "C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-objcopy.exe" -O binary stm32l031_project.elf stm32l031_project.bin && "C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-objcopy.exe" -O ihex stm32l031_project.elf stm32l031_project.hex && cd /D C:\Users\kurow\source\VSCode\TerraNode\build && "C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-size.exe" stm32l031_project.elf"
+  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\kurow\source\VSCode\TerraLink\TerraNode\build && "C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-objcopy.exe" -O binary stm32l031_project.elf stm32l031_project.bin && "C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-objcopy.exe" -O ihex stm32l031_project.elf stm32l031_project.hex && cd /D C:\Users\kurow\source\VSCode\TerraLink\TerraNode\build && "C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-size.exe" stm32l031_project.elf"
   PRE_LINK = cd .
   TARGET_FILE = stm32l031_project.elf
   TARGET_PDB = stm32l031_project.elf.dbg
@@ -443,7 +443,7 @@ build stm32l031_project.elf: C_EXECUTABLE_LINKER__stm32l031_project.2eelf_Debug 
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\kurow\source\VSCode\TerraNode\build && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\Users\kurow\source\VSCode\TerraNode -BC:\Users\kurow\source\VSCode\TerraNode\build"
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\kurow\source\VSCode\TerraLink\TerraNode\build && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\Users\kurow\source\VSCode\TerraLink\TerraNode -BC:\Users\kurow\source\VSCode\TerraLink\TerraNode\build"
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -455,7 +455,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\kurow\source\VSCode\TerraNode\build && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\kurow\source\VSCode\TerraNode -BC:\Users\kurow\source\VSCode\TerraNode\build"
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\kurow\source\VSCode\TerraLink\TerraNode\build && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\kurow\source\VSCode\TerraLink\TerraNode -BC:\Users\kurow\source\VSCode\TerraLink\TerraNode\build"
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -471,7 +471,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 #############################################
-# Folder: C:/Users/kurow/source/VSCode/TerraNode/build
+# Folder: C:/Users/kurow/source/VSCode/TerraLink/TerraNode/build
 
 build all: phony stm32l031_project.elf
 
@@ -482,14 +482,14 @@ build all: phony stm32l031_project.elf
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja C$:/Users/kurow/source/VSCode/TerraNode/build/cmake_install.cmake: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeASMInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-ASM.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeASMLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Platform/Generic.cmake C$:/Users/kurow/source/VSCode/TerraNode/CMakeLists.txt C$:/Users/kurow/source/VSCode/TerraNode/arm-gcc-toolchain.cmake CMakeCache.txt CMakeFiles/4.2.0-rc1/CMakeASMCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeCCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeSystem.cmake
+build build.ninja C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/build/cmake_install.cmake: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeASMInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-ASM.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeASMLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Platform/Generic.cmake C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/CMakeLists.txt C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/arm-gcc-toolchain.cmake CMakeCache.txt CMakeFiles/4.2.0-rc1/CMakeASMCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeCCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeASMInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-ASM.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeASMLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Platform/Generic.cmake C$:/Users/kurow/source/VSCode/TerraNode/CMakeLists.txt C$:/Users/kurow/source/VSCode/TerraNode/arm-gcc-toolchain.cmake CMakeCache.txt CMakeFiles/4.2.0-rc1/CMakeASMCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeCCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeSystem.cmake: phony
+build C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeASMInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-ASM.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeASMLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-4.2/Modules/Platform/Generic.cmake C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/CMakeLists.txt C$:/Users/kurow/source/VSCode/TerraLink/TerraNode/arm-gcc-toolchain.cmake CMakeCache.txt CMakeFiles/4.2.0-rc1/CMakeASMCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeCCompiler.cmake CMakeFiles/4.2.0-rc1/CMakeSystem.cmake: phony
 
 
 #############################################

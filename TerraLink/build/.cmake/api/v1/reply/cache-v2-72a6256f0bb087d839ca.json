@@ -203,7 +203,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/kurow/source/VSCode/TerraNode/build"
+			"value" : "c:/Users/kurow/source/VSCode/TerraLink/TerraLink/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -587,7 +587,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/kurow/source/VSCode/TerraLink/TerraLink/build/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -647,7 +647,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/kurow/source/VSCode/TerraNode"
+			"value" : "C:/Users/kurow/source/VSCode/TerraLink/TerraLink"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Program Files (x86)/stm32l031_project"
+			"value" : "C:/Program Files (x86)/stm32l476_project"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -903,7 +903,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "stm32l031_project"
+			"value" : "stm32l476_project"
 		},
 		{
 			"name" : "CMAKE_PROJECT_SPDX_LICENSE",
@@ -1207,7 +1207,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "c:/Users/kurow/source/VSCode/TerraNode/arm-gcc-toolchain.cmake"
+			"value" : "C:\\Users\\kurow\\source\\VSCode\\TerraLink\\TerraLink/arm-gcc-toolchain.cmake"
 		},
 		{
 			"name" : "CMAKE_VERBOSE_MAKEFILE",
@@ -1226,7 +1226,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "stm32l031_project_BINARY_DIR",
+			"name" : "stm32l476_project_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1235,10 +1235,10 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/kurow/source/VSCode/TerraNode/build"
+			"value" : "C:/Users/kurow/source/VSCode/TerraLink/TerraLink/build"
 		},
 		{
-			"name" : "stm32l031_project_IS_TOP_LEVEL",
+			"name" : "stm32l476_project_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1250,7 +1250,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "stm32l031_project_SOURCE_DIR",
+			"name" : "stm32l476_project_SOURCE_DIR",
 			"properties" : 
 			[
 				{
@@ -1259,7 +1259,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/kurow/source/VSCode/TerraNode"
+			"value" : "C:/Users/kurow/source/VSCode/TerraLink/TerraLink"
 		}
 	],
 	"kind" : "cache",

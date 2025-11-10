@@ -7,9 +7,60 @@
 
 #include "packet.h"
 #include "comm.h"
+#include <stdlib.h>
+#include <string.h>
+#include "STMDevice.h"
+
+// Allocate packet with specified payload length
+packet_t *packet_alloc(uint8_t payload_len)
+{
+	if (payload_len > MAX_PAYLOAD_SIZE)
+		return NULL;
+
+	size_t alloc_size = PACKET_SIZE(payload_len);
+	packet_t *pkt = (packet_t *)malloc(alloc_size);
+	if (pkt != NULL)
+	{
+		memset(pkt, 0, alloc_size);
+	}
+	return pkt;
+}
+
+// Free allocated packet
+void packet_free(packet_t *pkt)
+{
+	if (pkt != NULL)
+	{
+		free(pkt);
+	}
+}
+
+// Set CRC - compute from header and payload, store in crc field
+void packet_set_crc(packet_t *pkt)
+{
+	if (pkt == NULL)
+		return;
+
+	// Compute CRC from header (5 bytes) + payload
+	uint8_t temp_buffer[PACKET_MAX_SIZE];
+	memcpy(temp_buffer, pkt, PACKET_HEADER_SIZE);
+	memcpy(temp_buffer + PACKET_HEADER_SIZE, pkt->payload, pkt->len);
+
+	uint16_t crc = crc16_compute(temp_buffer, PACKET_HEADER_SIZE + pkt->len);
+	pkt->crc = crc;
+}
+
+// Get CRC from packet
+uint16_t packet_get_crc(const packet_t *pkt)
+{
+	if (pkt == NULL)
+		return 0;
+
+	return pkt->crc;
+}
 
 uint16_t get_pkt_length(const packet_t *pkt) {
-	return HEADER_SIZE + pkt->len + CRC_SIZE;
+	return PACKET_TOTAL_SIZE(pkt);
 }
 
 uint8_t next_seq_number() {
@@ -28,42 +79,41 @@ uint16_t crc16_compute(const uint8_t *data, uint16_t length) {
 uint8_t verify_pkt(packet_t *pkt) {
 
 	uint8_t *rx_buf = lora_buffer;
-	if (rx_buf == NULL)
-		return false;
+	if (rx_buf == NULL || pkt == NULL)
+		return 0;
 
 	uint8_t payload_len = rx_buf[4];
 	if (payload_len > MAX_PAYLOAD_SIZE)
-		return false;
+		return 0;
 
-	uint8_t actual_len = HEADER_SIZE + payload_len + CRC_SIZE;
+	// W rx_buf: header (5), payload (len), crc (2)
+	// CRC jest na końcu odbieranych danych
 	uint16_t received_crc;
-	memcpy(&received_crc, rx_buf + actual_len - CRC_SIZE, CRC_SIZE);
+	memcpy(&received_crc, rx_buf + PACKET_HEADER_SIZE + payload_len, CRC_SIZE);
 
-	uint16_t computed_crc = crc16_compute(rx_buf, actual_len - CRC_SIZE);
+	// Oblicz CRC z headera i payload
+	uint16_t computed_crc = crc16_compute(rx_buf, PACKET_HEADER_SIZE + payload_len);
 
 	if (computed_crc != received_crc)
-		return false;
+		return 0;
 
-	memcpy(pkt, rx_buf, HEADER_SIZE);
+	// Copy header (5 bytes)
+	memcpy(pkt, rx_buf, PACKET_HEADER_SIZE);
+	// Copy CRC to structure
+	pkt->crc = received_crc;
+	// Copy payload if exists
 	if (payload_len > 0)
-		memcpy(pkt->payload, rx_buf + HEADER_SIZE, payload_len);
-	memcpy(&pkt->crc16, rx_buf + HEADER_SIZE + payload_len, CRC_SIZE);
+		memcpy(pkt->payload, rx_buf + PACKET_HEADER_SIZE, payload_len);
 
-	return true;
+	return 1;
 }
 
-uint8_t get_data(const packet_t *pkt, uint8_t index, data_record_t *data) {
-	if (pkt == NULL || data == NULL)
+uint8_t get_data(const packet_t *pkt, void *dataStructPtr, size_t dataStructSize)
+{
+	if (pkt == NULL || dataStructPtr == NULL || pkt->len != dataStructSize)
 		return 0;
 
-	uint8_t total_records = pkt->len / DATA_RECORD_SIZE;
-	if (total_records <= index)
-		return 0;
-
-	uint8_t offset = index * DATA_RECORD_SIZE;
-
-	memcpy(data, pkt->payload + offset, DATA_RECORD_SIZE);
-
+	memcpy(dataStructPtr, pkt->payload, pkt->len);
 	return 1;
 }
 
@@ -108,8 +158,7 @@ uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt) {
 	ack_pkt->pkt_type = PKT_ACK;
 	ack_pkt->seq = received_pkt->seq + 1;
 	ack_pkt->len = 0;
-	ack_pkt->crc16 = crc16_compute((uint8_t*) ack_pkt,
-			get_pkt_length(ack_pkt) - CRC_SIZE);
+	packet_set_crc(ack_pkt);
 
 	return 1;
 }
@@ -122,26 +171,12 @@ uint8_t create_handshake_pkt(packet_t *pkt) {
 	pkt->src_id = 0;
 	pkt->pkt_type = PKT_REG_REQ;
 	pkt->seq = next_seq_number();
-	pkt->len = 0;
+	pkt->len = sizeof(SDeviceUID);
 
-	STM32_UID_t stm32_uid;
+	SDeviceUID stm32_uid;
 	FLASH_NODE_UID_get(&stm32_uid);
-
-	data_record_t handshake_data[3];
-
-	handshake_data[0].data = stm32_uid.UID_0;
-	handshake_data[1].data = stm32_uid.UID_1;
-	handshake_data[2].data = stm32_uid.UID_2;
-
-	for (int i = 0; i < 3; ++i) {
-		handshake_data[i].type = DATA_HANDSHAKE;
-		handshake_data[i].time_offset = 0;
-
-		if (!attach_data(pkt, &handshake_data[i]))
-			return 0;
-	}
-
-	pkt->crc16 = crc16_compute((uint8_t*) pkt, get_pkt_length(pkt) - CRC_SIZE);
+	memcpy(pkt->payload, &stm32_uid, sizeof(SDeviceUID));
+	packet_set_crc(pkt);
 
 	return 1;
 }
@@ -231,8 +266,7 @@ uint8_t create_cmd_data_resp_pkt(packet_t *cmd_data_pkt,
 	if (!attach_cmd(cmd_data_pkt, &cmd_data))
 		return 0;
 
-	cmd_data_pkt->crc16 = crc16_compute((uint8_t*) cmd_data_pkt,
-			get_pkt_length(cmd_data_pkt) - CRC_SIZE);
+	packet_set_crc(cmd_data_pkt);
 
 	return 1;
 }

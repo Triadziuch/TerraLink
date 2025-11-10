@@ -28,7 +28,7 @@
 					[
 						0
 					],
-					"name" : "stm32l031_project",
+					"name" : "stm32l476_project",
 					"targetIndexes" : 
 					[
 						0
@@ -39,9 +39,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "stm32l031_project.elf::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-stm32l031_project.elf-Debug-fd32628b0194a653de76.json",
-					"name" : "stm32l031_project.elf",
+					"id" : "stm32l476_project.elf::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-stm32l476_project.elf-Debug-207a000e1ab86f09e639.json",
+					"name" : "stm32l476_project.elf",
 					"projectIndex" : 0
 				}
 			]
@@ -50,8 +50,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/kurow/source/VSCode/TerraNode/build",
-		"source" : "C:/Users/kurow/source/VSCode/TerraNode"
+		"build" : "C:/Users/kurow/source/VSCode/TerraLink/TerraLink/build",
+		"source" : "C:/Users/kurow/source/VSCode/TerraLink/TerraLink"
 	},
 	"version" : 
 	{

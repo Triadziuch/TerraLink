@@ -22,6 +22,7 @@ events:
       - "arm-none-eabi-objcopy"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -64,6 +65,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objcopy.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objcopy.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objcopy"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objcopy.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objcopy.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objcopy"
       - "C:/Python314/Scripts/arm-none-eabi-objcopy.com"
       - "C:/Python314/Scripts/arm-none-eabi-objcopy.exe"
       - "C:/Python314/Scripts/arm-none-eabi-objcopy"
@@ -144,6 +148,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -205,6 +210,7 @@ events:
       - "arm-none-eabi-objdump"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -247,6 +253,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objdump.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objdump.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objdump"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objdump.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objdump.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objdump"
       - "C:/Python314/Scripts/arm-none-eabi-objdump.com"
       - "C:/Python314/Scripts/arm-none-eabi-objdump.exe"
       - "C:/Python314/Scripts/arm-none-eabi-objdump"
@@ -327,6 +336,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -388,6 +398,7 @@ events:
       - "arm-none-eabi-size"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -430,6 +441,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-size.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-size.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-size"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-size.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-size.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-size"
       - "C:/Python314/Scripts/arm-none-eabi-size.com"
       - "C:/Python314/Scripts/arm-none-eabi-size.exe"
       - "C:/Python314/Scripts/arm-none-eabi-size"
@@ -510,6 +524,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -580,6 +595,7 @@ events:
       - "samu"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -628,6 +644,15 @@ events:
       - "C:/Program Files/PowerShell/7/samu.com"
       - "C:/Program Files/PowerShell/7/samu.exe"
       - "C:/Program Files/PowerShell/7/samu"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/ninja-build.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/ninja-build.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/ninja-build"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/ninja.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/ninja.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/ninja"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/samu.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/samu.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/samu"
       - "C:/Python314/Scripts/ninja-build.com"
       - "C:/Python314/Scripts/ninja-build.exe"
       - "C:/Python314/Scripts/ninja-build"
@@ -942,6 +967,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1003,6 +1029,7 @@ events:
       - "arm-none-eabi-gcc"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1045,6 +1072,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc"
       - "C:/Python314/Scripts/arm-none-eabi-gcc.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc"
@@ -1125,6 +1155,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1193,6 +1224,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1291,6 +1323,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1351,7 +1384,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
       
       The C compiler identification is GNU, found in:
-        C:/Users/kurow/source/VSCode/TerraLink/build/CMakeFiles/4.2.0-rc1/CompilerIdC/CMakeCCompilerId.o
+        C:/Users/kurow/source/VSCode/TerraLink/TerraLink/build/CMakeFiles/4.2.0-rc1/CompilerIdC/CMakeCCompilerId.o
       
   -
     kind: "find-v1"
@@ -1376,6 +1409,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1419,6 +1453,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1482,6 +1517,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1525,6 +1561,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1588,6 +1625,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1631,6 +1669,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1694,6 +1733,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1737,6 +1777,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1800,6 +1841,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1843,6 +1885,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -1906,6 +1949,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -1949,6 +1993,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -2012,6 +2057,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -2056,6 +2102,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-dlltool.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-dlltool.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-dlltool"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-dlltool.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-dlltool.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-dlltool"
       - "C:/Python314/Scripts/arm-none-eabi-dlltool.com"
       - "C:/Python314/Scripts/arm-none-eabi-dlltool.exe"
       - "C:/Python314/Scripts/arm-none-eabi-dlltool"
@@ -2173,6 +2222,9 @@ events:
       - "C:/Program Files/PowerShell/7/dlltool.com"
       - "C:/Program Files/PowerShell/7/dlltool.exe"
       - "C:/Program Files/PowerShell/7/dlltool"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/dlltool.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/dlltool.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/dlltool"
       - "C:/Python314/Scripts/dlltool.com"
       - "C:/Python314/Scripts/dlltool.exe"
       - "C:/Python314/Scripts/dlltool"
@@ -2288,6 +2340,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -2351,6 +2404,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -2394,6 +2448,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -2457,6 +2512,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -2501,6 +2557,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-tapi.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-tapi.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-tapi"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-tapi.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-tapi.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-tapi"
       - "C:/Python314/Scripts/arm-none-eabi-tapi.com"
       - "C:/Python314/Scripts/arm-none-eabi-tapi.exe"
       - "C:/Python314/Scripts/arm-none-eabi-tapi"
@@ -2618,6 +2677,9 @@ events:
       - "C:/Program Files/PowerShell/7/tapi.com"
       - "C:/Program Files/PowerShell/7/tapi.exe"
       - "C:/Program Files/PowerShell/7/tapi"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/tapi.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/tapi.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/tapi"
       - "C:/Python314/Scripts/tapi.com"
       - "C:/Python314/Scripts/tapi.exe"
       - "C:/Python314/Scripts/tapi"
@@ -2733,6 +2795,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -2798,6 +2861,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -2842,6 +2906,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-14.3.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-14.3.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-14.3"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-14.3.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-14.3.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-14.3"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-14.3.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-14.3.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-14.3"
@@ -2959,6 +3026,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-14.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-14.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-14"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-14.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-14.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-14"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-14.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-14.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-14"
@@ -3076,6 +3146,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar14.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar14.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar14"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar14.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar14.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar14"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar14.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar14.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar14"
@@ -3192,6 +3265,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -3257,6 +3331,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -3301,6 +3376,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-14.3.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-14.3.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-14.3"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-14.3.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-14.3.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-14.3"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-14.3.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-14.3.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-14.3"
@@ -3418,6 +3496,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-14.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-14.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-14"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-14.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-14.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-14"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-14.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-14.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-14"
@@ -3535,6 +3616,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib14.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib14.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib14"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib14.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib14.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib14"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib14.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib14.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib14"
@@ -3651,6 +3735,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -3712,6 +3797,7 @@ events:
       - "arm-none-eabi-gcc"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -3754,6 +3840,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc"
       - "C:/Python314/Scripts/arm-none-eabi-gcc.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc"
@@ -3834,6 +3923,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -3912,6 +4002,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -3956,6 +4047,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-"
@@ -4073,6 +4167,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ar-"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ar-"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ar-"
@@ -4189,6 +4286,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -4254,6 +4352,7 @@ events:
     candidate_directories:
       - "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin/"
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -4298,6 +4397,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-"
@@ -4415,6 +4517,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-gcc-ranlib-"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-gcc-ranlib-"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-.com"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-.exe"
       - "C:/Python314/Scripts/arm-none-eabi-gcc-ranlib-"
@@ -4531,6 +4636,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -4574,7 +4680,7 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "CMakeLists.txt:58 (find_program)"
+      - "CMakeLists.txt:60 (find_program)"
     mode: "program"
     variable: "ARM_OBJCOPY"
     description: "Path to a program."
@@ -4590,6 +4696,7 @@ events:
       - "arm-none-eabi-objcopy"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -4633,6 +4740,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objcopy.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objcopy.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-objcopy"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objcopy.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objcopy.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-objcopy"
       - "C:/Python314/Scripts/arm-none-eabi-objcopy.com"
       - "C:/Python314/Scripts/arm-none-eabi-objcopy.exe"
       - "C:/Python314/Scripts/arm-none-eabi-objcopy"
@@ -4713,6 +4823,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"
@@ -4759,7 +4870,7 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "CMakeLists.txt:59 (find_program)"
+      - "CMakeLists.txt:61 (find_program)"
     mode: "program"
     variable: "ARM_SIZE"
     description: "Path to a program."
@@ -4775,6 +4886,7 @@ events:
       - "arm-none-eabi-size"
     candidate_directories:
       - "C:/Program Files/PowerShell/7/"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/"
       - "C:/Python314/Scripts/"
       - "C:/Python314/"
       - "C:/Program Files/Common Files/Oracle/Java/javapath/"
@@ -4818,6 +4930,9 @@ events:
       - "C:/Program Files/PowerShell/7/arm-none-eabi-size.com"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-size.exe"
       - "C:/Program Files/PowerShell/7/arm-none-eabi-size"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-size.com"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-size.exe"
+      - "C:/Program Files/Oculus/Support/oculus-runtime/arm-none-eabi-size"
       - "C:/Python314/Scripts/arm-none-eabi-size.com"
       - "C:/Python314/Scripts/arm-none-eabi-size.exe"
       - "C:/Python314/Scripts/arm-none-eabi-size"
@@ -4898,6 +5013,7 @@ events:
     search_context:
       ENV{PATH}:
         - "C:\\Program Files\\PowerShell\\7"
+        - "C:\\Program Files\\Oculus\\Support\\oculus-runtime"
         - "C:\\Python314\\Scripts\\"
         - "C:\\Python314\\"
         - "C:\\Program Files\\Common Files\\Oracle\\Java\\javapath"

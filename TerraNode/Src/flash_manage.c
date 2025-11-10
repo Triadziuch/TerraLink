@@ -7,9 +7,9 @@ uint8_t COMM_WAKEUP_TIMER_TIME_AWAKE = 3, MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE =
 uint8_t HIVE_ID = 255;
 uint8_t NODE_ID = 0;
 
-void FLASH_NODE_UID_get(STM32_UID_t *stm32_uid) {
+void FLASH_NODE_UID_get(SDeviceUID *stm32_uid) {
 	if (stm32_uid != NULL)
-		*stm32_uid = *((STM32_UID_t*) NODE_UID_ADDR);
+		*stm32_uid = *((SDeviceUID*) NODE_UID_ADDR);
 }
 
 uint8_t FLASH_NODE_ID_get(void) {

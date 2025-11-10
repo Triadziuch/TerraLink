@@ -1351,7 +1351,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
       
       The C compiler identification is GNU, found in:
-        C:/Users/kurow/source/VSCode/TerraNode/build/CMakeFiles/4.2.0-rc1/CompilerIdC/CMakeCCompilerId.o
+        C:/Users/kurow/source/VSCode/TerraLink/TerraNode/build/CMakeFiles/4.2.0-rc1/CompilerIdC/CMakeCCompilerId.o
       
   -
     kind: "find-v1"

@@ -3,6 +3,7 @@
 
 #include "stm32l0xx_hal.h"
 #include "stdio.h"
+#include "STMDevice.h"
 
 // Node UID
 #define NODE_UID_ADDR 		0x1FF80050
@@ -33,13 +34,7 @@ extern uint8_t COMM_WAKEUP_TIMER_TIME_AWAKE,
 		MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE;
 extern uint8_t HIVE_ID, NODE_ID;
 
-typedef struct {
-	uint32_t UID_0;
-	uint32_t UID_1;
-	uint32_t UID_2;
-} STM32_UID_t;
-
-void FLASH_NODE_UID_get(STM32_UID_t *stm32_uid);
+void FLASH_NODE_UID_get(SDeviceUID *stm32_uid);
 uint8_t FLASH_NODE_ID_get(void);
 uint8_t FLASH_NODE_ID_set(uint8_t new_id);
 uint8_t FLASH_NODE_ID_is_valid(void);

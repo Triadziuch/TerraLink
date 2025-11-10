@@ -33,6 +33,9 @@ set(PROJECT_SOURCES
   ${CMAKE_SOURCE_DIR}/Src/packet.c
   ${CMAKE_SOURCE_DIR}/Src/SX1278_hw.c
   ${CMAKE_SOURCE_DIR}/Src/SX1278.c
+  ${CMAKE_SOURCE_DIR}/Src/Flash.c
+  ${CMAKE_SOURCE_DIR}/Src/STMDevice.c
+  ${CMAKE_SOURCE_DIR}/Src/NodeManage.c
   ${CMAKE_SOURCE_DIR}/startup_stm32l476rgtx.s
 )
 

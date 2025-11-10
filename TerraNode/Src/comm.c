@@ -59,12 +59,13 @@ uint8_t comm_send(const packet_t *pkt) {
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 
 	uint16_t total_len = get_pkt_length(pkt);
-	uint8_t buffer[sizeof(packet_t)];
+	uint8_t buffer[PACKET_MAX_SIZE];
 
-	memcpy(buffer, pkt, total_len - CRC_SIZE);
+	memcpy(buffer, pkt, PACKET_HEADER_SIZE);
+	memcpy(buffer + PACKET_HEADER_SIZE, pkt->payload, pkt->len);
 
-	buffer[total_len - 2] = pkt->crc16 & 0xFF;
-	buffer[total_len - 1] = pkt->crc16 >> 8;
+	buffer[total_len - 2] = pkt->crc & 0xFF;
+	buffer[total_len - 1] = pkt->crc >> 8;
 
 	bool status = SX1278_transmit(&sx1278, buffer, total_len, PKT_TX_TIMEOUT);
 	HAL_NVIC_EnableIRQ(EXTI_LINE);
@@ -75,7 +76,7 @@ uint8_t comm_send(const packet_t *pkt) {
 uint8_t comm_receive(packet_t *pkt) {
 	lora_data_ready = 0;
 
-	if (!SX1278_receive(&sx1278, sizeof(packet_t), PKT_RX_TIMEOUT))
+	if (!SX1278_receive(&sx1278, PACKET_MAX_SIZE, PKT_RX_TIMEOUT))
 		return 0;
 
 	uint32_t start_time = HAL_GetTick();
@@ -102,23 +103,29 @@ uint8_t comm_send_moisture(const packet_t *request_pkt) {
 	data_record.time_offset = GetTime() - moisture.time;
 	data_record.data = moisture.value;
 
-	packet_t data_pkt;
-	create_data_pkt(&data_pkt, request_pkt);
-	attach_data(&data_pkt, &data_record);
-	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
-			get_pkt_length(&data_pkt) - CRC_SIZE);
+	packet_t *data_pkt = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (data_pkt == NULL)
+		return 0;
 
+	create_data_pkt(data_pkt, request_pkt);
+	attach_data(data_pkt, &data_record);
+	packet_set_crc(data_pkt);
+
+	uint8_t result = 0;
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (!comm_send(&data_pkt))
+		if (!comm_send(data_pkt))
 			continue;
 
-		if (comm_await_ack(&data_pkt))
-			return 1;
+		if (comm_await_ack(data_pkt)) {
+			result = 1;
+			break;
+		}
 
 		HAL_Delay(100);
 	}
 
-	return 0;
+	packet_free(data_pkt);
+	return result;
 }
 
 uint8_t comm_send_lux(const packet_t *request_pkt) {
@@ -132,23 +139,29 @@ uint8_t comm_send_lux(const packet_t *request_pkt) {
 	data_record.time_offset = GetTime() - light.time;
 	data_record.data = light.value;
 
-	packet_t data_pkt;
-	create_data_pkt(&data_pkt, request_pkt);
-	attach_data(&data_pkt, &data_record);
-	data_pkt.crc16 = crc16_compute((uint8_t*) &data_pkt,
-			get_pkt_length(&data_pkt) - CRC_SIZE);
+	packet_t *data_pkt = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (data_pkt == NULL)
+		return 0;
 
+	create_data_pkt(data_pkt, request_pkt);
+	attach_data(data_pkt, &data_record);
+	packet_set_crc(data_pkt);
+
+	uint8_t result = 0;
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (!comm_send(&data_pkt))
+		if (!comm_send(data_pkt))
 			continue;
 
-		if (comm_await_ack(&data_pkt))
-			return 1;
+		if (comm_await_ack(data_pkt)) {
+			result = 1;
+			break;
+		}
 
 		HAL_Delay(100);
 	}
 
-	return 0;
+	packet_free(data_pkt);
+	return result;
 }
 
 //TODO: Refactorize redundant code
@@ -198,21 +211,25 @@ wakeup_t* comm_send_next_wakeup(void) {
 	wakeup_record.type = CMD_INFO_NEXT_WAKEUP;
 	wakeup_record.value = sleep_time;
 
-	packet_t *pkt = malloc(sizeof(packet_t));
+	packet_t *pkt = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (pkt == NULL)
+		return NULL;
 	pkt->dst_id = HIVE_ID;
 	pkt->src_id = NODE_ID;
 	pkt->pkt_type = PKT_CMD_DATA;
 	pkt->seq = next_seq_number();
 	pkt->len = 0;
-	if (!attach_cmd(pkt, &wakeup_record))
-		return 0;
-	pkt->crc16 = crc16_compute((uint8_t*) pkt, get_pkt_length(pkt) - CRC_SIZE);
-
-	if (!comm_send_cmd_data(pkt)) {
-		free(pkt);
+	if (!attach_cmd(pkt, &wakeup_record)) {
+		packet_free(pkt);
 		return NULL;
 	}
-	free(pkt);
+	packet_set_crc(pkt);
+
+	if (!comm_send_cmd_data(pkt)) {
+		packet_free(pkt);
+		return NULL;
+	}
+	packet_free(pkt);
 
 	wakeup_t *wakeup = malloc(sizeof(wakeup_t));
 	wakeup->wakeup_type = next_wakeup;
@@ -221,102 +238,132 @@ wakeup_t* comm_send_next_wakeup(void) {
 }
 
 uint8_t comm_send_ack(const packet_t *received_pkt) {
-	packet_t ack_pkt;
-	if (!create_ack_pkt(&ack_pkt, received_pkt))
+	packet_t *ack_pkt = packet_alloc(0);
+	if (ack_pkt == NULL)
 		return 0;
+
+	if (!create_ack_pkt(ack_pkt, received_pkt)) {
+		packet_free(ack_pkt);
+		return 0;
+	}
 
 	HAL_Delay(100);
 
+	uint8_t result = 0;
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (comm_send(&ack_pkt))
-			return 1;
+		if (comm_send(ack_pkt)) {
+			result = 1;
+			break;
+		}
 
 		HAL_Delay(100);
 	}
 
-	return 0;
+	packet_free(ack_pkt);
+	return result;
 }
 
 uint8_t comm_await_ack(const packet_t *sent_packet) {
-	packet_t response;
-	if (comm_receive(&response)) {
-		if (response.pkt_type == PKT_ACK
-				&& response.dst_id == sent_packet->src_id
-				&& response.src_id == sent_packet->dst_id
-				&& response.seq == sent_packet->seq + 1) {
-			return 1;
+	packet_t *response = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (response == NULL)
+		return 0;
+
+	uint8_t result = 0;
+	if (comm_receive(response)) {
+		if (response->pkt_type == PKT_ACK
+				&& response->dst_id == sent_packet->src_id
+				&& response->src_id == sent_packet->dst_id
+				&& response->seq == sent_packet->seq + 1) {
+			result = 1;
 		}
 	}
 
-	return 0;
+	packet_free(response);
+	return result;
 }
 
 uint8_t comm_await_start(void) {
-	packet_t packet;
-	if (comm_receive(&packet) && packet.dst_id == NODE_ID) {
-		if (packet.pkt_type == PKT_START) {
+	packet_t *packet = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (packet == NULL)
+		return 0;
+
+	uint8_t result = 0;
+	if (comm_receive(packet) && packet->dst_id == NODE_ID) {
+		if (packet->pkt_type == PKT_START) {
 			next_comm_wakeup_in = COMM_WAKEUP_TIMER_INTERVAL;
 			next_measurement_wakeup_in = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
-			return 1;
+			result = 1;
 		}
-
-		else if (packet.pkt_type == PKT_CMD)
-			comm_handle_cmd(&packet);
+		else if (packet->pkt_type == PKT_CMD)
+			comm_handle_cmd(packet);
 	}
-	return 0;
+
+	packet_free(packet);
+	return result;
 }
 
 uint8_t comm_handshake_master(void) {
-	packet_t req;
-
-	if (!create_handshake_pkt(&req))
+	packet_t *req = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (req == NULL)
 		return 0;
 
+	if (!create_handshake_pkt(req)) {
+		packet_free(req);
+		return 0;
+	}
+
+	uint8_t result = 0;
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
 		HAL_Delay(100);
 
-		if (!comm_send(&req))
+		if (!comm_send(req))
 			continue;
 
-		packet_t response;
-		if (comm_receive(&response)) {
-			if (response.pkt_type == PKT_ASSIGN_ID
-					&& response.dst_id == req.src_id
-					&& response.len == DATA_RECORD_SIZE
-					&& response.seq == req.seq + 1) {
+		packet_t *response = packet_alloc(MAX_PAYLOAD_SIZE);
+		if (response == NULL)
+			continue;
 
-				data_record_t data_record;
+		if (comm_receive(response)) {
+			if (response->pkt_type == PKT_ASSIGN_ID
+					&& response->dst_id == req->src_id
+					&& response->seq == req->seq + 1) {
 
-				if (!get_data(&response, 0, &data_record))
+				SDevice deviceInfo;
+				if (!get_data(response, &deviceInfo, sizeof(SDevice))) {
+					packet_free(response);
 					continue;
-
-				if (data_record.type != DATA_ID)
-					continue;
-
-				uint8_t new_id = (uint8_t) data_record.data;
-
-				if (FLASH_NODE_ID_set(new_id)
-						&& FLASH_HIVE_ID_set(response.src_id)) {
-					packet_t ack;
-					ack.dst_id = response.src_id;
-					ack.src_id = NODE_ID;
-					ack.pkt_type = PKT_ACK;
-					ack.seq = response.seq + 1;
-					ack.len = 0;
-					ack.crc16 = crc16_compute((uint8_t*) &ack,
-							get_pkt_length(&ack) - CRC_SIZE);
-
-					if (!comm_send(&ack))
-						continue;
-
 				}
-				return 1;
 
+				if (memcmp(&deviceInfo.uid, (const void *)NODE_UID_ADDR, sizeof(SDeviceUID)) != 0) {
+					packet_free(response);
+					continue;
+				}
+
+				if (FLASH_NODE_ID_set(deviceInfo.id)
+						&& FLASH_HIVE_ID_set(response->src_id)) {
+					packet_t *ack = packet_alloc(0);
+					if (ack != NULL) {
+						ack->dst_id = response->src_id;
+						ack->src_id = NODE_ID;
+						ack->pkt_type = PKT_ACK;
+						ack->seq = response->seq + 1;
+						ack->len = 0;
+						packet_set_crc(ack);
+
+						comm_send(ack);
+						packet_free(ack);
+					}
+				}
+				packet_free(response);
+				result = 1;
+				break;
 			}
 		}
+		packet_free(response);
 	}
 
-	return 0;
+	packet_free(req);
+	return result;
 }
 
 uint8_t comm_handle_req_data(const packet_t *received_pkt) {
@@ -327,7 +374,7 @@ uint8_t comm_handle_req_data(const packet_t *received_pkt) {
 		return 0;
 
 	data_record_t req_data;
-	if (!get_data(received_pkt, 0, &req_data))
+	if (!get_data(received_pkt, &req_data, DATA_RECORD_SIZE))
 		return 0;
 
 	if (req_data.type == DATA_ID) {
@@ -360,9 +407,16 @@ uint8_t comm_handle_cmd(const packet_t *received_pkt) {
 	if (received_pkt->pkt_type != PKT_CMD)
 		return 0;
 
-	packet_t cmd_response;
-	if (create_cmd_data_resp_pkt(&cmd_response, received_pkt) == 0)
+	packet_t *cmd_response = packet_alloc(MAX_PAYLOAD_SIZE);
+	if (cmd_response == NULL)
 		return 0;
 
-	return comm_send_cmd_data(&cmd_response);
+	if (create_cmd_data_resp_pkt(cmd_response, received_pkt) == 0) {
+		packet_free(cmd_response);
+		return 0;
+	}
+
+	uint8_t result = comm_send_cmd_data(cmd_response);
+	packet_free(cmd_response);
+	return result;
 }

@@ -18,9 +18,9 @@
 #define BROADCAST_ID	255
 
 #include "stdint.h"
+#include "stddef.h"
 #include "flash_manage.h"
 
-//TODO: Flexible array
 #pragma pack(push, 1)
 typedef struct{
 	uint8_t dst_id;
@@ -28,10 +28,15 @@ typedef struct{
 	uint8_t pkt_type;
 	uint8_t seq;
 	uint8_t len;
-	uint8_t payload[MAX_PAYLOAD_SIZE];
-	uint16_t crc16;
+	uint16_t crc;
+	uint8_t payload[];
 } packet_t;
 #pragma pack(pop)
+
+#define PACKET_HEADER_SIZE (offsetof(packet_t, crc))
+#define PACKET_SIZE(payload_len) (PACKET_HEADER_SIZE + CRC_SIZE + (payload_len))
+#define PACKET_MAX_SIZE PACKET_SIZE(MAX_PAYLOAD_SIZE)
+#define PACKET_TOTAL_SIZE(pkt) (PACKET_HEADER_SIZE + CRC_SIZE + (pkt)->len)
 
 #pragma pack(push, 1)
 typedef struct{
@@ -58,7 +63,8 @@ enum{
 	PKT_TEST_CONN	= 0x07,
 	PKT_CMD			= 0x08,
 	PKT_CMD_DATA	= 0x09,
-	PKT_START		= 0x0A
+	PKT_START		= 0x0A,
+	PKT_SYNC_CONFIG	= 0x0B
 };
 
 typedef enum {
@@ -85,12 +91,18 @@ typedef enum{
 	CMD_INFO_NEXT_WAKEUP = 0x0D
 } CMD_TYPE;
 
+// Packet memory management
+packet_t* packet_alloc(uint8_t payload_len);
+void packet_free(packet_t* pkt);
+void packet_set_crc(packet_t* pkt);
+uint16_t packet_get_crc(const packet_t* pkt);
+
 uint16_t get_pkt_length(const packet_t* pkt);
 uint8_t next_seq_number();
 uint16_t crc16_compute(const uint8_t *data, uint16_t length);
 
 uint8_t verify_pkt(packet_t *pkt);
-uint8_t get_data(const packet_t* pkt, uint8_t index, data_record_t* data);
+uint8_t get_data(const packet_t *pkt, void *dataStructPtr, size_t dataStructSize);
 uint8_t get_cmd_data(const packet_t* pkt, cmd_record_t* cmd_data);
 uint8_t attach_data(packet_t* pkt, data_record_t* data);
 uint8_t attach_cmd(packet_t* pkt, cmd_record_t* cmd);

@@ -75,7 +75,6 @@ volatile uint8_t lora_data_ready = 0;
 volatile bool rtc_wakeup_flag = false;
 wakeup_t *wakeup_info;
 bool handshake = false;
-packet_t received_pkt;
 
 // RTC Time and Date variables
 RTC_TimeTypeDef clock_time;
@@ -124,16 +123,17 @@ void handle_communication(uint8_t awake_time) {
 
 		SX1278_receive(&sx1278, 64, 1000);
 		if (lora_data_ready) {
-			if (verify_pkt(&received_pkt)) {
-				switch (received_pkt.pkt_type) {
+			packet_t *received_pkt = packet_alloc(MAX_PAYLOAD_SIZE);
+			if (received_pkt != NULL && verify_pkt(received_pkt)) {
+				switch (received_pkt->pkt_type) {
 				case PKT_REQ_DATA:
-					comm_handle_req_data(&received_pkt);
+					comm_handle_req_data(received_pkt);
 					break;
 				case PKT_TEST_CONN:
-					comm_handle_test_conn(&received_pkt);
+					comm_handle_test_conn(received_pkt);
 					break;
 				case PKT_CMD:
-					comm_handle_cmd(&received_pkt);
+					comm_handle_cmd(received_pkt);
 					break;
 				case PKT_ASSIGN_ID:
 					break;
@@ -141,6 +141,8 @@ void handle_communication(uint8_t awake_time) {
 					break;
 				}
 			}
+			if (received_pkt != NULL)
+				packet_free(received_pkt);
 			lora_data_ready = 0;
 		}
 	}
