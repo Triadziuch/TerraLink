@@ -11,6 +11,13 @@
 #include <string.h>
 #include "STMDevice.h"
 
+SNodeConfig node_config = {
+	.comm_wakeup_timer_interval = 0,
+	.measurement_wakeup_timer_interval = 0,
+	.comm_wakeup_timer_time_awake = 0,
+	.measurement_wakeup_timer_time_awake = 0
+};
+
 // Allocate packet with specified payload length
 packet_t *packet_alloc(uint8_t payload_len)
 {
@@ -197,76 +204,6 @@ uint8_t create_data_pkt(packet_t *data_pkt, const packet_t *received_pkt) {
 	}
 
 	data_pkt->len = 0;
-
-	return 1;
-}
-
-uint8_t create_cmd_data_resp_pkt(packet_t *cmd_data_pkt,
-		const packet_t *received_pkt) {
-	if (!cmd_data_pkt || !received_pkt)
-		return 0;
-
-	cmd_record_t cmd_data;
-	if (!get_cmd_data(received_pkt, &cmd_data))
-		return 0;
-
-	cmd_data_pkt->dst_id = FLASH_HIVE_ID_get();
-	cmd_data_pkt->src_id = FLASH_NODE_ID_get();
-	cmd_data_pkt->pkt_type = PKT_CMD_DATA;
-	cmd_data_pkt->seq = received_pkt->seq + 1;
-	cmd_data_pkt->len = 0;
-
-	switch (cmd_data.type) {
-	case CMD_SET_COMM_WAKEUP_TIMER_INTERVAL:
-		if (!FLASH_COMM_WAKEUP_TIMER_INTERVAL_set(cmd_data.value))
-			return 0;
-	case CMD_GET_COMM_WAKEUP_TIMER_INTERVAL:
-		cmd_data.value = FLASH_COMM_WAKEUP_TIMER_INTERVAL_get();
-		break;
-
-	case CMD_SET_COMM_WAKEUP_TIMER_TIME_AWAKE:
-		if (!FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_set(cmd_data.value))
-			return 0;
-	case CMD_GET_COMM_WAKEUP_TIMER_TIME_AWAKE:
-		cmd_data.value = FLASH_COMM_WAKEUP_TIMER_TIME_AWAKE_get();
-		break;
-
-	case CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL:
-		if (!FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_set(cmd_data.value))
-			return 0;
-	case CMD_GET_MEASUREMENT_WAKEUP_TIMER_INTERVAL:
-		cmd_data.value = FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_INTERVAL_get();
-		break;
-
-	case CMD_SET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE:
-		if (!FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_set(cmd_data.value))
-			return 0;
-	case CMD_GET_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE:
-		cmd_data.value = FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_get();
-		break;
-
-	case CMD_SET_HIVE_ID:
-		if (!FLASH_HIVE_ID_set(cmd_data.value))
-			return 0;
-	case CMD_GET_HIVE_ID:
-		cmd_data.value = FLASH_HIVE_ID_get();
-		break;
-
-	case CMD_SET_NODE_ID:
-		if (!FLASH_NODE_ID_set(cmd_data.value))
-			return 0;
-	case CMD_GET_NODE_ID:
-		cmd_data.value = FLASH_NODE_ID_get();
-		break;
-
-	default:
-		return 0;
-	}
-
-	if (!attach_cmd(cmd_data_pkt, &cmd_data))
-		return 0;
-
-	packet_set_crc(cmd_data_pkt);
 
 	return 1;
 }

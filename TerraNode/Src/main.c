@@ -102,12 +102,12 @@ void handle_received_pkt(packet_t *received_pkt) {
 		comm_handle_req_data(received_pkt);
 	} else if (received_pkt->pkt_type == PKT_TEST_CONN) {
 		comm_handle_test_conn(received_pkt);
+	} else if (received_pkt->pkt_type == PKT_SYNC_CONFIG) {
+		comm_handle_sync_config(received_pkt);
 	} else if (received_pkt->pkt_type == PKT_ASSIGN_ID) {
 
 	} else if (received_pkt->pkt_type == PKT_REQ_ID) {
 
-	} else if (received_pkt->pkt_type == PKT_CMD) {
-		comm_handle_cmd(received_pkt);
 	}
 }
 
@@ -131,9 +131,6 @@ void handle_communication(uint8_t awake_time) {
 					break;
 				case PKT_TEST_CONN:
 					comm_handle_test_conn(received_pkt);
-					break;
-				case PKT_CMD:
-					comm_handle_cmd(received_pkt);
 					break;
 				case PKT_ASSIGN_ID:
 					break;
@@ -216,13 +213,14 @@ int main(void) {
 	// CRC Init
 	__HAL_RCC_CRC_CLK_ENABLE();
 
-	if (node_config() == 0)
-		Error_Handler();
+	// TODO: Zainicjalizować z flasha
+	// if (node_config() == 0)
+	// 	Error_Handler();
 
 	// Validate Hive Connection
 	while (handshake == false) {
 		handshake = comm_handshake_master();
-		SX1278_receive(&sx1278, 64, 500);
+		SX1278_receive(&sx1278, 64, 1000);
 	}
 
 	while (!comm_await_start()) {

@@ -61,5 +61,5 @@ uint8_t FLASH_MEASUREMENT_WAKEUP_TIMER_TIME_AWAKE_is_valid(void);
 
 void node_restart(void);
 
-uint8_t node_config(void);
+uint8_t node_config1(void);
 #endif

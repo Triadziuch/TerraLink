@@ -17,6 +17,20 @@ static bool is_flag_valid(uint32_t flagAddress)
 	return flag == VALID_FLAG;
 }
 
+void Flash_Clear(void)
+{
+	HAL_FLASH_Unlock();
+
+	uint32_t pageError;
+	FLASH_EraseInitTypeDef EraseInit = {.TypeErase = FLASH_TYPEERASE_PAGES,
+										.Page = (FLASH_START_ADDR - FLASH_BASE) / FLASH_PAGE_SIZE,
+										.NbPages = 3,
+										.Banks = FLASH_BANK};
+	HAL_FLASHEx_Erase(&EraseInit, &pageError);
+
+	HAL_FLASH_Lock();
+}
+
 HAL_StatusTypeDef Flash_read(uint32_t address, uint8_t *data, uint16_t length)
 {
 	if (!is_address_range_valid(address, length))

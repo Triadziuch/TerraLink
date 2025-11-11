@@ -57,9 +57,12 @@ void Node_Init(void)
 
     for (size_t i = 0; i < node_count; ++i)
     {
+        // TODO: To należy pobierać z serwera
+        nodes[i].last_wakeup_info = (SNodeLastWakeupInfo){0};
         nodes[i].handshake = false;
         nodes[i].started = false;
 
+        // TODO: Dodać kolejkę cały czas próbującą synchronizować ustawienia (i łączyć się z node'ami)
         if (validate_node_connection(&nodes[i]))
         {
             nodes[i].handshake = sync_node_settings(&nodes[i]);
@@ -111,9 +114,7 @@ const data_record_t *Node_GetDataRecord(uint8_t node_id, uint8_t data_type)
 {
     const SNode *node = Node_GetNodeById(node_id);
     if (node == NULL)
-    {
         return NULL;
-    }
 
     switch (data_type)
     {
@@ -131,11 +132,13 @@ const data_record_t *Node_GetDataRecord(uint8_t node_id, uint8_t data_type)
 const SDevice *Node_PrepareNewDevice(const SDeviceUID *argUID)
 {
     if (node_count >= MAX_NODES || argUID == NULL)
-    {
         return NULL;
-    }
 
-    SDevice *new_device = &nodes[node_count].device;
+    SDevice *new_device = &get_node_by_uid(argUID)->device;
+    if (new_device != NULL)
+        return new_device;
+
+    new_device = &nodes[node_count].device;
     new_device->uid = *argUID;
     new_device->id = get_unused_id();
     new_device->type = DEVICE_TYPE_NODE;
@@ -143,17 +146,18 @@ const SDevice *Node_PrepareNewDevice(const SDeviceUID *argUID)
     return new_device;
 }
 
-const SNode *Node_AddNode(const SDevice *argDevice)
+const SNode *Node_AddNode(SDevice argDevice)
 {
-    if (node_count >= MAX_NODES || argDevice == NULL)
+    if (node_count >= MAX_NODES)
         return false;
 
     SNode *new_node = &nodes[node_count];
-    new_node->device = *argDevice;
-    node_count++;
+    *new_node = (SNode){0};
+    new_node->device = argDevice;
 
     save_node_count_to_flash(node_count);
     save_nodes_to_flash(nodes, node_count);
+    node_count++;
 
     if (sync_node_settings(new_node))
         new_node->handshake = true;
@@ -168,4 +172,14 @@ void Node_SetStarted(uint8_t node_id, bool started)
         return;
 
     node->started = started;
+}
+
+void Node_UpdateWakeupInfo(uint8_t node_id, const wakeup_t *wakeup_info)
+{
+    SNode *node = get_node_by_id(node_id);
+    if (node == NULL || wakeup_info == NULL)
+        return;
+
+    node->last_wakeup_info.wakeup_info = *wakeup_info;
+    node->last_wakeup_info.timestamp = get_timestamp();
 }

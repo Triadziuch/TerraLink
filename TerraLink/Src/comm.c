@@ -26,27 +26,6 @@ uint32_t GetTime(void)
 	return (uint32_t)mktime(&t);
 }
 
-// TODO: Dokończyć
-uint8_t execute_cmd(const packet_t *cmd, const packet_t *cmd_data)
-{
-	if (cmd == NULL || cmd_data == NULL)
-		return 0;
-
-	cmd_record_t cmd_record;
-	if (get_cmd_data(cmd, &cmd_record) == 0)
-		return 0;
-	CMD_TYPE type = cmd_record.type;
-
-	switch (type)
-	{
-	case CMD_SET_COMM_WAKEUP_TIMER_INTERVAL:
-		break;
-	default:
-		break;
-	}
-	return 0;
-}
-
 void comm_init()
 {
 	sx1278_hw.dio0.pin = LORA_DIO0_Pin;
@@ -165,7 +144,7 @@ uint8_t comm_handshake_slave(const packet_t *received_pkt)
 			if (DEBUG_INFO)
 				printf("[ID: %d] Received handshake PKT_ACK from device ID = %d\n", get_own_id(), response->src_id);
 
-			Node_AddNode(newDevice);
+			Node_AddNode(*newDevice);
 
 			bool started = Comm_NodeStart(newDevice->id);
 			Node_SetStarted(newDevice->id, started);
@@ -198,6 +177,7 @@ bool Comm_SyncConfig(uint8_t node_id)
 
 		if (comm_await_ack(sync_pkt))
 		{
+			printf("[ID: %d] Synced config with node ID = %d\n", get_own_id(), node_id);
 			packet_free(sync_pkt);
 			return true;
 		}
@@ -297,15 +277,9 @@ packet_t *comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type)
 	if (find_id(dest_id) < 0)
 		return NULL;
 
-	packet_t *req_data_pkt = packet_alloc(DATA_RECORD_SIZE);
+	packet_t *req_data_pkt = create_request_data_pkt(dest_id, req_data_type);
 	if (req_data_pkt == NULL)
 		return NULL;
-
-	if (create_request_data_pkt(req_data_pkt, dest_id, req_data_type) == 0)
-	{
-		packet_free(req_data_pkt);
-		return NULL;
-	}
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
 	{
@@ -332,9 +306,8 @@ packet_t *comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type)
 			{
 
 				if (DEBUG_INFO)
-					printf(
-						"[ID: %d] Received requested data PKT_DATA from device ID = %d\t\t[attempt = %d]\n",
-						get_own_id(), response->src_id, attempt);
+					printf("[ID: %d] Received requested data PKT_DATA from device ID = %d\t\t[attempt = %d]\n",
+						   get_own_id(), response->src_id, attempt);
 
 				if (!comm_send_ack(response))
 				{
@@ -352,98 +325,19 @@ packet_t *comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type)
 	return NULL;
 }
 
-// Returns received packed with data, either from SET or GET command. Returns NULL if didn't get response to request.
-cmd_record_t *comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value)
-{
-	if (find_id(dest_id) < 0)
-		return NULL;
-
-	packet_t *cmd_pkt = packet_alloc(CMD_RECORD_SIZE);
-	if (cmd_pkt == NULL)
-		return NULL;
-
-	if (create_cmd_pkt(cmd_pkt, dest_id, cmd_type, value) == 0)
-	{
-		packet_free(cmd_pkt);
-		return NULL;
-	}
-
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
-	{
-		HAL_Delay(100);
-
-		if (!comm_send(cmd_pkt))
-			continue;
-
-		if (DEBUG_INFO)
-			printf(
-				"[ID: %d] Sending CMD_PKT = %d to device ID = %d\t\t[attempt = %d]\n",
-				get_own_id(), cmd_type, cmd_pkt->dst_id, attempt);
-
-		packet_t *response = packet_alloc(MAX_PAYLOAD_SIZE);
-		if (response == NULL)
-		{
-			packet_free(cmd_pkt);
-			return NULL;
-		}
-
-		if (comm_receive(response))
-		{
-			if (response->pkt_type == PKT_CMD_DATA && response->dst_id == cmd_pkt->src_id && response->src_id == cmd_pkt->dst_id && response->seq == cmd_pkt->seq + 1)
-			{
-
-				cmd_record_t *cmd_record = malloc(sizeof(cmd_record_t));
-				if (!get_cmd_data(response, cmd_record) && cmd_record->type != cmd_type)
-				{
-					packet_free(response);
-					continue;
-				}
-
-				if (DEBUG_INFO)
-					printf(
-						"[ID: %d] Received CMD confirmation PKT_CMD_DATA = %d, value = %d from device ID = %d\t\t[attempt = %d]\n",
-						get_own_id(), cmd_record->type, cmd_record->value,
-						response->src_id, attempt);
-
-				if (!comm_send_ack(response))
-				{
-					free(cmd_record);
-					packet_free(response);
-					packet_free(cmd_pkt);
-					return NULL;
-				}
-
-				packet_free(response);
-				packet_free(cmd_pkt);
-				return cmd_record;
-			}
-		}
-		packet_free(response);
-	}
-	packet_free(cmd_pkt);
-	return NULL;
-}
-
 uint8_t comm_send_ack(const packet_t *received_pkt)
 {
-	packet_t *ack_pkt = packet_alloc(0);
+	packet_t *ack_pkt = create_ack_pkt(received_pkt);
 	if (ack_pkt == NULL)
 		return 0;
-
-	if (!create_ack_pkt(ack_pkt, received_pkt))
-	{
-		packet_free(ack_pkt);
-		return 0;
-	}
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
 	{
 		if (comm_send(ack_pkt))
 		{
 			if (DEBUG_INFO)
-				printf(
-					"[ID: %d] Sent PKT_ACK to PKT_DATA from device ID = %d\t\t\t[attempt = %d]\n",
-					get_own_id(), received_pkt->src_id, attempt);
+				printf("[ID: %d] Sent PKT_ACK to PKT_DATA from device ID = %d\t\t\t[attempt = %d]\n",
+					   get_own_id(), received_pkt->src_id, attempt);
 
 			packet_free(ack_pkt);
 			return 1;
@@ -458,36 +352,30 @@ uint8_t comm_send_ack(const packet_t *received_pkt)
 
 uint8_t comm_test_conn(uint8_t link_id)
 {
-	if (find_id(link_id) < 0)
+	if (!id_exists(link_id))
 		return 0;
 
-	packet_t *test_pkt = packet_alloc(0);
-	if (test_pkt == NULL)
+	packet_t *conn_pkt = create_test_conn_pkt(link_id);
+	if (conn_pkt == NULL)
 		return 0;
-
-	if (!create_test_conn_pkt(test_pkt, link_id))
-	{
-		packet_free(test_pkt);
-		return 0;
-	}
 
 	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
 	{
-		if (comm_send(test_pkt))
+		if (comm_send(conn_pkt))
 		{
 			if (DEBUG_INFO)
 				printf(
 					"[ID: %d] Sent PKT_TEST_CONN to device ID = %d\t\t\t[attempt = %d]\n",
-					get_own_id(), test_pkt->dst_id, attempt);
+					get_own_id(), conn_pkt->dst_id, attempt);
 
-			if (comm_await_ack(test_pkt))
+			if (comm_await_ack(conn_pkt))
 			{
-				packet_free(test_pkt);
+				packet_free(conn_pkt);
 				return 1;
 			}
 		}
 	}
-	packet_free(test_pkt);
+	packet_free(conn_pkt);
 	return 0;
 }
 
@@ -502,8 +390,7 @@ uint8_t comm_await_ack(const packet_t *sent_packet)
 		if (response->pkt_type == PKT_ACK && response->dst_id == sent_packet->src_id && (response->src_id == sent_packet->dst_id || sent_packet->dst_id == 0) && response->seq == sent_packet->seq + 1)
 		{
 			if (DEBUG_INFO)
-				printf("[ID: %d] Received PKT_ACK from device ID = %d\n",
-					   get_own_id(), response->src_id);
+				printf("[ID: %d] Received PKT_ACK from device ID = %d\n", get_own_id(), response->src_id);
 			packet_free(response);
 			return 1;
 		}
@@ -513,29 +400,20 @@ uint8_t comm_await_ack(const packet_t *sent_packet)
 	return 0;
 }
 
-uint8_t comm_handle_cmd_data(const packet_t *received_pkt)
+uint8_t comm_handle_wakeup_info(const packet_t *received_pkt)
 {
-	if (received_pkt->pkt_type == PKT_CMD_DATA && received_pkt->dst_id == get_own_id() && find_id(received_pkt->src_id) >= 0)
+	if (received_pkt->pkt_type == PKT_INFO_NEXT_WAKEUP && received_pkt->dst_id == get_own_id() && id_exists(received_pkt->src_id))
 	{
-
-		cmd_record_t cmd_record;
-		if (!get_cmd_data(received_pkt, &cmd_record))
+		wakeup_t wakeup_record;
+		if (!get_data(received_pkt, &wakeup_record, sizeof(wakeup_t)))
 			return 0;
+		update_wakeup_info(received_pkt->src_id, &wakeup_record);
 
-		if (cmd_record.type == CMD_INFO_NEXT_WAKEUP)
-		{
-			if (DEBUG_INFO)
-				printf(
-					"[ID: %d] Received CMD_INFO_NEXT_WAKEUP. Next wakeup of device ID = %d in %d seconds\n",
-					get_own_id(), received_pkt->src_id, cmd_record.value);
+		if (DEBUG_INFO)
+			printf("[ID: %d] Received PKT_INFO_NEXT_WAKEUP. Next wakeup of device ID = %d in %d seconds\n",
+				   get_own_id(), received_pkt->src_id, wakeup_record.time);
 
-			if (!comm_send_ack(received_pkt))
-				return 0;
-
-			FLASH_NODE_NEXT_WAKEUP_set(received_pkt->src_id, cmd_record.value);
-
-			return 1;
-		}
+		return comm_send_ack(received_pkt);
 	}
 
 	return 0;

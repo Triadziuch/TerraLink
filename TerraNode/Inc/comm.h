@@ -56,6 +56,5 @@ uint8_t comm_await_start(void);
 uint8_t comm_handshake_master(void);
 uint8_t comm_handle_req_data(const packet_t *received_pkt);
 uint8_t comm_handle_test_conn(const packet_t *received_pkt);
-uint8_t comm_handle_cmd(const packet_t *received_pkt);
-
+uint8_t comm_handle_sync_config(const packet_t *received_pkt);
 #endif /* INC_COMM_H_ */

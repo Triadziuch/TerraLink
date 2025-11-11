@@ -55,3 +55,9 @@ static inline bool sync_node_settings(const SNode *node)
 {
     return Comm_SyncConfig(node->device.id);
 }
+
+static inline uint32_t get_timestamp(void)
+{
+    // TODO: Poprawić na RTC
+    return HAL_GetTick();
+}

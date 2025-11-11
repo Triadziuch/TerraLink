@@ -24,7 +24,6 @@
 #define DEBUG_INFO 1
 
 uint32_t GetTime(void);
-uint8_t execute_cmd(const packet_t* cmd, const packet_t* cmd_data);
 
 void comm_init();
 uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout);
@@ -34,7 +33,6 @@ uint8_t comm_send(const packet_t *pkt);
 uint8_t comm_receive(packet_t *pkt);
 
 packet_t* comm_req_data(uint8_t dest_id, DATA_TYPE req_data_type);
-cmd_record_t* comm_send_cmd(uint8_t dest_id, CMD_TYPE cmd_type, uint16_t value);
 uint8_t comm_send_ack(const packet_t *received_pkt);
 uint8_t comm_await_ack(const packet_t *sent_packet);
 
@@ -42,7 +40,7 @@ uint8_t comm_test_conn(uint8_t link_id);
 uint8_t comm_handshake_slave(const packet_t *received_pkt);
 bool Comm_SyncConfig(uint8_t node_id);
 uint8_t comm_handle_data(const packet_t *received_pkt);
-uint8_t comm_handle_cmd_data(const packet_t *received_pkt);
+uint8_t comm_handle_wakeup_info(const packet_t *received_pkt);
 bool Comm_NodeStart(uint8_t node_id);
 void comm_print_pkt(const packet_t *pkt, const char *text);
 

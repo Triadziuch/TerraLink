@@ -167,10 +167,11 @@ uint8_t attach_cmd(packet_t *pkt, cmd_record_t *cmd)
 //	return 0;
 // }
 
-uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt)
+packet_t *create_ack_pkt(const packet_t *received_pkt)
 {
+	packet_t *ack_pkt = packet_alloc(0);
 	if (received_pkt == NULL || ack_pkt == NULL)
-		return 0;
+		return NULL;
 
 	ack_pkt->dst_id = received_pkt->src_id;
 	ack_pkt->src_id = get_own_id();
@@ -179,10 +180,10 @@ uint8_t create_ack_pkt(packet_t *ack_pkt, const packet_t *received_pkt)
 	ack_pkt->len = 0;
 	packet_set_crc(ack_pkt);
 
-	return 1;
+	return ack_pkt;
 }
 
-packet_t *create_handshake_response_pkt(const packet_t *req_pkt, const SDevice* argDevice)
+packet_t *create_handshake_response_pkt(const packet_t *req_pkt, const SDevice *argDevice)
 {
 	if (req_pkt == NULL || argDevice == NULL)
 		return NULL;
@@ -202,33 +203,33 @@ packet_t *create_handshake_response_pkt(const packet_t *req_pkt, const SDevice* 
 	return resp_pkt;
 }
 
-uint8_t create_request_data_pkt(packet_t *req_pkt, uint8_t dest_id,
-								DATA_TYPE req_data_type)
+packet_t *create_request_data_pkt(uint8_t dest_id, DATA_TYPE req_data_type)
 {
+	packet_t *req_pkt = packet_alloc(DATA_RECORD_SIZE);
 	if (req_pkt == NULL)
-		return 0;
+		return NULL;
 
-	data_record_t req_data_record;
-	req_data_record.type = req_data_type;
-	req_data_record.time_offset = 0;
-	req_data_record.data = 0;
+	data_record_t req_data_record = {
+		.type = req_data_type,
+		.time_offset = 0,
+		.data = 0};
 
 	req_pkt->dst_id = dest_id;
 	req_pkt->src_id = get_own_id();
 	req_pkt->pkt_type = PKT_REQ_DATA;
 	req_pkt->seq = next_seq_number();
-	req_pkt->len = 0;
-	if (!attach_data(req_pkt, &req_data_record))
-		return 0;
+	req_pkt->len = sizeof(data_record_t);
+	memcpy(req_pkt->payload, &req_data_record, sizeof(data_record_t));
 	packet_set_crc(req_pkt);
 
-	return 1;
+	return req_pkt;
 }
 
-uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id)
+packet_t *create_test_conn_pkt(uint8_t dest_id)
 {
+	packet_t *test_pkt = packet_alloc(0);
 	if (test_pkt == NULL)
-		return 0;
+		return NULL;
 
 	test_pkt->dst_id = dest_id;
 	test_pkt->src_id = get_own_id();
@@ -237,7 +238,7 @@ uint8_t create_test_conn_pkt(packet_t *test_pkt, uint8_t dest_id)
 	test_pkt->len = 0;
 	packet_set_crc(test_pkt);
 
-	return 1;
+	return test_pkt;
 }
 
 packet_t *create_sync_config_pkt(uint8_t dest_id)
@@ -259,47 +260,6 @@ packet_t *create_sync_config_pkt(uint8_t dest_id)
 	packet_set_crc(pkt);
 
 	return pkt;
-}
-
-uint8_t create_cmd_pkt(packet_t *cmd_pkt, uint8_t dest_id, CMD_TYPE cmd,
-					   uint16_t value)
-{
-	if (cmd_pkt == NULL)
-		return 0;
-
-	cmd_pkt->dst_id = dest_id;
-	cmd_pkt->src_id = get_own_id();
-	cmd_pkt->pkt_type = PKT_CMD;
-	cmd_pkt->seq = next_seq_number();
-	cmd_pkt->len = 0;
-
-	// If set command
-	if (cmd % 2 == 0)
-	{
-		if (cmd != CMD_SET_COMM_WAKEUP_TIMER_INTERVAL && cmd != CMD_SET_MEASUREMENT_WAKEUP_TIMER_INTERVAL)
-			if (value > 255)
-				return 0;
-
-		cmd_record_t cmd_record;
-		cmd_record.type = cmd;
-		cmd_record.value = value;
-
-		if (!attach_cmd(cmd_pkt, &cmd_record))
-			return 0;
-	}
-	else
-	{
-		cmd_record_t cmd_record;
-		cmd_record.type = cmd;
-		cmd_record.value = 0;
-
-		if (!attach_cmd(cmd_pkt, &cmd_record))
-			return 0;
-	}
-
-	packet_set_crc(cmd_pkt);
-
-	return 1;
 }
 
 packet_t *create_start_pkt(uint8_t dest_id)

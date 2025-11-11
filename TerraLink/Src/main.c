@@ -24,6 +24,8 @@
 #include "SX1278.h"
 #include "string.h"
 #include "stdio.h"
+#include "NodeManage.h"
+#include "Flash.h"
 
 /* USER CODE END Includes */
 
@@ -202,8 +204,10 @@ int main(void) {
 	// CRC Init
 	__HAL_RCC_CRC_CLK_ENABLE();
 
+	// Flash_Clear();
 	comm_init();
 	init_time();
+	Node_Init();
 
 	// Od razu przejście do trybu nasłuchiwania
 	printf("Starting LoRa receiver mode...\n");
@@ -238,8 +242,8 @@ int main(void) {
 				} else {
 					if (received_pkt->pkt_type == PKT_DATA) {
 						comm_handle_data(received_pkt);
-					} else if (received_pkt->pkt_type == PKT_CMD_DATA) {
-						comm_handle_cmd_data(received_pkt);
+					} else if (received_pkt->pkt_type == PKT_INFO_NEXT_WAKEUP) {
+						comm_handle_wakeup_info(received_pkt);
 					}
 				}
 
@@ -278,13 +282,6 @@ int main(void) {
 //				cmd_i = 97;
 //
 //			printf("SETTING NODE ID TO %d\n", cmd_i);
-//			if (comm_send_cmd(current_id, CMD_SET_NODE_ID, cmd_i)){
-//				printf("SETTING NODE ID SUCCESSFUL\n");
-//				current_id = cmd_i;
-//			}
-//			else{
-//				printf("ERROR OCURRED SETTING NODE ID\n");
-//			}
 
 		static uint32_t last_check = 0;
 		if (HAL_GetTick() - last_check > 5000) {

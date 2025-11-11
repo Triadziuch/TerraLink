@@ -244,7 +244,7 @@ void node_restart(void) {
 	HAL_FLASHEx_DATAEEPROM_Lock();
 }
 
-uint8_t node_config(void) {
+uint8_t node_config1(void) {
 	if (FLASH_HIVE_ID_is_valid() == 0) {
 		if (!FLASH_HIVE_ID_set(HIVE_ID) || !FLASH_NODE_ID_set(NODE_ID))
 			return 0;

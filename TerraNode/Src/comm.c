@@ -9,7 +9,8 @@
 
 int16_t next_comm_wakeup_in, next_measurement_wakeup_in;
 
-uint32_t GetTime(void) {
+uint32_t GetTime(void)
+{
 	HAL_RTC_GetTime(&hrtc, &clock_time, RTC_FORMAT_BIN);
 	HAL_RTC_GetDate(&hrtc, &clock_date, RTC_FORMAT_BIN);
 
@@ -22,10 +23,11 @@ uint32_t GetTime(void) {
 	t.tm_sec = clock_time.Seconds;
 	t.tm_isdst = 0;
 
-	return (uint32_t) mktime(&t);
+	return (uint32_t)mktime(&t);
 }
 
-void comm_init() {
+void comm_init()
+{
 	sx1278_hw.dio0.pin = LORA_DIO0_Pin;
 	sx1278_hw.dio0.port = LORA_DIO0_GPIO_Port;
 	sx1278_hw.nss.pin = LORA_NSS_Pin;
@@ -37,25 +39,28 @@ void comm_init() {
 	sx1278.hw = &sx1278_hw;
 
 	SX1278_init(&sx1278, 433000000,
-	SX1278_POWER_17DBM,
-	SX1278_LORA_SF_7,
-	SX1278_LORA_BW_125KHZ,
-	SX1278_LORA_CR_4_5,
-	SX1278_LORA_CRC_EN, 64);
+				SX1278_POWER_17DBM,
+				SX1278_LORA_SF_7,
+				SX1278_LORA_BW_125KHZ,
+				SX1278_LORA_CR_4_5,
+				SX1278_LORA_CRC_EN, 64);
 }
 
-uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout) {
+uint8_t comm_tx(uint8_t *txBuf, uint8_t length, uint32_t timeout)
+{
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 	int status = SX1278_transmit(&sx1278, txBuf, length, timeout);
 	HAL_NVIC_EnableIRQ(EXTI_LINE);
 	return status;
 }
 
-uint8_t comm_rx(uint8_t length, uint32_t timeout) {
+uint8_t comm_rx(uint8_t length, uint32_t timeout)
+{
 	return SX1278_receive(&sx1278, length, timeout);
 }
 
-uint8_t comm_send(const packet_t *pkt) {
+uint8_t comm_send(const packet_t *pkt)
+{
 	HAL_NVIC_DisableIRQ(EXTI_LINE);
 
 	uint16_t total_len = get_pkt_length(pkt);
@@ -73,7 +78,8 @@ uint8_t comm_send(const packet_t *pkt) {
 	return status;
 }
 
-uint8_t comm_receive(packet_t *pkt) {
+uint8_t comm_receive(packet_t *pkt)
+{
 	lora_data_ready = 0;
 
 	if (!SX1278_receive(&sx1278, PACKET_MAX_SIZE, PKT_RX_TIMEOUT))
@@ -92,7 +98,8 @@ uint8_t comm_receive(packet_t *pkt) {
 	return valid;
 }
 
-uint8_t comm_send_moisture(const packet_t *request_pkt) {
+uint8_t comm_send_moisture(const packet_t *request_pkt)
+{
 	sensor_data_raw_t moisture;
 
 	if (!GetSoilMoisturePercentage(&moisture))
@@ -112,11 +119,13 @@ uint8_t comm_send_moisture(const packet_t *request_pkt) {
 	packet_set_crc(data_pkt);
 
 	uint8_t result = 0;
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
+	{
 		if (!comm_send(data_pkt))
 			continue;
 
-		if (comm_await_ack(data_pkt)) {
+		if (comm_await_ack(data_pkt))
+		{
 			result = 1;
 			break;
 		}
@@ -128,7 +137,8 @@ uint8_t comm_send_moisture(const packet_t *request_pkt) {
 	return result;
 }
 
-uint8_t comm_send_lux(const packet_t *request_pkt) {
+uint8_t comm_send_lux(const packet_t *request_pkt)
+{
 	sensor_data_raw_t light;
 
 	if (!GetLightSensorValue(&light))
@@ -148,11 +158,13 @@ uint8_t comm_send_lux(const packet_t *request_pkt) {
 	packet_set_crc(data_pkt);
 
 	uint8_t result = 0;
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
+	{
 		if (!comm_send(data_pkt))
 			continue;
 
-		if (comm_await_ack(data_pkt)) {
+		if (comm_await_ack(data_pkt))
+		{
 			result = 1;
 			break;
 		}
@@ -164,9 +176,11 @@ uint8_t comm_send_lux(const packet_t *request_pkt) {
 	return result;
 }
 
-//TODO: Refactorize redundant code
-uint8_t comm_send_cmd_data(const packet_t *cmd_packet) {
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+// TODO: Refactorize redundant code
+uint8_t comm_send_cmd_data(const packet_t *cmd_packet)
+{
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
+	{
 		if (!comm_send(cmd_packet))
 			continue;
 
@@ -179,12 +193,14 @@ uint8_t comm_send_cmd_data(const packet_t *cmd_packet) {
 	return 0;
 }
 
-wakeup_t* comm_send_next_wakeup(void) {
+wakeup_t *comm_send_next_wakeup(void)
+{
 	static WAKEUP_TYPE next_wakeup = MEASUREMENT;
 	uint16_t sleep_time = 0;
 
 	// Next wakeup is measurement
-	if (next_measurement_wakeup_in <= next_comm_wakeup_in) {
+	if (next_measurement_wakeup_in <= next_comm_wakeup_in)
+	{
 		next_wakeup = MEASUREMENT;
 
 		if (next_comm_wakeup_in <= MEASUREMENT_WAKEUP_TIMER_INTERVAL)
@@ -195,7 +211,8 @@ wakeup_t* comm_send_next_wakeup(void) {
 		next_comm_wakeup_in -= sleep_time;
 		next_measurement_wakeup_in = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
 	} // is communication
-	else {
+	else
+	{
 		next_wakeup = COMMUNICATION;
 
 		if (next_measurement_wakeup_in <= COMM_WAKEUP_TIMER_INTERVAL)
@@ -207,42 +224,67 @@ wakeup_t* comm_send_next_wakeup(void) {
 		next_measurement_wakeup_in -= sleep_time;
 	}
 
-	cmd_record_t wakeup_record;
-	wakeup_record.type = CMD_INFO_NEXT_WAKEUP;
-	wakeup_record.value = sleep_time;
+	wakeup_t wakeup_record;
+	wakeup_record.wakeup_type = next_wakeup;
+	wakeup_record.time = sleep_time;
 
 	packet_t *pkt = packet_alloc(MAX_PAYLOAD_SIZE);
 	if (pkt == NULL)
 		return NULL;
 	pkt->dst_id = HIVE_ID;
 	pkt->src_id = NODE_ID;
-	pkt->pkt_type = PKT_CMD_DATA;
+	pkt->pkt_type = PKT_INFO_NEXT_WAKEUP;
 	pkt->seq = next_seq_number();
 	pkt->len = 0;
-	if (!attach_cmd(pkt, &wakeup_record)) {
+
+	// Attach wakeup_t structure to packet
+	if (pkt->len + sizeof(wakeup_t) > MAX_PAYLOAD_SIZE)
+	{
 		packet_free(pkt);
 		return NULL;
 	}
+	memcpy(pkt->payload + pkt->len, &wakeup_record, sizeof(wakeup_t));
+	pkt->len += sizeof(wakeup_t);
+
 	packet_set_crc(pkt);
 
-	if (!comm_send_cmd_data(pkt)) {
-		packet_free(pkt);
-		return NULL;
+	// Send with retries and await ACK (similar to comm_send_moisture/comm_send_lux)
+	uint8_t result = 0;
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
+	{
+		if (!comm_send(pkt))
+			continue;
+
+		if (comm_await_ack(pkt))
+		{
+			result = 1;
+			break;
+		}
+
+		HAL_Delay(100);
 	}
+
 	packet_free(pkt);
 
+	if (!result)
+		return NULL;
+
 	wakeup_t *wakeup = malloc(sizeof(wakeup_t));
+	if (wakeup == NULL)
+		return NULL;
 	wakeup->wakeup_type = next_wakeup;
 	wakeup->time = sleep_time;
 	return wakeup;
 }
 
-uint8_t comm_send_ack(const packet_t *received_pkt) {
+uint8_t comm_send_ack(const packet_t *received_pkt)
+{
 	packet_t *ack_pkt = packet_alloc(0);
 	if (ack_pkt == NULL)
 		return 0;
 
-	if (!create_ack_pkt(ack_pkt, received_pkt)) {
+	if (!create_ack_pkt(ack_pkt, received_pkt))
+	{
 		packet_free(ack_pkt);
 		return 0;
 	}
@@ -250,8 +292,10 @@ uint8_t comm_send_ack(const packet_t *received_pkt) {
 	HAL_Delay(100);
 
 	uint8_t result = 0;
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
-		if (comm_send(ack_pkt)) {
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
+	{
+		if (comm_send(ack_pkt))
+		{
 			result = 1;
 			break;
 		}
@@ -263,17 +307,17 @@ uint8_t comm_send_ack(const packet_t *received_pkt) {
 	return result;
 }
 
-uint8_t comm_await_ack(const packet_t *sent_packet) {
+uint8_t comm_await_ack(const packet_t *sent_packet)
+{
 	packet_t *response = packet_alloc(MAX_PAYLOAD_SIZE);
 	if (response == NULL)
 		return 0;
 
 	uint8_t result = 0;
-	if (comm_receive(response)) {
-		if (response->pkt_type == PKT_ACK
-				&& response->dst_id == sent_packet->src_id
-				&& response->src_id == sent_packet->dst_id
-				&& response->seq == sent_packet->seq + 1) {
+	if (comm_receive(response))
+	{
+		if (response->pkt_type == PKT_ACK && response->dst_id == sent_packet->src_id && response->src_id == sent_packet->dst_id && response->seq == sent_packet->seq + 1)
+		{
 			result = 1;
 		}
 	}
@@ -282,38 +326,48 @@ uint8_t comm_await_ack(const packet_t *sent_packet) {
 	return result;
 }
 
-uint8_t comm_await_start(void) {
+uint8_t comm_await_start(void)
+{
 	packet_t *packet = packet_alloc(MAX_PAYLOAD_SIZE);
 	if (packet == NULL)
 		return 0;
 
 	uint8_t result = 0;
-	if (comm_receive(packet) && packet->dst_id == NODE_ID) {
-		if (packet->pkt_type == PKT_START) {
+	if (comm_receive(packet) && packet->dst_id == NODE_ID)
+	{
+		if (packet->pkt_type == PKT_START)
+		{
 			next_comm_wakeup_in = COMM_WAKEUP_TIMER_INTERVAL;
 			next_measurement_wakeup_in = MEASUREMENT_WAKEUP_TIMER_INTERVAL;
 			result = 1;
+			comm_send_ack(packet);
 		}
-		else if (packet->pkt_type == PKT_CMD)
-			comm_handle_cmd(packet);
+		else if (packet->pkt_type == PKT_SYNC_CONFIG)
+		{
+			comm_handle_sync_config(packet);
+			result = 0;
+		}
 	}
 
 	packet_free(packet);
 	return result;
 }
 
-uint8_t comm_handshake_master(void) {
+uint8_t comm_handshake_master(void)
+{
 	packet_t *req = packet_alloc(MAX_PAYLOAD_SIZE);
 	if (req == NULL)
 		return 0;
 
-	if (!create_handshake_pkt(req)) {
+	if (!create_handshake_pkt(req))
+	{
 		packet_free(req);
 		return 0;
 	}
 
 	uint8_t result = 0;
-	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt) {
+	for (int attempt = 0; attempt < MAX_RETRIES; ++attempt)
+	{
 		HAL_Delay(100);
 
 		if (!comm_send(req))
@@ -323,26 +377,29 @@ uint8_t comm_handshake_master(void) {
 		if (response == NULL)
 			continue;
 
-		if (comm_receive(response)) {
-			if (response->pkt_type == PKT_ASSIGN_ID
-					&& response->dst_id == req->src_id
-					&& response->seq == req->seq + 1) {
+		if (comm_receive(response))
+		{
+			if (response->pkt_type == PKT_ASSIGN_ID && response->dst_id == req->src_id && response->seq == req->seq + 1)
+			{
 
 				SDevice deviceInfo;
-				if (!get_data(response, &deviceInfo, sizeof(SDevice))) {
+				if (!get_data(response, &deviceInfo, sizeof(SDevice)))
+				{
 					packet_free(response);
 					continue;
 				}
 
-				if (memcmp(&deviceInfo.uid, (const void *)NODE_UID_ADDR, sizeof(SDeviceUID)) != 0) {
+				if (memcmp(&deviceInfo.uid, (const void *)NODE_UID_ADDR, sizeof(SDeviceUID)) != 0)
+				{
 					packet_free(response);
 					continue;
 				}
 
-				if (FLASH_NODE_ID_set(deviceInfo.id)
-						&& FLASH_HIVE_ID_set(response->src_id)) {
+				if (FLASH_NODE_ID_set(deviceInfo.id) && FLASH_HIVE_ID_set(response->src_id))
+				{
 					packet_t *ack = packet_alloc(0);
-					if (ack != NULL) {
+					if (ack != NULL)
+					{
 						ack->dst_id = response->src_id;
 						ack->src_id = NODE_ID;
 						ack->pkt_type = PKT_ACK;
@@ -366,7 +423,8 @@ uint8_t comm_handshake_master(void) {
 	return result;
 }
 
-uint8_t comm_handle_req_data(const packet_t *received_pkt) {
+uint8_t comm_handle_req_data(const packet_t *received_pkt)
+{
 	if (received_pkt == NULL)
 		return 0;
 
@@ -377,20 +435,28 @@ uint8_t comm_handle_req_data(const packet_t *received_pkt) {
 	if (!get_data(received_pkt, &req_data, DATA_RECORD_SIZE))
 		return 0;
 
-	if (req_data.type == DATA_ID) {
+	if (req_data.type == DATA_ID)
+	{
 		return 0;
-	} else if (req_data.type == DATA_SOIL_MOISTURE) {
+	}
+	else if (req_data.type == DATA_SOIL_MOISTURE)
+	{
 		return comm_send_moisture(received_pkt);
-	} else if (req_data.type == DATA_LIGHT) {
+	}
+	else if (req_data.type == DATA_LIGHT)
+	{
 		return comm_send_lux(received_pkt);
-	} else if (req_data.type == DATA_TEMP) {
+	}
+	else if (req_data.type == DATA_TEMP)
+	{
 		return 0;
 	}
 
 	return 0;
 }
 
-uint8_t comm_handle_test_conn(const packet_t *received_pkt) {
+uint8_t comm_handle_test_conn(const packet_t *received_pkt)
+{
 	if (received_pkt == NULL)
 		return 0;
 
@@ -400,23 +466,15 @@ uint8_t comm_handle_test_conn(const packet_t *received_pkt) {
 	return 0;
 }
 
-uint8_t comm_handle_cmd(const packet_t *received_pkt) {
-	if (received_pkt == NULL)
+uint8_t comm_handle_sync_config(const packet_t *received_pkt)
+{
+	if (received_pkt->pkt_type != PKT_SYNC_CONFIG || received_pkt == NULL)
 		return 0;
 
-	if (received_pkt->pkt_type != PKT_CMD)
+	SNodeConfig config;
+	if (!get_data(received_pkt, &config, sizeof(SNodeConfig)))
 		return 0;
+	node_config = config;
 
-	packet_t *cmd_response = packet_alloc(MAX_PAYLOAD_SIZE);
-	if (cmd_response == NULL)
-		return 0;
-
-	if (create_cmd_data_resp_pkt(cmd_response, received_pkt) == 0) {
-		packet_free(cmd_response);
-		return 0;
-	}
-
-	uint8_t result = comm_send_cmd_data(cmd_response);
-	packet_free(cmd_response);
-	return result;
+	return comm_send_ack(received_pkt);
 }
